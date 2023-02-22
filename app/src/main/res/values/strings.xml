@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MelodiaApp</string>
+    <string name="app_title">Melodia\n Vive tu música</string>
+    <string name="app_login">Iniciar Sesión</string>
+    <string name="app_register">Registrarse</string>
+    <string name="LogIn_step1">Introduce tus credenciales</string>
+    <string name="LogIn_recover"><u>He olvidado mi contraseña</u></string>
+    <string name="LogIn_enter">Acceder</string>
+    <string name="LogIn_hint">Contraseña</string>
+    <string name="Menu_Search" fontFamily="Arial">Buscar    &#x1F50D;</string>
+    <string name="Menu_Folders">Mis Carpetas</string>
+    <string name="Menu_Playlist">Mis Listas</string>
+    <string name="Register_step1">Introduce tu correo</string>
+    <string name="Register_step2">Introduce tu \n nombre de usuario</string>
+    <string name="Username_hint">Usuario</string>
+    <string name="Register_step3">Introduce tu contraseña</string>
+</resources>
