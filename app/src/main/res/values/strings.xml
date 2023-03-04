@@ -14,4 +14,6 @@
     <string name="Register_step2">Introduce tu \n nombre de usuario</string>
     <string name="Username_hint">Usuario</string>
     <string name="Register_step3">Introduce tu contraseña</string>
+    <string name="PasswordRecover_title">Recuperar contraseña</string>
+    <string name="PasswordRecover_sendCode">Enviar código</string>
 </resources>

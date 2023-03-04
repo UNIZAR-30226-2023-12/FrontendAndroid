@@ -13,12 +13,22 @@ public class LogIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        getSupportActionBar().hide();
 
         TextView acces = findViewById(R.id.bAcceder);
         acces.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Menu.class);
+                startActivity(intent);
+            }
+        });
+
+        TextView recover = findViewById(R.id.iForgor);
+        recover.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PasswordRecover.class);
                 startActivity(intent);
             }
         });
