@@ -7,7 +7,7 @@
     <string name="LogIn_recover"><u>He olvidado mi contraseña</u></string>
     <string name="LogIn_enter">Acceder</string>
     <string name="LogIn_hint">Contraseña</string>
-    <string name="Menu_Search" fontFamily="Arial">Buscar    &#x1F50D;</string>
+    <string name="Menu_Search" fontFamily="Arial">Buscar    🔍</string>
     <string name="Menu_Folders">Mis Carpetas</string>
     <string name="Menu_Playlist">Mis Listas</string>
     <string name="Register_step1">Introduce tu correo</string>
@@ -16,4 +16,7 @@
     <string name="Register_step3">Introduce tu contraseña</string>
     <string name="PasswordRecover_title">Recuperar contraseña</string>
     <string name="PasswordRecover_sendCode">Enviar código</string>
+    <string name="Menu_Favourites">Fav</string>
+    <string name="Menu_Random">♫ Aleatoria</string>
+    <string name="Menu_Social">Social</string>
 </resources>
