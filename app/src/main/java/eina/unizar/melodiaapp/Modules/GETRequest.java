@@ -1,3 +1,5 @@
+package eina.unizar.melodiaapp.Modules;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -8,6 +10,7 @@ import org.json.JSONObject;
  * Haciendo uso de las distintas funciones que ofrece el backend en su API llamar con urls
  * distintas al constructor para hacer uso de las mismas.
  */
+
 public class GETRequest {
     // URL como atributo
     private String url;

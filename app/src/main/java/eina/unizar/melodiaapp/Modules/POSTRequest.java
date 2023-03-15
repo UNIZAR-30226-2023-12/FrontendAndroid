@@ -1,3 +1,5 @@
+package eina.unizar.melodiaapp.Modules;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
@@ -36,7 +38,7 @@ public class POSTRequest {
             connection.setDoOutput(true);
 
             // Enviamos los datos en formato JSON
-            DATAOutputStream wr = new DataOutputStream(connection.getOutputStream());
+            DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
             wr.writeBytes(data.toString());
             wr.flush();
             wr.close();

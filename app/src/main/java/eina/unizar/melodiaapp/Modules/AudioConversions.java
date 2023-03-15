@@ -1,3 +1,7 @@
+package eina.unizar.melodiaapp.Modules;
+
+import android.os.Build;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.Base64;
@@ -15,13 +19,13 @@ import java.util.Base64;
  */
 
 public class AudioConversions {
-    private string binaryString;
+    private String binaryString;
     private byte[] byteArray;
     private File inputFile;
 
     // Constructor, si se quiere conseguir un archivo de audio a partir de un string en file pasar null
     // Si se quiere conseguir un string en base64 a partir de un archivo de audio pasar null en el string
-    public JSONConversions(string binaryString, File file) {
+    public void JSONConversions(String binaryString, File file) {
         this.binaryString = binaryString;
         this.inputFile = file;
     }

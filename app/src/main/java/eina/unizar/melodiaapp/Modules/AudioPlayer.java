@@ -1,3 +1,5 @@
+package eina.unizar.melodiaapp.Modules;
+
 import android.media.MediaPlayer;
 
 
@@ -24,7 +26,7 @@ public class AudioPlayer {
                 mediaPlayer.stop();
                 mediaPlayer.release();
                 mediaPlayer.reset();
-                mediaPlayer = new MediaPlayer(path);
+                mediaPlayer = new MediaPlayer();
             }
             mediaPlayer.setDataSource(path);
             mediaPlayer.prepare();
