@@ -4,14 +4,13 @@ import android.os.Build;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.util.Base64;
+import android.util.Base64;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
 
-import java.util.Base64;
 
 /*
  * Módulo que contiene una clase con los métodos necesarios para convertir strings en arrays de bytes
@@ -32,7 +31,7 @@ public class AudioConversions {
 
     // Método para convertir un string en un array de bytes
     public void convertStringToByteArray() {
-        this.byteArray = Base64.getDecoder().decode(this.binaryString);
+        this.byteArray = android.util.Base64.decode(this.binaryString, android.util.Base64.DEFAULT);
     }
 
     // Método para convertir un array de bytes en un archivo de audio
@@ -48,8 +47,8 @@ public class AudioConversions {
 
     // Método para convertir un archivo de audio en un string en base64
     public String convertFileToString() {
-        byte[] fileContent = Files.readAllBytes(this.inputFile.toPath());
-        String encodedString = Base64.getEncoder().encodeToString(fileContent);
+        byte[] fileContent = File.readAllBytes(this.inputFile.toPath());
+        String encodedString = android.util.Base64.encodeToString(fileContent, android.util.Base64.DEFAULT);
 
         return encodedString;
     }
