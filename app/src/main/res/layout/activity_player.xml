@@ -112,6 +112,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBar">
 
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/equializer"
+            android:padding="6dp"/>
+        <!--
+        <com.warkiz.widget.IndicatorSeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:isb_min="0"
+            app:isb_max="100"
+            app:isb_progress="50"
+            app:isb_tick_count="10"
+            app:isb_tick_mode="CONTINUOUS"
+            app:isb_track_background_color="@color/grey_300"
+            app:isb_track_progress_color="@color/green_500" />
+        -->
         <ImageButton
             android:id="@+id/previous_track"
             android:layout_width="wrap_content"
@@ -155,6 +174,14 @@
             android:backgroundTint="#00FFFFFF"
             app:srcCompat="@android:drawable/ic_media_next"
             tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/volume"
+            android:padding="14dp"/>
+
     </LinearLayout>
 
     <ImageView

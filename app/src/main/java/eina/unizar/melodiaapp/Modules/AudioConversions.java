@@ -1,3 +1,4 @@
+/*
 package eina.unizar.melodiaapp.Modules;
 
 import android.os.Build;
@@ -10,13 +11,14 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
-
+*/
 
 /*
  * Módulo que contiene una clase con los métodos necesarios para convertir strings en arrays de bytes
  * y después en archivos de audio y viceversa.
  */
 
+/*
 public class AudioConversions {
     private String binaryString;
     private byte[] byteArray;
@@ -53,3 +55,5 @@ public class AudioConversions {
         return encodedString;
     }
 }
+
+*/

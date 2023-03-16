@@ -1,3 +1,4 @@
+/*
 package eina.unizar.melodiaapp.Modules;
 
 import android.content.Context;
@@ -19,12 +20,14 @@ public class VolumeControl {
         audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 0);
     }
 }
+*/
 
 /*
  * Botones para subir y bajar el volumen, en el menu de reproduccion, al pulsar el boton de volumen
  * se debería sacar un submenu con el volumen actual y al desplazar subir o bajar el volumen.
  * Este código es el que se puede copiar y pegar
  */
+    /*
 Button subirVolumenBtn = findViewById(R.id.subir_volumen_btn);
 subirVolumenBtn.setOnClickListener(new View.onClickListener(){
     @Override
@@ -42,3 +45,4 @@ public void onClick(View v){
         volumenControl.turnDownVolume();
         }
 });
+*/
