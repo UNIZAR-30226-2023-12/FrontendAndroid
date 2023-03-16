@@ -59,6 +59,7 @@ public class AudioPlayer {
 
     /*
      * Método para parar el audio, si no se estaba reproduciendo no hace nada.
+     * Parar significa dejar de escuchar el audio, y subir el instante a BBDD
      */
     public void stop() {
         if (mediaPlayer.isPlaying()) {
