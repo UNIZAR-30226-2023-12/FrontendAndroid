@@ -25,4 +25,7 @@
     <string name="CC_hint">Nombre carpeta</string>
     <string name="CC_crear">Crear carpeta</string>
     <string name="carpeta_masCarpetas">Añadir carpeta</string>
+    <string name="player_author">Autor:</string>
+    <string name="player_genre">Género:</string>
+    <string name="text_placeholder">Lorem Ipsum</string>
 </resources>
