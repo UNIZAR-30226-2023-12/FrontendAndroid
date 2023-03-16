@@ -1,0 +1,39 @@
+Se apuntarán en el fichero todas las funciones y avances de investigación que se hagan sobre Android Studio, el desarrollo en general de la app y la conectividad con el backend.
+
+BOTONES PARA SUBIR Y BAJAR EL VOLUMEN
+Deberán ir dentro de la clase onCreate de la pantalla del reproductor de música, cuando se desplace el seekbar discreto se modificará con el subir o bajar volumen.
+
+Button subirVolumenBtn = findViewById(R.id.subir_volumen_btn);
+subirVolumenBtn.setOnClickListener(new View.onClickListener(){
+    @Override
+    public void onClick(View v){
+        VolumeControl volumeControl = new VolumenControl(getApplicationContext());
+        volumenControl.turnUpVolume();
+        }
+});
+
+Button bajarVolumenBtn = findViewById(R.id.bajar_volumen_btn);
+bajarVolumenBtn.setOnClickListener(new View.onClickListener(){
+@Override
+public void onClick(View v){
+        VolumeControl volumeControl = new VolumenControl(getApplicationContext());
+        volumenControl.turnDownVolume();
+        }
+});
+
+CREACIÓN DEL ECUALIZADOR PARA EL REPRODUCTOR DE AUDIO
+	Código para crear un objeto de clase equalizer (lo incluye android)
+Equalizer equalizer = new Equalizer(0, mediaPlayer.getAudioSessionId());
+	Creación de las bandas y de la ganancia de cada banda localizada
+equalizer.setEnabled(true);
+short bands = equalizer.getNumberOfBands();
+short[] bandLevels = new short[bands];
+equalizer.setBandLevel((short) 0, bandLevels[0]);
+// Se añaden bandas de nivel por cada banda que nos haya devuelto la función, ver si hacerlo con un for o poner unas por defecto
+equalizer.setBandLevel((short) (bands - 1), bandLevels[bands - 1]);
+	Destrucción del ecualizador cuando no se use, cuando se cierre el submenu??
+equalizer.release();
+
+
+
+
