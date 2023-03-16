@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".Carpeta">
+    tools:context=".CreateCarpeta">
 
     <ImageView
         android:id="@+id/imageHomeC"
@@ -24,67 +24,44 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="108dp"
         android:gravity="center"
-        android:text="Carpeta placeholder"
+        android:text="@string/CC_title"
         android:textColor="@color/regular_text"
         android:textSize="24pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="71dp"
-        android:layout_height="83dp"
-        app:layout_constraintEnd_toStartOf="@+id/carpetaEjemplo"
-        app:srcCompat="@drawable/options"
-        tools:layout_editor_absoluteY="261dp" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="50dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="4dp"
-        app:layout_constraintStart_toEndOf="@+id/carpetaEjemplo"
-        app:srcCompat="@drawable/thrash"
-        tools:layout_editor_absoluteY="276dp" />
+    <EditText
+        android:id="@+id/inCapretaName"
+        android:layout_width="230dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/regular_text"
+        android:ems="10"
+        android:hint="@string/CC_hint"
+        android:textColor="@color/regular_text"
+        android:textColorHint="@color/regular_text"
+        android:textSize="26dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
-        android:id="@+id/carpetaEjemplo"
-        android:layout_width="241dp"
-        android:layout_height="38dp"
-        android:text="Carpeta"
-        android:textSize="28dp"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="276dp" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="406dp"
-        android:layout_height="270dp"
-        android:layout_marginTop="72dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"></LinearLayout>
-
-    <TextView
-        android:id="@+id/bMasCarpetas"
+        android:id="@+id/bCrearCarpeta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="52dp"
         android:background="@drawable/button1"
         android:gravity="center"
         android:padding="8dp"
-        android:text="@string/carpeta_masCarpetas"
+        android:text="@string/CC_crear"
         android:textColor="@color/button_text"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/inCapretaName" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

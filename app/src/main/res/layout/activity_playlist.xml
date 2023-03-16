@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".Carpeta">
+    tools:context=".playlist">
 
     <ImageView
         android:id="@+id/imageHomeC"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="108dp"
         android:gravity="center"
-        android:text="Carpeta placeholder"
+        android:text="Listas placeholder"
         android:textColor="@color/regular_text"
         android:textSize="24pt"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
         android:id="@+id/imageView4"
         android:layout_width="71dp"
         android:layout_height="83dp"
-        app:layout_constraintEnd_toStartOf="@+id/carpetaEjemplo"
+        app:layout_constraintEnd_toStartOf="@+id/ListaRejemplo"
         app:srcCompat="@drawable/options"
         tools:layout_editor_absoluteY="261dp" />
 
@@ -45,46 +45,28 @@
         android:layout_width="50dp"
         android:layout_height="46dp"
         android:layout_marginStart="4dp"
-        app:layout_constraintStart_toEndOf="@+id/carpetaEjemplo"
+        app:layout_constraintStart_toEndOf="@+id/ListaRejemplo"
         app:srcCompat="@drawable/thrash"
         tools:layout_editor_absoluteY="276dp" />
 
     <TextView
-        android:id="@+id/carpetaEjemplo"
+        android:id="@+id/ListaRejemplo"
         android:layout_width="241dp"
         android:layout_height="38dp"
-        android:text="Carpeta"
+        android:text="Lista reproduccion"
         android:textSize="28dp"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="276dp" />
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="406dp"
-        android:layout_height="270dp"
-        android:layout_marginTop="72dp"
+        android:layout_width="411dp"
+        android:layout_height="352dp"
+        android:layout_marginTop="96dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"></LinearLayout>
-
-    <TextView
-        android:id="@+id/bMasCarpetas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button1"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="@string/carpeta_masCarpetas"
-        android:textColor="@color/button_text"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,4 +21,8 @@
     <string name="Menu_Social">Social</string>
     <string name="quantity_Placeholder">X.X</string>
     <string name="song_placeholder">Canción</string>
+    <string name="CC_title">Añadir carpeta</string>
+    <string name="CC_hint">Nombre carpeta</string>
+    <string name="CC_crear">Crear carpeta</string>
+    <string name="carpeta_masCarpetas">Añadir carpeta</string>
 </resources>
