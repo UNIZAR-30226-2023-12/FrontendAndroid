@@ -34,6 +34,23 @@ equalizer.setBandLevel((short) (bands - 1), bandLevels[bands - 1]);
 	Destrucción del ecualizador cuando no se use, cuando se cierre el submenu??
 equalizer.release();
 
+CREAR UN SCROLLVIEW EN UN LINEARLAYOUT
+Instrucciones para en un linear layout scrolleable. El código deberá ser agregado al archivo XML que deseemos que sea scrolleable.
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        // Zona para añadir las componentes que queremos que sean scrolleables
+    </LinearLayout>
+
+</ScrollView>
+
+Si queremos que el scroll sea horizontal en vez de vertical hay que intercambiar ScrollView por HorizontalScrollView, no deberíamos necesitarlo para alguna pantalla. En la página nombran el NestedScrollView para que se haga scroll en una única dirección comparar ambos para ver cual es más adecuado en nuestro caso.
+NestedScrollView existe a partir de Android Lollipop y sirve para anidad vistas desplazables, ScrollView solo permite que haya una vista de este tipo, por lo tanto deberíamos usar ScrollView ya que parece adecuarse más a lo que necesitamos.
 
 
 
