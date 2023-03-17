@@ -15,6 +15,14 @@
         android:theme="@style/Theme.MelodiaApp"
         tools:targetApi="31">
         <activity
+            android:name=".Equalizer"
+            android:theme="@style/Theme.AppCompat.Translucent"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Player"
             android:exported="false">
             <meta-data
