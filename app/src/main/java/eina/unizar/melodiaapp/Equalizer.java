@@ -2,7 +2,12 @@ package eina.unizar.melodiaapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.DragEvent;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 public class Equalizer extends AppCompatActivity {
 
