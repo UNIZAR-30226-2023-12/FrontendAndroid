@@ -1,4 +1,4 @@
-name: Generate Javadoc and deploy to GitHub Pages
+﻿name: Deploy Javadoc to GitHub Pages
 
 on:
   push:
@@ -19,9 +19,15 @@ jobs:
 
       - name: Build and deploy Javadoc
         run: |
-          ./gradlew javadoc
+          ./gradlew javadoc && mkdir -p ${{ env.OUTPUT_DIR }} && cp -R ./app/build/docs/javadoc/* ${{ env.OUTPUT_DIR }}
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add .
           git commit -m "Deploy Javadoc to GitHub Pages"
           git push --force --quiet "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" master:gh-pages
+      - name: Deploy docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+            personal_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: ${{ env.OUTPUT_DIR }}
+
