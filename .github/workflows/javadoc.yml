@@ -19,7 +19,7 @@ jobs:
 
       - name: Build and deploy Javadoc
         run: |
-          ./gradlew javadoc && mkdir -p ${{ env.OUTPUT_DIR }} && cp -R ./app/build/docs/javadoc/* ${{ env.OUTPUT_DIR }}
+          ./gradlew generateJavadoc && mkdir -p ${{ env.OUTPUT_DIR }} && cp -R ./app/build/docs/javadoc/* ${{ env.OUTPUT_DIR }}
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add .
