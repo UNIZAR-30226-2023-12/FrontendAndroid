@@ -28,4 +28,8 @@
     <string name="player_author">Autor:</string>
     <string name="player_genre">Género:</string>
     <string name="text_placeholder">Lorem Ipsum</string>
+    <string name="PasswordRecoverCode_codeHint">Código de verificación</string>
+    <string name="PasswordRecoverCode_paswd">Nueva contraseña</string>
+    <string name="PasswordRecoverCode_repeatPaswd">Repetir contraseña</string>
+    <string name="PasswordRecoverCode_changePaswd">Cambiar contraseña</string>
 </resources>
