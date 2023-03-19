@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import org.json.JSONObject;
+
+import eina.unizar.melodiaapp.Modules.GETRequest;
+
 public class Player extends AppCompatActivity {
 
     LayoutInflater vi;
@@ -24,6 +28,8 @@ public class Player extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
         getSupportActionBar().hide();
+
+        new GETRequest().execute("http://192.168.56.1:8080/Melodia/Prueba");
 
         vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         volumeBar = vi.inflate(R.layout.volume_bar, null);
