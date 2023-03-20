@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+/**
+ * Clase que codifica la actividad Ecualizador
+ */
 public class Equalizer extends AppCompatActivity {
 
     @Override

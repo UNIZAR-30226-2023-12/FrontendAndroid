@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * Clase que codifica la actividad de recuperación de contraseña
+ */
 public class PasswordRecover extends AppCompatActivity {
 
     @Override

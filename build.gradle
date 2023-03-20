@@ -3,17 +3,3 @@ plugins {
     id 'com.android.application' version '7.3.1' apply false
     id 'com.android.library' version '7.3.1' apply false
 }
-
-task generateJavadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    options {
-        encoding "UTF-8"
-        charSet 'UTF-8'
-        author true
-        version '1.0'
-        links "http://docs.oracle.com/javase/7/docs/api/"
-    }
-    exclude '**/BuildConfig.java'
-    exclude '**/R.java'
-}

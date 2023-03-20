@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * Clase que codifica la actividad del menu principal de la aplicación
+ */
 public class Menu extends AppCompatActivity {
 
     @Override

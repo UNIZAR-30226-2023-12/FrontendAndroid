@@ -1,5 +1,7 @@
 package eina.unizar.melodiaapp;
 
+import static android.util.Log.d;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import eina.unizar.melodiaapp.Modules.GETRequest;
@@ -29,7 +32,16 @@ public class Player extends AppCompatActivity {
         setContentView(R.layout.activity_player);
         getSupportActionBar().hide();
 
-        new GETRequest().execute("http://192.168.56.1:8080/Melodia/Prueba");
+        new GETRequest(){
+            @Override
+            protected void onPostExecute(JSONObject feed){
+                try {
+                    d(feed.getString("msgTitle"), feed.getString("msgContent"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute("http://192.168.56.1:8080/Melodia/Prueba");
 
         vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         volumeBar = vi.inflate(R.layout.volume_bar, null);

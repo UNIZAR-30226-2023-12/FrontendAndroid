@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Clase que codifica la actividad para cambio de contraseña
+ */
 public class PasswordRecoverCode extends AppCompatActivity {
 
     @Override

@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+/**
+ * Clase que codifica la actividad de registrarse
+ */
 public class Register extends AppCompatActivity {
 
     @Override

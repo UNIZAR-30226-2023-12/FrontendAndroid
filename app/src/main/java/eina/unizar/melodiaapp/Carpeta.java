@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * Clase que codifica la actividad Carpeta
+ */
 public class Carpeta extends AppCompatActivity {
 
     @Override
