@@ -26,6 +26,15 @@ public class Player extends AppCompatActivity {
     LinearLayout volumeBarSlot;
     Boolean isVolumeBarPresent = false;
 
+    /**
+     * Función invocada al crear la pantalla. Inicializa todos los elementos de la interfaz de usuario
+     *
+     * @param savedInstanceState Si la actividad se ha reinicializado después de ser apagada,
+     *                           este Bundle contiene los datos que había aportado recientemente en
+     *                           {@link #onSaveInstanceState}.  <b><i>Nota: En cualquier otro caso su
+     *                           valor es null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +77,11 @@ public class Player extends AppCompatActivity {
 
     }
 
+    /**
+     * Función invocada al pulsar el botón de volumen.
+     * Si la barra de volumen se estaba mostrando, la oculta.
+     * Si estaba oculta, la muestra.
+     */
     protected void displayBar(){
 
         if(isVolumeBarPresent) {
