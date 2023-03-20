@@ -17,11 +17,18 @@ import org.json.JSONObject;
  * distintas al constructor para hacer uso de las mismas.
  */
 
+/**
+ * Clase que realiza una petición al tomcat pasandole de parámetro una URL
+ */
 public class GETRequest extends AsyncTask<String, Void, JSONObject> {
 
     private Exception exception;
 
-    // Metodo para realizar la petición GET
+    /**
+     * Metodo que realiza la petición a través de la url que se pasa.
+     * @param url
+     * @return
+     */
     public JSONObject sendGET(String url) {
         JSONObject jsonResponse = null;
         try {

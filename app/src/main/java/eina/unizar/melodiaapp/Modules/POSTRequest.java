@@ -11,6 +11,10 @@ import org.json.JSONObject;
  * Haciendo uso de las distintas funciones que ofrece el backend en su API llamar con urls
  * distintas al constructor para hacer uso de las mismas.
  */
+
+/**
+ * Clase que realiza una petición al tomcat de tipo POST pasandole de parámetro una URL
+ */
 public class POSTRequest {
     // URL como atributo
     private String url;
