@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +18,24 @@ import android.widget.LinearLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import eina.unizar.melodiaapp.Modules.AudioPlayer;
 import eina.unizar.melodiaapp.Modules.GETRequest;
 
 public class Player extends AppCompatActivity {
 
+    byte[] AudioFile = null;
+    AudioPlayer reproductor = new AudioPlayer();
     LayoutInflater vi;
     View volumeBar;
     LinearLayout volumeBarSlot;
     Boolean isVolumeBarPresent = false;
+    MediaPlayer mediaPlayer = new MediaPlayer();
 
     /**
      * Función invocada al crear la pantalla. Inicializa todos los elementos de la interfaz de usuario
@@ -45,8 +56,21 @@ public class Player extends AppCompatActivity {
             @Override
             protected void onPostExecute(JSONObject feed){
                 try {
-                    d(feed.getString("msgTitle"), feed.getString("msgContent"));
+                    AudioFile =  android.util.Base64.decode(feed.getString("fichero"), android.util.Base64.DEFAULT);
+                    // create temp file that will hold byte array
+                    File tempMp3 = File.createTempFile("playing_sound", "mp3");
+                    tempMp3.deleteOnExit();
+                    FileOutputStream fos = new FileOutputStream(tempMp3);
+                    fos.write(AudioFile);
+                    fos.close();
+                    AudioFile = null;
+
+                    reproductor.play(tempMp3.getAbsolutePath());
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
