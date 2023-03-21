@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ToggleButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +37,8 @@ public class Player extends AppCompatActivity {
     LinearLayout volumeBarSlot;
     Boolean isVolumeBarPresent = false;
     MediaPlayer mediaPlayer = new MediaPlayer();
+    ToggleButton play_pause;
+    ImageButton stop;
 
     /**
      * Función invocada al crear la pantalla. Inicializa todos los elementos de la interfaz de usuario
@@ -66,6 +69,28 @@ public class Player extends AppCompatActivity {
                     AudioFile = null;
 
                     reproductor.play(tempMp3.getAbsolutePath());
+
+                    play_pause = findViewById(R.id.play_pause);
+                    play_pause.setChecked(true);
+                    play_pause.setOnClickListener(new ToggleButton.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(play_pause.isChecked()){
+                                reproductor.resume();
+                            }else{
+                                reproductor.pause();
+                            }
+                        }
+                    });
+
+                    stop = findViewById(R.id.stop_track);
+                    stop.setOnClickListener(new ImageButton.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            reproductor.stop();
+                            play_pause.setChecked(false);
+                        }
+                    });
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (FileNotFoundException e) {

@@ -100,7 +100,7 @@ public class AudioPlayer {
     public void stop() {
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
-            mediaPlayer.release();
+            //mediaPlayer.release();
             mediaPlayer.reset();
         }
     }
