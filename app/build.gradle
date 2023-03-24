@@ -40,9 +40,17 @@ dependencies {
 
 }
 
+configurations {
+    implementationCanBeResolved {
+        extendsFrom implementation
+        canBeResolved true
+    }
+}
+
+
 task generateJavadoc(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    classpath += configurations.implementation
+    classpath += configurations.implementationCanBeResolved
     destinationDir = file("${project.buildDir}/docs")
 }
