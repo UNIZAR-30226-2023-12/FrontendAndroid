@@ -19,7 +19,7 @@ jobs:
         java-version: 1.8
     
     - name: Debug
-      run: pwd
+      run: ls app/src/main/java
 
     - name: Entrar en el directorio del código
       run: cd app/src/main/java
