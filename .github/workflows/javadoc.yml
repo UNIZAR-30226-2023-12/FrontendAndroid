@@ -15,5 +15,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           javadoc-branch: gh-pages
           java-version: 17
+          java-distribution: temurin
           target-folder: docs 
           project: gradle
