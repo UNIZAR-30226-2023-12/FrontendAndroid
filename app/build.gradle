@@ -57,4 +57,19 @@ task generateJavadoc(type: Javadoc) {
     options.addStringOption("use")
     options.addStringOption("author")
     options.addStringOption("version")
+    failOnError false
+
+    doFirst {
+        ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+        classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+
+        // I used a custom doclet
+        options.docletpath = configurations.umlDoclet.files as List
+        options.doclet = "nl.talsmasoftware.umldoclet.UMLDoclet"
+
+        options.addStringOption "-show-members", "package"
+        // more doclet options here...
+       
+        options.links "https://developer.android.com/reference/"
+    }
 }
