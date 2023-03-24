@@ -20,3 +20,4 @@ jobs:
           java-distribution: temurin
           target-folder: docs 
           project: gradle
+          custom-command: cd app && gradle generateJavadoc
