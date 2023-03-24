@@ -18,4 +18,4 @@ jobs:
           java-distribution: temurin
           target-folder: docs 
           project: gradle
-          custom-command: cd app/src/main/java && javadoc -protected -splitindex -d ../../../../docs eina.unizar.melodiaapp eina.unizar.melodiaapp.Modules
+          custom-command: cd app/src/main/java && javadoc --ignore-source-errors -protected -splitindex -d ../../../../docs eina.unizar.melodiaapp eina.unizar.melodiaapp.Modules && cd ../../../..
