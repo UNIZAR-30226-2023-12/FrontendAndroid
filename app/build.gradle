@@ -57,5 +57,4 @@ task generateJavadoc(type: Javadoc) {
     options.addStringOption("use")
     options.addStringOption("author")
     options.addStringOption("version")
-    options.optionFiles("groupfile")
 }
