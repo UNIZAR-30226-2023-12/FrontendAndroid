@@ -13,19 +13,14 @@ jobs:
     - name: Checkout código
       uses: actions/checkout@v2
 
-    - name: Dar permisos de ejecución a gradlew
-      run: chmod +x ./gradlew
-      
-    - name: Cambiar finales de línea
-      run: sed -i 's/\r//' gradlew
+    - name: Instalar JDK 1.8
+      run: apt install openjdk-8-jdk
+
+    - name: Entrar en el directorio del código
+      run: cd app/src/main/java
 
     - name: Generar Javadoc
-      run: ./gradlew generateJavadoc
-
-    - name: Copiar archivos Javadoc
-      run: |
-        mkdir -p docs
-        cp -R app/build/docs/javadoc/* docs/
+      run: javadoc -protected -splitindex -d ../../../../docs eina.unizar.melodiaapp eina.unizar.melodiaapp.Modules
 
     - name: Desplegar en GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
