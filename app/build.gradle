@@ -49,8 +49,19 @@ configurations {
 
 
 task generateJavadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    classpath += configurations.implementationCanBeResolved
-    destinationDir = file("${project.buildDir}/docs")
+    from {
+        dependencies.createArtifactResolutionQuery()
+            .forComponents(
+                 configurations.compile.incoming.resolutionResult
+                     .allDependencies.collect { it.selected.id }
+            )
+            .withArtifacts(JvmLibrary, JavadocArtifact)
+            .execute()
+            .resolvedComponents
+            .collectMany {
+                it.artifactResults
+                    .collect { it.file.path }
+            }
+    }
+    into "$projectDir/$sunriseProjectName/docs"
 }
