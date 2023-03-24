@@ -15,6 +15,9 @@ jobs:
 
     - name: Dar permisos de ejecución a gradlew
       run: chmod +x ./gradlew
+      
+    - name: Cambiar finales de línea
+      run: sed -i 's/\r//' gradlew
 
     - name: Generar Javadoc
       run: ./gradlew generateJavadoc
