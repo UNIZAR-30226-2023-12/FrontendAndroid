@@ -59,6 +59,8 @@ task generateJavadoc(type: Javadoc) {
     options.addStringOption("version")
     failOnError false
 
+    def variant = android.applicationVariants.first()
+
     doFirst {
         ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
         classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
