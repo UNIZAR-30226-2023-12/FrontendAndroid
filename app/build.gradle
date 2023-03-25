@@ -59,11 +59,9 @@ task generateJavadoc(type: Javadoc) {
     options.addStringOption("version")
     failOnError false
 
-    def variant = android.applicationVariants.first()
-
     doFirst {
         ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
-        classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+        classpath = files(ext.androidJar)
 
         // I used a custom doclet
         options.docletpath = configurations.umlDoclet.files as List
