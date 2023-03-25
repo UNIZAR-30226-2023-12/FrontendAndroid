@@ -6,27 +6,18 @@ on:
       - main
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout código
-      uses: actions/checkout@v2
-
-    - name: Dar permisos de ejecución a gradlew
-      run: chmod +x ./gradlew
-
-    - name: Generar Javadoc
-      run: ./gradlew generateJavadoc
-
-    - name: Copiar archivos Javadoc
-      run: |
-        mkdir -p docs
-        cp -R app/build/docs/javadoc/* docs/
-
-    - name: Desplegar en GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        personal_token: ${{ secrets.ACCESS_TOKEN }}
-        publish_branch: gh-pages
-        publish_dir: ./docs
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+      - name: Deploy JavaDoc
+        uses: MathieuSoysal/Javadoc-publisher.yml@v2.4.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          javadoc-branch: gh-pages
+          java-version: 17
+          java-distribution: temurin
+          target-folder: docs 
+          project: gradle
+          custom-command: cd app && gradle generateJavadoc

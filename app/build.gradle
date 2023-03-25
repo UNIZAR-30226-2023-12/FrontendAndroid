@@ -39,3 +39,37 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
 }
+
+configurations {
+    implementationCanBeResolved {
+        extendsFrom implementation
+        canBeResolved true
+    }
+}
+
+
+task generateJavadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.implementationCanBeResolved
+    destinationDir = file("${project.buildDir}/docs")
+    maxMemory = '512m'
+    options.addStringOption("use")
+    options.addStringOption("author")
+    options.addStringOption("version")
+    failOnError false
+
+    doFirst {
+        ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+        classpath = files(ext.androidJar)
+
+        // I used a custom doclet
+        options.docletpath = configurations.umlDoclet.files as List
+        options.doclet = "nl.talsmasoftware.umldoclet.UMLDoclet"
+
+        options.addStringOption "-show-members", "package"
+        // more doclet options here...
+       
+        options.links "https://developer.android.com/reference/"
+    }
+}
