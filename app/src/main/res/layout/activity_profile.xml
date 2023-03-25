@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Profile"
+    android:background="@drawable/background">
+
+  <ImageView
+      android:id="@+id/profileImage"
+      android:layout_width="148dp"
+      android:layout_height="121dp"
+      android:layout_marginTop="32dp"
+      android:src="@drawable/profileicon"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.498"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <ImageView
+      android:id="@+id/menuIconAProfile"
+      android:layout_width="76dp"
+      android:layout_height="66dp"
+      android:layout_marginTop="16dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.05"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@drawable/home" />
+
+  <TextView
+      android:id="@+id/displayProfileName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:gravity="center"
+      android:text="Nombre usuario"
+      android:textColor="@color/regular_text"
+      android:textSize="12pt"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+
+  <ImageView
+      android:id="@+id/profileNameEdit"
+      android:layout_width="32dp"
+      android:layout_height="32dp"
+      android:layout_marginTop="24dp"
+      android:src="@drawable/pencil"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.121"
+      app:layout_constraintStart_toEndOf="@+id/displayProfileName"
+      app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+
+  <TextView
+      android:id="@+id/displayEmail"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:gravity="center"
+      android:text="Email usuario"
+      android:textColor="@color/regular_text"
+      android:textSize="12pt"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/displayProfileName" />
+
+  <ImageView
+      android:id="@+id/profileEmailEdit"
+      android:layout_width="32dp"
+      android:layout_height="32dp"
+      android:layout_marginTop="20dp"
+      android:src="@drawable/pencil"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.121"
+      app:layout_constraintStart_toEndOf="@+id/displayProfileName"
+      app:layout_constraintTop_toBottomOf="@+id/profileNameEdit" />
+
+  <TextView
+      android:id="@+id/bChangePassword"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:background="@drawable/button1"
+      android:gravity="center"
+      android:padding="8dp"
+      android:text="@string/PasswordRecoverCode_changePaswd"
+      android:textColor="@color/button_text"
+      android:textSize="22sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.502"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/displayEmail" />
+
+  <TextView
+      android:id="@+id/bBecomeArtist"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@drawable/buttonbotleft"
+      android:gravity="center"
+      android:padding="8dp"
+      android:text="@string/Profile_artist"
+      android:textColor="@color/button_text"
+      android:textSize="22sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+  <TextView
+      android:id="@+id/bCloseSession"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@drawable/buttonbotright"
+      android:gravity="center"
+      android:padding="8dp"
+      android:text="@string/Profile_singOut"
+      android:textColor="@color/button_text"
+      android:textSize="22sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+  <TextView
+      android:id="@+id/audioCuality"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="24dp"
+      android:gravity="center"
+      android:text="@string/Profile_audioCuality"
+      android:textColor="@color/regular_text"
+      android:textSize="12pt"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/bChangePassword" />
+
+  <RadioGroup
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      android:layout_marginEnd="100dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/audioCuality">
+
+    <RadioButton
+        android:id="@+id/radioButton2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Profile_radioHD"
+        android:textColor="@color/regular_text"/>
+
+    <RadioButton
+        android:id="@+id/radioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Profile_radioLD"
+        android:textColor="@color/regular_text"/>
+  </RadioGroup>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

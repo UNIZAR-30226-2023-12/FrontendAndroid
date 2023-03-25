@@ -32,4 +32,10 @@
     <string name="PasswordRecoverCode_paswd">Nueva contraseña</string>
     <string name="PasswordRecoverCode_repeatPaswd">Repetir contraseña</string>
     <string name="PasswordRecoverCode_changePaswd">Cambiar contraseña</string>
+    <string name="Profile_changePassword">Cambiar contraseña</string>
+    <string name="Profile_artist">Ser artista</string>
+    <string name="Profile_singOut">Cerrar sesion</string>
+    <string name="Profile_audioCuality">Calidad de audio:</string>
+    <string name="Profile_radioHD">Alta fidelidad</string>
+    <string name="Profile_radioLD">Baja fidelidad</string>
 </resources>
