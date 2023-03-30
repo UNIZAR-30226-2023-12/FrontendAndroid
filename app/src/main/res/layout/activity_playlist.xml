@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="108dp"
         android:gravity="center"
-        android:text="Listas placeholder"
+        android:text="Mis listas placeholder"
         android:textColor="@color/regular_text"
         android:textSize="24pt"
         app:layout_constraintEnd_toEndOf="parent"
