@@ -38,4 +38,11 @@
     <string name="Profile_audioCuality">Calidad de audio:</string>
     <string name="Profile_radioHD">Alta fidelidad</string>
     <string name="Profile_radioLD">Baja fidelidad</string>
+    <string name="CP_title">Añadir lista de audio</string>
+    <string name="CP_hint">Nombre lista</string>
+    <string name="CP_crear">Crear lista</string>
+    <string name="CP_public">Pública</string>
+    <string name="CP_private">Privada</string>
+    <string name="CP_playlistType">Elige la visibilidad de la lista</string>
+
 </resources>

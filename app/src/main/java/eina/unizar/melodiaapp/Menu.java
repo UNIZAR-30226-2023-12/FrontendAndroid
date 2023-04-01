@@ -45,5 +45,14 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        TextView boton_listas = findViewById(R.id.bPlaylist);
+        boton_listas.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Playlist.class);
+                startActivity(intent);
+            }
+        });
     }
 }

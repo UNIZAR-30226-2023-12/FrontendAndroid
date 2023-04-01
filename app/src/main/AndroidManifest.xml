@@ -17,6 +17,9 @@
         android:theme="@style/Theme.MelodiaApp"
         tools:targetApi="31">
         <activity
+            android:name=".CreatePlaylist"
+            android:exported="false" />
+        <activity
             android:name=".listaReproduccion"
             android:exported="false" />
         <activity
@@ -57,8 +60,9 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".playlist"
-            android:exported="false">
+            android:name=".Playlist"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

@@ -54,8 +54,8 @@
         app:srcCompat="@drawable/home" />
 
     <LinearLayout
-        android:layout_width="405dp"
-        android:layout_height="501dp"
+        android:layout_width="407dp"
+        android:layout_height="343dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

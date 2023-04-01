@@ -32,39 +32,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="71dp"
-        android:layout_height="83dp"
-        app:layout_constraintEnd_toStartOf="@+id/carpetaEjemplo"
-        app:srcCompat="@drawable/options"
-        tools:layout_editor_absoluteY="261dp" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="50dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="4dp"
-        app:layout_constraintStart_toEndOf="@+id/carpetaEjemplo"
-        app:srcCompat="@drawable/thrash"
-        tools:layout_editor_absoluteY="276dp" />
-
     <TextView
         android:id="@+id/carpetaEjemplo"
         android:layout_width="241dp"
         android:layout_height="38dp"
-        android:text="Carpeta"
-        android:textSize="28dp"
         android:gravity="center"
+        android:text="Carpeta placeholder"
+        android:textColor="@color/regular_text"
+        android:textSize="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="276dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="406dp"
         android:layout_height="270dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="56dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -82,9 +66,11 @@
         android:text="@string/carpeta_masCarpetas"
         android:textColor="@color/button_text"
         android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.081" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
