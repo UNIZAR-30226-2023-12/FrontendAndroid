@@ -2,7 +2,12 @@ package eina.unizar.melodiaapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Notification;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * Clase que codifica la actividad de lista de reproducción
@@ -22,5 +27,32 @@ public class Playlist extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlist);
+
+        ImageView profileIcon = findViewById(R.id.profileIconAplaylist);
+        profileIcon.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Profile.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageView bellIcon = findViewById(R.id.bellIconAPlaylist);
+        bellIcon.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Notifications.class);
+                startActivity(intent);
+            }
+        });
+
+        TextView createPlaylist = findViewById(R.id.bCrearLista);
+        createPlaylist.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CreatePlaylist.class);
+                startActivity(intent);
+            }
+        });
     }
 }
