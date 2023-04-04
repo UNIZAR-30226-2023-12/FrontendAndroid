@@ -20,13 +20,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
+import eina.unizar.melodiaapp.Modules.GETRequest;
 
 import eina.unizar.melodiaapp.Modules.AudioPlayer;
-import eina.unizar.melodiaapp.Modules.GETRequest;
 
 public class Player extends AppCompatActivity {
 
@@ -55,11 +58,29 @@ public class Player extends AppCompatActivity {
         setContentView(R.layout.activity_player);
         getSupportActionBar().hide();
 
-        new GETRequest(){
+        Map<String, Object> data = new HashMap<>();
+        data.put("idSong", "idAudio:1");
+        data.put("calidadAlta", "False");
+
+        StringBuilder sb = new StringBuilder("");
+        try {
+            for (Map.Entry<String, Object> entry : data.entrySet()) {
+                sb.append(entry.getKey());
+                sb.append("=");
+                sb.append(URLEncoder.encode(entry.getValue().toString(), "UTF-8"));
+                sb.append("&");
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        sb.deleteCharAt(sb.length() - 1);
+
+        new GETRequest() {
             @Override
-            protected void onPostExecute(JSONObject feed){
+            protected void onPostExecute(JSONObject feed) {
                 try {
-                    AudioFile =  android.util.Base64.decode(feed.getString("fichero"), android.util.Base64.DEFAULT);
+                    AudioFile = android.util.Base64.decode(feed.getString("fichero"), android.util.Base64.DEFAULT);
                     // create temp file that will hold byte array
                     File tempMp3 = File.createTempFile("playing_sound", "mp3");
                     tempMp3.deleteOnExit();
@@ -75,9 +96,9 @@ public class Player extends AppCompatActivity {
                     play_pause.setOnClickListener(new ToggleButton.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if(play_pause.isChecked()){
+                            if (play_pause.isChecked()) {
                                 reproductor.resume();
-                            }else{
+                            } else {
                                 reproductor.pause();
                             }
                         }
@@ -99,7 +120,7 @@ public class Player extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }.execute("http://192.168.56.1:8080/Melodia/Prueba");
+        }.execute("GetSong/", sb.toString());
 
         vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         volumeBar = vi.inflate(R.layout.volume_bar, null);
