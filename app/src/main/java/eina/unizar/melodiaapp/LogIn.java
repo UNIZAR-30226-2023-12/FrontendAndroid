@@ -3,9 +3,18 @@ package eina.unizar.melodiaapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * Clase que codifica la actividad LogIn
@@ -21,6 +30,75 @@ public class LogIn extends AppCompatActivity {
      *                           valor es null.</i></b>
      *
      */
+    protected void doRequest() {
+
+        String id = "value1";
+        String contra = "value2";
+
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("127.0.0.1")
+                .appendPath("ValidateUser")
+                .appendQueryParameter("usr", id)
+                .appendQueryParameter("passwd", contra);
+        String urlS = builder.build().toString();
+        Toast.makeText(getApplicationContext(), urlS, Toast.LENGTH_SHORT).show();
+
+
+        //"https://127.0.0.1/ValidateUser/?usr=value11&passwd=value2"
+
+        try {
+            //No olvides el try catch
+            URL urlLogin = new URL(urlS);
+
+            HttpURLConnection connection = (HttpURLConnection) urlLogin.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+
+            try{//Intentamos obtener respuesta
+
+                //Respuesta de ValidateUser
+                InputStream respuesta = new BufferedInputStream(connection.getInputStream());
+                //Respuesta de la petción http
+                int responseCode = connection.getResponseCode();
+
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    ///La petición se ha realizado correctamente
+                    // Leemos la respuesta de ValidateUser
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(respuesta));
+                    StringBuilder response = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        response.append(line);
+                    }
+                    reader.close();
+                    respuesta.close();
+
+                    // Convertimos la respuesta a int
+                    int intValue = Integer.parseInt(response.toString());
+
+                    // Do something with the int value
+                    Toast.makeText(getApplicationContext(), "Valor de la respuesta http:" + intValue, Toast.LENGTH_SHORT).show();
+
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Error en la respuesta http", Toast.LENGTH_SHORT).show();
+
+                }
+
+
+            } finally {
+                connection.disconnect();
+
+            }
+        }
+        catch (Exception e){
+            Toast.makeText(getApplicationContext(), "Error en el URL", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +109,7 @@ public class LogIn extends AppCompatActivity {
         acces.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                doRequest();
                 Intent intent = new Intent(getApplicationContext(), Menu.class);
                 startActivity(intent);
             }
