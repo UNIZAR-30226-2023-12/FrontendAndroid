@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -32,8 +35,12 @@ public class LogIn extends AppCompatActivity {
      */
     protected void doRequest() {
 
-        String id = "value1";
-        String contra = "value2";
+        EditText eTemail = findViewById(R.id.inEmail);
+        EditText eTcontra = findViewById(R.id.inPasswd);
+
+
+        String id = eTemail.getText().toString();
+        String contra = eTcontra.getText().toString();
 
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("https")
