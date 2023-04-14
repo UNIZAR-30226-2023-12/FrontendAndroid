@@ -3,6 +3,7 @@ package eina.unizar.melodiaapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -48,7 +49,24 @@ public class LogIn extends AppCompatActivity {
         String contra = eTcontra.getText().toString();
 
         MyTaskLogin task = new MyTaskLogin();
-        return task.execute(id, contra).get();
+        String respuesta = task.execute(id, contra).get();
+
+        String response[] = respuesta.split(",");
+        // Accedo a la primera posición del array, que es el código de respuesta
+        if (response[0].equals("200")) {
+            // Accedo a la segunda posición del array que es el idUsuario
+            String idUsuario = response[1];
+            // Guardo el idUsuario y la contraseña en el fichero de preferencias
+            SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("idUsuario", idUsuario);
+            editor.putString("contrasenya", contra);
+            editor.apply();
+            return "200";
+        }
+        else {
+            return "Error";
+        }
     }
 
     /**

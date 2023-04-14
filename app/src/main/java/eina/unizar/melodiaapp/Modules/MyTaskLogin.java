@@ -3,9 +3,13 @@ package eina.unizar.melodiaapp.Modules;
 
 import android.os.AsyncTask;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 /**
  * Clase que codifica la tarea asíncrona para la validación de usuarios en el login
@@ -40,7 +44,21 @@ public class MyTaskLogin extends AsyncTask<String, Void, String> {
             int response = conn.getResponseCode();
 
             if (response == HttpURLConnection.HTTP_OK) {
-                return "200";
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+                StringBuilder sb = new StringBuilder();
+                String responseLine = null;
+                while ((responseLine = br.readLine()) != null) {
+                    sb.append(responseLine.trim());
+                }
+                br.close();
+                result = sb.toString();
+
+                // Parseamos el JSON
+                Gson gson = new Gson();
+                JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
+                String idUsuario = jsonObject.get("idUsuario").getAsString();
+
+                return "200," + idUsuario;
             }
             else{
                 return "Error";
