@@ -1,29 +1,38 @@
 package eina.unizar.melodiaapp.Modules;
 
-
 import android.os.AsyncTask;
 
 import java.io.DataOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class MyTask extends AsyncTask<String, Void, String> {
+/**
+ * Clase que codifica la tarea asíncrona de registro
+ */
+public class MyTaskRegister extends AsyncTask<String, Void, String> {
+    /**
+     * Realiza la tarea de llamar al backend para realizar el registro de un usuario
+     * @param params
+     * @return
+     */
     @Override
     public String doInBackground(String... params) {
-        String id = params[0];
-        id = "idUsuario:" + id;
-        String contra = params[1];
+        String username = params[0];
+        String email = params[1];
+        String password = params[2];
+        String idUltimoAudio = "-1";
+
         String result = "";
 
         try {
-            URL url = new URL("http://10.0.2.2:8081/ValidateUser/");
+            URL url = new URL("http://10.0.2.2:8081/SetUser/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsuario\": \"" + id + "\", \"contrasenya\": \"" + contra + "\"}";
+            String jsonInputString = "{\"idUsuario\": \"" + username + "\", \"email\": \"" + email + "\", \"contrasenya\": \"" + password + "\", \"tipoUsuario\": \"normalUser\", \"alias\": \"" + username + "\", \"idUltimoAudio\": \"" + idUltimoAudio + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
@@ -37,16 +46,10 @@ public class MyTask extends AsyncTask<String, Void, String> {
             else{
                 return "Error";
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return "-1";
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-        // Aquí puedes procesar la respuesta
+        return result;
     }
 }

@@ -33,5 +33,15 @@ public class listaReproduccion extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Configuración del listener para el botón home
+        ImageView homeIcon = findViewById(R.id.menuIconAlistarep);
+        homeIcon.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Menu.class);
+                startActivity(intent);
+            }
+        });
     }
 }

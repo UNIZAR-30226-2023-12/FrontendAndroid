@@ -10,7 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import eina.unizar.melodiaapp.Modules.MyTask;
+import eina.unizar.melodiaapp.Modules.MyTaskLogin;
+import eina.unizar.melodiaapp.Modules.MyTaskLogin;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -25,18 +26,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Clase que codifica la actividad LogIn
+ * Clase que codifica la actividad de login
  */
 public class LogIn extends AppCompatActivity {
-
     /**
-     * Función invocada al crear la pantalla. Inicializa todos los elementos de la interfaz de usuario
+     * Llama a la función que realiza la petición al servidor para validar usuario
+     * con los datos introducidos en el formulario
+     * Devuelve el resultado de la petición
      *
-     * @param savedInstanceState Si la actividad se ha reinicializado después de ser apagada,
-     *                           este Bundle contiene los datos que había aportado recientemente en
-     *                           onSaveInstanceState.  <b><i>Nota: En cualquier otro caso su
-     *                           valor es null.</i></b>
-     *
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     protected String doRequest() throws ExecutionException, InterruptedException {
 
@@ -47,14 +47,16 @@ public class LogIn extends AppCompatActivity {
         String id = eTemail.getText().toString();
         String contra = eTcontra.getText().toString();
 
-        MyTask task = new MyTask();
+        MyTaskLogin task = new MyTaskLogin();
         return task.execute(id, contra).get();
-
-
-
-        //"https://127.0.0.1/ValidateUser/?usr=value11&passwd=value2"
     }
 
+    /**
+     * Función que se ejecuta al crear la actividad. Se encarga de asignar los listeners a los botones
+     * de la actividad y de iniciar los distintos componentes de la pantalla
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
