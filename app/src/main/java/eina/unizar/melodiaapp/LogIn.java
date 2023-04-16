@@ -45,11 +45,11 @@ public class LogIn extends AppCompatActivity {
         EditText eTcontra = findViewById(R.id.inPasswd);
 
 
-        String id = eTemail.getText().toString();
+        String email = eTemail.getText().toString();
         String contra = eTcontra.getText().toString();
 
         MyTaskLogin task = new MyTaskLogin();
-        String respuesta = task.execute(id, contra).get();
+        String respuesta = task.execute(email, contra).get();
 
         String response[] = respuesta.split(",");
         // Accedo a la primera posición del array, que es el código de respuesta

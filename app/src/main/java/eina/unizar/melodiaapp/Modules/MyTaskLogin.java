@@ -22,20 +22,19 @@ public class MyTaskLogin extends AsyncTask<String, Void, String> {
      */
     @Override
     public String doInBackground(String... params) {
-        String id = params[0];
-        id = "idUsuario:" + id;
+        String email = params[0];
         String contra = params[1];
         String result = "";
 
         try {
-            URL url = new URL("http://10.0.2.2:8081/ValidateUser/");
+            URL url = new URL("http://10.0.2.2:8081/ValidateUserEmail/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsuario\": \"" + id + "\", \"contrasenya\": \"" + contra + "\"}";
+            String jsonInputString = "{\"email\": \"" + email + "\", \"contrasenya\": \"" + contra + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
@@ -56,7 +55,7 @@ public class MyTaskLogin extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                String idUsuario = jsonObject.get("idUsuario").getAsString();
+                String idUsuario = jsonObject.get("idUsr").getAsString();
 
                 return "200," + idUsuario;
             }

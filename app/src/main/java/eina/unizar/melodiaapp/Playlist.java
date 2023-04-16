@@ -52,6 +52,7 @@ public class Playlist extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CreatePlaylist.class);
                 startActivity(intent);
+                fillData();
             }
         });
 
@@ -64,5 +65,13 @@ public class Playlist extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * Función que se encarga de rellenar la lista de reproducción con los datos de la base de datos
+     */
+    private void fillData() {
+        TextView playlistName = findViewById(R.id.ListaRejemplo);
+        playlistName.setText("Prueba");
     }
 }

@@ -30,7 +30,7 @@ public class MyTaskCreatePlaylist extends AsyncTask<String, Void, String> {
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"nombre\": \"" + nombre + "\", \"privacidad\": \"" + privacidad + "\", \"idUsuario\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\", \"idLista\": \"" + idLista + "\", \"tipoLista\": \"" + tipoLista + "\"}";
+            String jsonInputString = "{\"nombreLista\": \"" + nombre + "\", \"privada\": \"" + privacidad + "\", \"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\", \"idLista\": \"" + idLista + "\", \"tipoLista\": \"" + tipoLista + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
