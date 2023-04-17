@@ -22,6 +22,16 @@ import java.util.concurrent.ExecutionException;
 import eina.unizar.melodiaapp.Modules.MyTaskCreatePlaylist;
 
 public class CreatePlaylist extends AppCompatActivity {
+    /**
+     * Función que llama a la task encargada de crear una lista de reproducción
+     * Si ha ido bien devuelve 200
+     * Sino devuelve error
+     *
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     * @throws JSONException
+     */
     protected String doRequest() throws ExecutionException, InterruptedException, JSONException {
         EditText eTnombre = findViewById(R.id.inPlaylistName);
         RadioButton rBprivada = findViewById(R.id.radioButtonPrivate);

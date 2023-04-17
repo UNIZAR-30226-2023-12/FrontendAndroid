@@ -11,31 +11,22 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class MyTaskCreatePlaylist extends AsyncTask<String, Void, String> {
-    /**
-     * Método que se ejecuta en segundo plano para realizar la petición al servidor y crear una playlist
-     * @param params
-     * @return
-     */
+public class MyTaskAskPlaylists extends AsyncTask<String, Void, String> {
     @Override
     public String doInBackground(String... params) {
-        String nombre = params[0];
-        String privacidad = params[1];
-        String idUsuario = params[2];
-        String contrasenya = params[3];
-        String idLista = params[4];
-        String tipoLista = params[5];
+        String idUsuario = params[0];
+        String contrasenya = params[1];
         String result = "";
 
         try {
-            URL url = new URL("http://10.0.2.2:8081/SetLista/");
+            URL url = new URL("http://10.0.2.2:8081/GetListaRepUsr/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"nombreLista\": \"" + nombre + "\", \"privada\": \"" + privacidad + "\", \"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\", \"idLista\": \"" + idLista + "\", \"tipoLista\": \"" + tipoLista + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
@@ -56,13 +47,17 @@ public class MyTaskCreatePlaylist extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                String idDevuelto = jsonObject.get("idLista").getAsString();
+                String idDevuelto = jsonObject.get("listas").getAsString();
 
-                return "200, " + idDevuelto;
+                return idDevuelto;
+            }
+            else {
+                return "Error";
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return "200";
     }
 }
