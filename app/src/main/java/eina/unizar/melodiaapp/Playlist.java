@@ -46,6 +46,14 @@ public class Playlist extends AppCompatActivity {
         }
     }
 
+    /**
+     * Función que llama a la task encargada de pedir al servidor el nombre de una lista de reproducción
+     * Si ha ido bien devuelve un string con el nombre de la lista
+     * Sino devuelve un string con el código de error
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestAskNameListas(String idLista) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
