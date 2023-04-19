@@ -49,7 +49,7 @@ public class MyTaskAskPlaylists extends AsyncTask<String, Void, String> {
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
                 String idDevuelto = jsonObject.get("listas").getAsString();
 
-                return idDevuelto;
+                return "200," + idDevuelto;
             }
             else {
                 return "Error";

@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,14 +95,17 @@ public class Playlist extends AppCompatActivity {
             }
             else {
                 //Obtengo los nombres de las listas
-                String nombresListas[] = new String[listaListasRepUser.length];
-                Integer i = 0;
-                for (String idLista : listaListasRepUser) {
-                    nombresListas[i] = doRequestAskNameListas(idLista);
-                    i++;
+                String nombresListas[] = new String[listaListasRepUser.length - 1];
+                Integer i = 1;
+                for (i = 1; i <= nombresListas.length; i++) {
+                    nombresListas[i - 1] = doRequestAskNameListas(listaListasRepUser[i]);
                 }
+                String [] prueba = {"lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4"};
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, prueba);
+                ListView listView = findViewById(R.id.listPlsylist);
+                listView.setAdapter(adapter);
             }
-            //TODO: Rellenar la pantalla con los nombres de las listas que ha devuelto el servidor
+
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -130,7 +135,7 @@ public class Playlist extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CreatePlaylist.class);
                 startActivity(intent);
-                fillData();
+                //fillData();
             }
         });
 
@@ -148,8 +153,10 @@ public class Playlist extends AppCompatActivity {
     /**
      * Función que se encarga de rellenar la lista de reproducción con los datos de la base de datos
      */
+    /*
     private void fillData() {
         TextView playlistName = findViewById(R.id.ListaRejemplo);
         playlistName.setText("Prueba");
     }
+    */
 }

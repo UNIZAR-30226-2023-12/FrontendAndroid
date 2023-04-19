@@ -54,5 +54,15 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Onclick para el boton de las carpetas
+        TextView folderBTN = findViewById(R.id.bCarpetas);
+        folderBTN.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Carpeta.class);
+                startActivity(intent);
+            }
+        });
     }
 }

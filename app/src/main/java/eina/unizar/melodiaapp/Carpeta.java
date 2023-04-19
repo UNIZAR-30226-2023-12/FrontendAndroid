@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -145,15 +147,16 @@ public class Carpeta extends AppCompatActivity {
                 for (int i = 1; i < idsCarpetas.length; i++) {
                     nombresCarpetas[i - 1] = doRequestAskNameFolder(idsCarpetas[i]);
                 }
-                //TODO con idsCarpetasJson rellenar la lista de carpetas en la pantalla
-            }
+                String [] prueba = {"lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4"};
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, prueba);
+                ListView listView = findViewById(R.id.listPlsylist);
+                listView.setAdapter(adapter);            }
             else {
                 Toast.makeText(getApplicationContext(), "Error al obtener las carpetas", Toast.LENGTH_SHORT).show();
             }
         }
         else {
-            // Ya tengo los ids guardados en cache
-            //TODO con idsCarpetasJson rellenar la lista de carpetas en la pantalla
+            //TODO dar una vuelta a cómo hay que hacer esto
         }
     }
 

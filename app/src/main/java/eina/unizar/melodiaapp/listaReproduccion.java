@@ -6,6 +6,7 @@ import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 public class listaReproduccion extends AppCompatActivity {
@@ -14,7 +15,6 @@ public class listaReproduccion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_reproduccion);
-
         ImageView profileIcon = findViewById(R.id.profileIconAlistarep);
         profileIcon.setOnClickListener(new View.OnClickListener(){
             @Override
