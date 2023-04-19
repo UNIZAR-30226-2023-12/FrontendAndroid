@@ -4,12 +4,35 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Notification;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
+import java.util.concurrent.ExecutionException;
+
+import eina.unizar.melodiaapp.Modules.MyTaskAskSongs;
+
 public class listaReproduccion extends AppCompatActivity {
+
+    public String[] doRequestAskSongs(String idPlaylist) throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contraseña
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        MyTaskAskSongs task = new MyTaskAskSongs();
+        String respuesta = task.execute(idUsuario, contrasenya, idPlaylist).get();
+        String response[] = respuesta.split(",");
+
+        if (response[0].equals("200")) {
+            return response;
+        }
+        else {
+            return new String[]{"Error"};
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
