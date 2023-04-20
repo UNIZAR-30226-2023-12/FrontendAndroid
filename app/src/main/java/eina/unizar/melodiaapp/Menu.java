@@ -64,5 +64,15 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Onclik para el boton de favoritos
+        TextView favoritosBTN = findViewById(R.id.bFavs);
+        favoritosBTN.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), playlist_favoritos.class);
+                startActivity(intent);
+            }
+        });
     }
 }
