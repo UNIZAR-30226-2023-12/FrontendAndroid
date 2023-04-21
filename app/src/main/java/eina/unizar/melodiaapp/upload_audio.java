@@ -1,13 +1,14 @@
 package eina.unizar.melodiaapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 
-public class BecomeArtist extends AppCompatActivity {
+public class upload_audio extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_become_artist);
+        setContentView(R.layout.activity_upload_audio);
     }
 }

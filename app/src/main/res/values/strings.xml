@@ -45,7 +45,8 @@
     <string name="CP_public">Pública</string>
     <string name="CP_private">Privada</string>
     <string name="CP_playlistType">Elige la visibilidad de la lista</string>
-    <string name="Upload_title">Subir canción</string>
+    <string name="BecomeArtist_title">Solicitud de ser artista</string>
+    <string name="UploadAudio_title">Subir canción</string>
     <string name="Upload_reason">Explique brevemente en un \nparrafo quien es y porque desea \nconvertirse en artista</string>
     <string name="Upload_send">Solcitar</string>
 

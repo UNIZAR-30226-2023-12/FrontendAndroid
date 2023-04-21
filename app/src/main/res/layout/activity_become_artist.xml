@@ -14,7 +14,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="32dp"
       android:gravity="center"
-      android:text="@string/Upload_title"
+      android:text="@string/BecomeArtist_title"
       android:textColor="@color/regular_text"
       android:textSize="24pt"
       app:layout_constraintEnd_toEndOf="parent"
