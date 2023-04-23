@@ -25,7 +25,7 @@ public class MyTaskAskNamePlaylist extends AsyncTask<String, Void, String> {
         String result = "";
 
         try {
-            URL url = new URL("http://10.0.2.2:8081/GetNombreLista/");
+            URL url = new URL("http://10.0.2.2:8081/GetLista/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -53,9 +53,9 @@ public class MyTaskAskNamePlaylist extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                String nombreDevuelto = jsonObject.get("nombreLista").getAsString();
+                String nombreDevuelto = jsonObject.getAsJsonObject("lista").get("nombreLista").getAsString();
 
-                return "200" + nombreDevuelto;
+                return "200," + nombreDevuelto;
             }
             else {
                 return "Error";

@@ -23,6 +23,8 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskNamePlaylist;
  * Clase que codifica la actividad de lista de reproducción
  */
 public class Playlist extends AppCompatActivity {
+
+    private String listaListasRepUser[];
     /**
      * Función que llama a la task encargada de pedir al servidor las listas de reproducción del usuario
      * Si ha ido bien devuelve un array con el código de respuesta y el json con las listas de reproducción
@@ -90,7 +92,7 @@ public class Playlist extends AppCompatActivity {
         setContentView(R.layout.activity_playlist);
 
         try {
-            String [] listaListasRepUser = doRequestAskPlaylists(); //Id playlists
+            listaListasRepUser = doRequestAskPlaylists(); //Id playlists
             if (listaListasRepUser[0].equals("Error")) {
                 Toast.makeText(getApplicationContext(), "Error al obtener las listas de reproducción", Toast.LENGTH_SHORT).show();
             }
@@ -102,39 +104,38 @@ public class Playlist extends AppCompatActivity {
                     nombresListas[i - 1] = doRequestAskNameListas(listaListasRepUser[i]);
                 }
 
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, nombresListas);
+                ListView listView = findViewById(R.id.listPlsylist);
+                listView.setAdapter(adapter);
                 /*
                  * Bucle para añadirun tag con el id de cada lista.
                  * Se podría añadir en el bucle anterior pero de momento
                  * esta separado para facilitar cambios al código
                  */
-                ListView listView = findViewById(R.id.listPlsylist);
-                for (int j = 0; j < nombresListas.length; j++) {
+                for (int j = 0; j < listaListasRepUser.length-1; j++) {
                     // Obtener una referencia a la lista en concreto
-                    View listItem = listView.getChildAt(j);
+                    View listItem = adapter.getView(j, null, listView);
                     TextView textView = listItem.findViewById(R.id.listTextView);
 
                     // Añadir el tag con la id de la lista
-                    textView.setTag(listaListasRepUser[j]);
+                    String idLista = listaListasRepUser[j+1];
+                    textView.setTag(idLista);
                 }
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        // Encuentra el text view seleccionado
-                        TextView textView = view.findViewById(R.id.listTextView);
+                        String[] test = new String[listaListasRepUser.length - 1];
 
-                        // Obtiene el tag
-                        String tagValue = (String) textView.getTag();
-                        Toast.makeText(getApplicationContext(), "Playlist Id: " + tagValue, Toast.LENGTH_SHORT).show();
+                        System.arraycopy(listaListasRepUser, 1, test, 0, test.length);
+                        Toast.makeText(getApplicationContext(), "Playlist Id: " + test[position], Toast.LENGTH_SHORT).show();
 
                     }
                 });
 
 
-                String [] prueba = {"lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4"};
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, prueba);
-                //ListView listView = findViewById(R.id.listPlsylist);
-                listView.setAdapter(adapter);
+
             }
 
         } catch (ExecutionException e) {

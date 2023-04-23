@@ -19,9 +19,9 @@ public class MyTaskAskPlaylists extends AsyncTask<String, Void, String> {
         String result = "";
 
         try {
-            URL url = new URL("http://10.0.2.2:8081/GetListaRepUsr/");
+            URL url = new URL("http://10.0.2.2:8081/GetListasUsr/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
+            conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
