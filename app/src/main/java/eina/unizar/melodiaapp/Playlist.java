@@ -89,7 +89,7 @@ public class Playlist extends AppCompatActivity {
         setContentView(R.layout.activity_playlist);
 
         try {
-            String [] listaListasRepUser = doRequestAskPlaylists();
+            String [] listaListasRepUser = doRequestAskPlaylists(); //Id playlists
             if (listaListasRepUser[0].equals("Error")) {
                 Toast.makeText(getApplicationContext(), "Error al obtener las listas de reproducción", Toast.LENGTH_SHORT).show();
             }
@@ -100,9 +100,26 @@ public class Playlist extends AppCompatActivity {
                 for (i = 1; i <= nombresListas.length; i++) {
                     nombresListas[i - 1] = doRequestAskNameListas(listaListasRepUser[i]);
                 }
+
+                /*
+                 * Bucle para añadirun tag con el id de cada lista.
+                 * Se podría añadir en el bucle anterior pero de momento
+                 * esta separado para facilitar cambios al código
+                 */
+                ListView listView = findViewById(R.id.listPlsylist);
+                for (int j = 0; j < nombresListas.length; j++) {
+                    // Obtener una referencia a la lista en concreto
+                    View listItem = listView.getChildAt(j);
+                    TextView textView = listItem.findViewById(R.id.listTextView);
+
+                    // Añadir el tag con la id de la lista
+                    textView.setTag(listaListasRepUser[j]);
+                }
+
+
                 String [] prueba = {"lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4"};
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, prueba);
-                ListView listView = findViewById(R.id.listPlsylist);
+                //ListView listView = findViewById(R.id.listPlsylist);
                 listView.setAdapter(adapter);
             }
 

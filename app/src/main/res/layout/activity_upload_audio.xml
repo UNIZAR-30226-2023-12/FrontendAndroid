@@ -26,7 +26,7 @@
         android:id="@+id/FileRoute"
         android:layout_width="280dp"
         android:layout_height="60dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/regular_text"
         android:ems="10"
         android:gravity="center"
@@ -35,6 +35,7 @@
         android:textColor="@color/regular_text"
         android:textColorHint="@color/regular_text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/uploadTitle" />
 
@@ -42,7 +43,7 @@
         android:id="@+id/esCancion"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/regular_text"
         android:ems="10"
         android:gravity="center"
@@ -53,13 +54,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uploadTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/FileRoute" />
 
     <EditText
         android:id="@+id/inDuracion"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_marginTop="176dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/regular_text"
         android:ems="10"
         android:gravity="center"
@@ -70,13 +71,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uploadTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/esCancion" />
 
     <EditText
         android:id="@+id/InCalidad"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_marginTop="252dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/regular_text"
         android:ems="10"
         android:gravity="center"
@@ -87,13 +88,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uploadTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/inDuracion" />
 
     <EditText
         android:id="@+id/InGeneros"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_marginTop="336dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/regular_text"
         android:ems="10"
         android:gravity="center"
@@ -104,23 +105,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uploadTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/InCalidad" />
 
     <TextView
         android:id="@+id/bSubir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="640dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/button1"
         android:gravity="center"
         android:padding="8dp"
         android:text="Subir"
         android:textColor="@color/button_text"
         android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/InGeneros"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
