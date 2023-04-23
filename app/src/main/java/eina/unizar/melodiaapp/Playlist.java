@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -115,6 +116,19 @@ public class Playlist extends AppCompatActivity {
                     // Añadir el tag con la id de la lista
                     textView.setTag(listaListasRepUser[j]);
                 }
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        // Encuentra el text view seleccionado
+                        TextView textView = view.findViewById(R.id.listTextView);
+
+                        // Obtiene el tag
+                        String tagValue = (String) textView.getTag();
+                        Toast.makeText(getApplicationContext(), "Playlist Id: " + tagValue, Toast.LENGTH_SHORT).show();
+
+                    }
+                });
 
 
                 String [] prueba = {"lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4"};
