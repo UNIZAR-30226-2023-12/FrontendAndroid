@@ -133,10 +133,9 @@ public class CreatePlaylist extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if(response == "200"){
-                    /*
-                    * TODO: Cambiar el intent para que vaya a la pantalla de la playlist creada y se muestre
-                    * */
                     Toast.makeText(getApplicationContext(), "Playlist creada correctamente", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), Playlist.class);
+                    startActivity(intent);
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Error al crear la playlist", Toast.LENGTH_SHORT).show();

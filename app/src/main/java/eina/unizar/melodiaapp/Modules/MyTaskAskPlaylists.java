@@ -3,6 +3,7 @@ package eina.unizar.melodiaapp.Modules;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
@@ -47,7 +48,12 @@ public class MyTaskAskPlaylists extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                String idDevuelto = jsonObject.get("listas").getAsString();
+                JsonArray jsonArray = jsonObject.getAsJsonArray("listas");
+                // Obtengo los ids de todas las listas del array y los concateno en un string
+                String idDevuelto = "";
+                for (int i = 0; i < jsonArray.size(); i++) {
+                    idDevuelto += jsonArray.get(i).getAsString() + ",";
+                }
 
                 return "200," + idDevuelto;
             }
