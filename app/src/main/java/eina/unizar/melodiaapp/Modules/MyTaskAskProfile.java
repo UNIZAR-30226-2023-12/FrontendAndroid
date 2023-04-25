@@ -53,9 +53,9 @@ public class MyTaskAskProfile extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                String artista = jsonObject.getAsJsonObject("usuarios").get("artista").getAsString();
-                String nombre = jsonObject.getAsJsonObject("usuarios").get("alias").getAsString();
-                String email = jsonObject.getAsJsonObject("usuarios").get("email").getAsString();
+                String artista = jsonObject.get("tipoUsuario").getAsString();
+                String nombre = jsonObject.get("alias").getAsString();
+                String email = jsonObject.get("email").getAsString();
 
                 return "200," + artista + "," + nombre + "," + email;
             }

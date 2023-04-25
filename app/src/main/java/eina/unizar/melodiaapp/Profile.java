@@ -44,10 +44,15 @@ public class Profile extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        TextView name = findViewById(R.id.displayProfileName);
+        TextView email = findViewById(R.id.displayEmail);
+        name.setText(response[2]);
+        email.setText(response[3]);
+
         TextView becomeArist = findViewById(R.id.bBecomeArtist);
         TextView upload = findViewById(R.id.bUploadSong);
 
-        if (response[1].equals("True")){//Escondemos Subir cancion
+        if (response[1].equals("normalUser")){//Escondemos Subir cancion
             upload.setVisibility(View.GONE);
 
             // Configuración del botón de convertirse en artista
