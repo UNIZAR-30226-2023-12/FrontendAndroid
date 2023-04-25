@@ -91,6 +91,7 @@ public class Playlist extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlist);
 
+
         try {
             listaListasRepUser = doRequestAskPlaylists(); //Id playlists
             if (listaListasRepUser[0].equals("Error")) {
@@ -128,9 +129,20 @@ public class Playlist extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         String[] test = new String[listaListasRepUser.length - 1];
 
-                        System.arraycopy(listaListasRepUser, 1, test, 0, test.length);
-                        Toast.makeText(getApplicationContext(), "Playlist Id: " + test[position], Toast.LENGTH_SHORT).show();
+                        Bundle extras = getIntent().getExtras();
+                        if (extras != null) {
+                            String option = extras.getString("key");
 
+                            if (option == "Append"){//Estamos en modo añadir canción
+                                //Función añadir cancion
+                                Toast.makeText(getApplicationContext(), "Añadir canción en playlist Id: " + test[position], Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }
+                        else {
+                            System.arraycopy(listaListasRepUser, 1, test, 0, test.length);
+                            Toast.makeText(getApplicationContext(), "Playlist Id: " + test[position], Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 

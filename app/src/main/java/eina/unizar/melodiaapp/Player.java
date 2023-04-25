@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
@@ -143,6 +144,19 @@ public class Player extends AppCompatActivity {
                 displayBar();
             }
         });
+
+        ImageView song2Playlist = findViewById(R.id.bAddSong2Playlist);
+        song2Playlist.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                String opcion = "Append";
+                Intent intent = new Intent(getApplicationContext(), Playlist.class);
+                intent.putExtra("key", opcion);
+                startActivity(intent);
+            }
+        });
+
+
 
 
     }
