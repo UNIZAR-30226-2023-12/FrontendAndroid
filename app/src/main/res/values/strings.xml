@@ -48,6 +48,7 @@
     <string name="BecomeArtist_title">Solicitud de ser artista</string>
     <string name="UploadAudio_title">Subir canción</string>
     <string name="Upload_reason">Explique brevemente en un \nparrafo quien es y porque desea \nconvertirse en artista</string>
-    <string name="Upload_send">Solcitar</string>
+    <string name="Upload_send">Solicitar</string>
+    <string name="FavoritesList">Favoritos</string>
 
 </resources>

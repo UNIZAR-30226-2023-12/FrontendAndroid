@@ -103,6 +103,13 @@ public class Playlist extends AppCompatActivity {
                 Integer i = 1;
                 for (i = 1; i <= nombresListas.length; i++) {
                     nombresListas[i - 1] = doRequestAskNameListas(listaListasRepUser[i]);
+                    // Si el nombre es la de Favoritos se guarda en SharedPreferences con su id
+                    if (nombresListas[i - 1].equals("Favoritos")) {
+                        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("idListaFavoritos", listaListasRepUser[i]);
+                        editor.apply();
+                    }
                 }
 
 
