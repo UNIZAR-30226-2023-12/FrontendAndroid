@@ -108,11 +108,10 @@ public class LogIn extends AppCompatActivity {
         recover.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("/");
-
-                startActivityForResult(Intent.createChooser(intent,"Seleccione un archivo mp3 o wav"), 1);
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("audio/*");
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -120,8 +119,9 @@ public class LogIn extends AppCompatActivity {
     }
 
 
-    protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data){
-        if( requestCode == 1 && resultCode == RESULT_OK){
+    protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == RESULT_OK){
             Uri uri = data.getData();
             String rutaArchivo = uri.getPath();
         }
