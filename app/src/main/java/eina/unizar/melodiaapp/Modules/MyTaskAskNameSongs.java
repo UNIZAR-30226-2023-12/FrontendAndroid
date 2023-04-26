@@ -12,23 +12,23 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class MyTaskAskSongs extends AsyncTask<String, Void, String> {
+public class MyTaskAskNameSongs extends AsyncTask<String, Void, String> {
     @Override
     public String doInBackground(String... params) {
         String idUsuario = params[0];
         String contrasenya = params[1];
-        String idLista = params[2];
+        String idSong = params[2];
         String result = "";
 
         try {
-            URL url = new URL("http://10.0.2.2:8081/GetAudiosLista/");
+            URL url = new URL("http://10.0.2.2:8081/GetAudioName/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"idLista\": \"" + idLista + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"idSong\": \"" + idSong + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
@@ -49,14 +49,9 @@ public class MyTaskAskSongs extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                JsonArray jsonArray = jsonObject.getAsJsonArray("songs");
-                // Obtengo los ids de todas las listas del array y los concateno en un string
-                String idSong = "";
-                for (int i = 0; i < jsonArray.size(); i++) {
-                    idSong += jsonArray.get(i).getAsString() + ",";
-                }
+                String name = jsonObject.get("nombre").getAsString();
 
-                return "200," + idSong;
+                return "200," + name;
             }
             else {
                 return "Error";
