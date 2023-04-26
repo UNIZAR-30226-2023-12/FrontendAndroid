@@ -1,5 +1,6 @@
 package eina.unizar.melodiaapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -107,9 +108,22 @@ public class LogIn extends AppCompatActivity {
         recover.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PasswordRecover.class);
-                startActivity(intent);
+
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("/");
+
+                startActivityForResult(Intent.createChooser(intent,"Seleccione un archivo mp3 o wav"), 1);
             }
         });
+
+
+    }
+
+
+    protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data){
+        if( requestCode == 1 && resultCode == RESULT_OK){
+            Uri uri = data.getData();
+            String rutaArchivo = uri.getPath();
+        }
     }
 }
