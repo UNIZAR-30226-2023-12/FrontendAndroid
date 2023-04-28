@@ -74,5 +74,15 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Onclick para el botón de notificaciones
+        ImageView notificacionesBTN = findViewById(R.id.bellIconAMenu);
+        notificacionesBTN.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Notifications.class);
+                startActivity(intent);
+            }
+        });
     }
 }
