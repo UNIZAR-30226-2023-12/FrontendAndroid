@@ -15,7 +15,7 @@ import java.net.URL;
 public class MyTaskUploadAudio extends AsyncTask<String, Void, String> {
     /**
      * Método que se ejecuta en segundo plano para realizar la petición al servidor y que
-     * devuelve los ids de las notificaciones de un usuario dado su usr y contraseña
+     * sube un audio y devuelve el código de respuesta http
      *
      * @param params
      * @return

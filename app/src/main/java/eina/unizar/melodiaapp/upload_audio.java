@@ -14,6 +14,14 @@ import java.util.concurrent.ExecutionException;
 import eina.unizar.melodiaapp.Modules.MyTaskUploadAudio;
 
 public class upload_audio extends AppCompatActivity {
+    /**
+     * Hace la petición para subir una canción
+     * Y convierte la ruta obtenida en un string en base64
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     * @throws IOException
+     */
     protected String doRequestUpload() throws ExecutionException, InterruptedException, IOException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -44,6 +52,10 @@ public class upload_audio extends AppCompatActivity {
         return task.execute(idUsuario, contrasenya, nombre.getText().toString(), str, esCancion.getText().toString(), duracion.getText().toString(), genero.getText().toString(), calidad.getText().toString()).get();
     }
 
+    /**
+     * Crea la actividad e inicializa los elementos de la pantalla
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
