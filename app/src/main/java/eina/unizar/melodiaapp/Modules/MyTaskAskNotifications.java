@@ -13,6 +13,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class MyTaskAskNotifications extends AsyncTask<String, Void, String> {
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y que
+     * devuelve los ids de las notificaciones de un usuario dado su usr y contraseña
+     * @param params
+     * @return
+     */
     @Override
     public String doInBackground(String... params) {
         String idUsuario = params[0];

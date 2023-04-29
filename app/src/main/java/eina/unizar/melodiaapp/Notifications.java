@@ -17,6 +17,12 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskNotifications;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNameNotifications;
 
 public class Notifications extends AppCompatActivity {
+    /**
+     * Realiza la petición para obtener los ids de las notificaciones del usuario
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String[] doRequest() throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -36,6 +42,13 @@ public class Notifications extends AppCompatActivity {
         }
     }
 
+    /**
+     * Realiza la petición para obtener el nombre de una notificación dado su id
+     * @param idNot
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestAskNameNotifications(String idNot) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -55,6 +68,10 @@ public class Notifications extends AppCompatActivity {
         }
     }
 
+    /**
+     * Se encarga de generar la interfaz de la actividad
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
