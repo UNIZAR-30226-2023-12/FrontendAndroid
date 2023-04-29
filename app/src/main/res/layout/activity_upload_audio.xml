@@ -26,11 +26,28 @@
         android:id="@+id/FileRoute"
         android:layout_width="280dp"
         android:layout_height="60dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="92dp"
         android:backgroundTint="@color/regular_text"
         android:ems="10"
         android:gravity="center"
         android:hint="Indique la ruta completa al audio en su dispositivo"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/regular_text"
+        android:textColorHint="@color/regular_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/uploadTitle" />
+
+    <EditText
+        android:id="@+id/Name"
+        android:layout_width="280dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/regular_text"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Nombre"
         android:inputType="textEmailAddress"
         android:textColor="@color/regular_text"
         android:textColorHint="@color/regular_text"
@@ -77,7 +94,7 @@
         android:id="@+id/InCalidad"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/regular_text"
         android:ems="10"
         android:gravity="center"
@@ -94,7 +111,7 @@
         android:id="@+id/InGeneros"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         android:backgroundTint="@color/regular_text"
         android:ems="10"
         android:gravity="center"
@@ -123,7 +140,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InGeneros"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.09" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
