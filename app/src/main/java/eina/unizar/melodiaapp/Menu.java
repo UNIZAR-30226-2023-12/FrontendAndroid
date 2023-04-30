@@ -84,5 +84,15 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Onclick para el botón de amigos
+        TextView amigosBTN = findViewById(R.id.bSocial);
+        amigosBTN.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), UserFriends.class);
+                startActivity(intent);
+            }
+        });
     }
 }
