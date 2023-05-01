@@ -15,20 +15,18 @@ import java.net.URL;
 public class MyTaskAskNameFriends extends AsyncTask<String, Void, String> {
     @Override
     public String doInBackground(String... params) {
-        String idUsuario = params[0];
-        String contrasenya = params[1];
-        String idUsrAmigo = params[2];
+        String idUsuarioAmigo = params[0];
         String result = "";
 
         try {
-            URL url = new URL("http://10.0.2.2:8081/GetNameFriends/");
+            URL url = new URL("http://10.0.2.2:8081/GetUser/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"idUsrAmigo\": \"" + idUsrAmigo + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsuarioAmigo + "\", \"contrasenya\": \"" + "None" + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
