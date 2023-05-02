@@ -64,8 +64,7 @@ public class LogIn extends AppCompatActivity {
             editor.putString("contrasenya", contra);
             editor.apply();
             return "200";
-        }
-        else {
+        } else {
             return "Error";
         }
     }
@@ -83,7 +82,7 @@ public class LogIn extends AppCompatActivity {
         getSupportActionBar().hide();
 
         TextView acces = findViewById(R.id.bAcceder);
-        acces.setOnClickListener(new View.OnClickListener(){
+        acces.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String response = null;
@@ -94,18 +93,17 @@ public class LogIn extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if(response.equals("200")){
+                if (response.equals("200")) {
                     Intent intent = new Intent(getApplicationContext(), Menu.class);
                     startActivity(intent);
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Error en el login", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         TextView recover = findViewById(R.id.iForgor);
-        recover.setOnClickListener(new View.OnClickListener(){
+        recover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), PasswordRecover.class);
@@ -115,3 +113,4 @@ public class LogIn extends AppCompatActivity {
 
 
     }
+}

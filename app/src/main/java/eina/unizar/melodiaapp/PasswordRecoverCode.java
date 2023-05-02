@@ -9,10 +9,27 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.concurrent.ExecutionException;
+
+import eina.unizar.melodiaapp.Modules.MyTaskRecoverPasswd;
+
 /**
  * Clase que codifica la actividad para cambio de contraseña
  */
 public class PasswordRecoverCode extends AppCompatActivity {
+    protected String doRequestChangePasswd() throws ExecutionException, InterruptedException {
+
+        EditText eTemail = findViewById(R.id.inEmail);
+        EditText eTcontra = findViewById(R.id.inPasswd);
+
+        String email = eTemail.getText().toString();
+        String contra = eTcontra.getText().toString();
+
+        MyTaskRecoverPasswd task = new MyTaskRecoverPasswd();
+        String respuesta = task.execute(email, contra).get();
+
+        return respuesta;
+    }
 
     /**
      * Función invocada al crear la pantalla. Inicializa todos los elementos de la interfaz de usuario
@@ -43,8 +60,24 @@ public class PasswordRecoverCode extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Las contraseñas deben tener almenos 7 letras o números", Toast.LENGTH_SHORT).show();
                 }
                 else if(pass1.equals(pass2)){
-                    Intent intent = new Intent(getApplicationContext(), LogIn.class);
-                    startActivity(intent);
+                    String response = "Error";
+                    try {
+                        response = doRequestChangePasswd();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (response.equals("200")) {
+                        Toast.makeText(getApplicationContext(), "Contraseña cambiada correctamente", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), LogIn.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Error al cambiar la contraseña", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
