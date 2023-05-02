@@ -22,7 +22,7 @@ public class upload_audio extends AppCompatActivity {
      * @throws InterruptedException
      * @throws IOException
      */
-    protected String doRequestUpload() throws ExecutionException, InterruptedException, IOException {
+    protected String doRequestUpload(String rutaAudio) throws ExecutionException, InterruptedException, IOException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         String idUsuario = preferences.getString("idUsuario", "");
@@ -30,14 +30,12 @@ public class upload_audio extends AppCompatActivity {
 
         // Obtengo los campos de la pantalla
         EditText nombre = findViewById(R.id.Name);
-        EditText ruta = findViewById(R.id.FileRoute);
         EditText esCancion = findViewById(R.id.esCancion);
         EditText duracion = findViewById(R.id.inDuracion);
         EditText genero = findViewById(R.id.InGeneros);
         EditText calidad = findViewById(R.id.InCalidad);
 
         // Convierto el fichero en un string en base64
-        String rutaAudio = ruta.getText().toString();
         File file = new File(rutaAudio);
         FileInputStream fis = new FileInputStream(file);
         byte[] data = new byte[(int) file.length()];
@@ -61,11 +59,19 @@ public class upload_audio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_audio);
 
+        // Onclick para el botón de seleccionar audio
+        findViewById(R.id.SelectAudio).setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("audio/*");
+            startActivityForResult(intent, 10);
+        });
+
         // Onclick para el botón de subir canción
         findViewById(R.id.bSubir).setOnClickListener(v -> {
             String response = "Error";
             try {
-                response = doRequestUpload();
+                String prueba = "hola";
+                response = doRequestUpload(prueba);
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
@@ -85,5 +91,14 @@ public class upload_audio extends AppCompatActivity {
         });
 
 
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            String rutaAudio = data.getData().getPath();
+            Toast.makeText(getApplicationContext(), rutaAudio, Toast.LENGTH_LONG).show();
+            String nombre = rutaAudio.substring(rutaAudio.lastIndexOf("/") + 1);
+        }
     }
 }

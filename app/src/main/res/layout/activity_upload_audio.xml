@@ -23,23 +23,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/FileRoute"
-        android:layout_width="280dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="92dp"
-        android:backgroundTint="@color/regular_text"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Indique la ruta completa al audio en su dispositivo"
-        android:inputType="textEmailAddress"
-        android:textColor="@color/regular_text"
-        android:textColorHint="@color/regular_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uploadTitle" />
-
-    <EditText
         android:id="@+id/Name"
         android:layout_width="280dp"
         android:layout_height="60dp"
@@ -60,7 +43,6 @@
         android:id="@+id/esCancion"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_marginTop="16dp"
         android:backgroundTint="@color/regular_text"
         android:ems="10"
         android:gravity="center"
@@ -69,9 +51,9 @@
         android:textColor="@color/regular_text"
         android:textColorHint="@color/regular_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.585"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FileRoute" />
+        tools:layout_editor_absoluteY="187dp" />
 
     <EditText
         android:id="@+id/inDuracion"
@@ -140,7 +122,25 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InGeneros"
-        app:layout_constraintVertical_bias="0.09" />
+        app:layout_constraintVertical_bias="0.836" />
+
+    <TextView
+        android:id="@+id/SelectAudio"
+        android:layout_width="255dp"
+        android:layout_height="106dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button1"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Seleccionar audio"
+        android:textColor="@color/button_text"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InGeneros"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

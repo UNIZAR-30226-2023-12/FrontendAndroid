@@ -108,22 +108,10 @@ public class LogIn extends AppCompatActivity {
         recover.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("audio/*");
-                startActivityForResult(intent, 1);
+                Intent intent = new Intent(getApplicationContext(), PasswordRecover.class);
+                startActivity(intent);
             }
         });
 
 
     }
-
-
-    protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1) {
-            Uri uri = data.getData();
-            String rutaArchivo = uri.getPath();
-        }
-    }
-}
