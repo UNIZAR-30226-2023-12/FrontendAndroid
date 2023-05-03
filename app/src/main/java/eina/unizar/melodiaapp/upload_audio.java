@@ -18,6 +18,9 @@ import java.util.concurrent.ExecutionException;
 
 import eina.unizar.melodiaapp.Modules.MyTaskUploadAudio;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 public class upload_audio extends AppCompatActivity {
 
     private String ruta = "Error";
@@ -52,13 +55,19 @@ public class upload_audio extends AppCompatActivity {
         fis.close();
         String str = new String(data, "UTF-8");
         // convierto str a base64
-        str = android.util.Base64.encodeToString(data, android.util.Base64.DEFAULT);
+        String rutaFinal = android.util.Base64.encodeToString(data, android.util.Base64.DEFAULT);
+        String fichero = new String(rutaFinal.getBytes("UTF-8"));
 
+        Pattern patron = Pattern.compile("[\\p{Cntrl}]");
+
+        // Eliminar caracteres de control
+        Matcher matcher = patron.matcher(fichero);
+        String cadenaLimpia = matcher.replaceAll("");
 
         // Hago la petición para subir la canción
         MyTaskUploadAudio task = new MyTaskUploadAudio();
 
-        return task.execute(idUsuario, contrasenya, nombre.getText().toString(), str, esCancion.getText().toString(), duracion.getText().toString(), genero.getText().toString(), calidad.getText().toString()).get();
+        return task.execute(idUsuario, contrasenya, nombre.getText().toString(), cadenaLimpia, esCancion.getText().toString(), duracion.getText().toString(), genero.getText().toString(), calidad.getText().toString()).get();
     }
 
     /**
