@@ -76,44 +76,58 @@ public class Notifications extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
+        Bundle extras = getIntent().getExtras();
 
-        // Hago la petición para obtener las notificaciones del usuario
-        String response[] = new String[]{"Error"};
-        try {
-            response = doRequest();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if (response[0].equals("200")) {
-            // Para cada notificación obtengo su nombre
-            String nombreNotificaciones[] = new String[response.length - 1];
-            for (int i = 1; i < response.length; i++) {
-                try {
-                    nombreNotificaciones[i - 1] = doRequestAskNameNotifications(response[i]);
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
+        if (extras == null) {
+            // Hago la petición para obtener las notificaciones del usuario
+            String response[] = new String[]{"Error"};
+            try {
+                response = doRequest();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
             }
 
-            // Muestro los nombres de las canciones en la interfaz
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.notificationsListView, nombreNotificaciones);
-            ListView listView = findViewById(R.id.notificationsListView);
-            listView.setAdapter(adapter);
+            if (response[0].equals("200")) {
+                // Para cada notificación obtengo su nombre
+                String nombreNotificaciones[] = new String[response.length - 1];
+                for (int i = 1; i < response.length; i++) {
+                    try {
+                        nombreNotificaciones[i - 1] = doRequestAskNameNotifications(response[i]);
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // Muestro los nombres de las canciones en la interfaz
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.notificationsListView, nombreNotificaciones);
+                ListView listView = findViewById(R.id.notificationsListView);
+                listView.setAdapter(adapter);
+            }
+
+            // Añado onCreate para botón home
+            ImageView homeBtn = findViewById(R.id.menuIconNotifications);
+            homeBtn.setOnClickListener(v -> {
+                Intent intent = new Intent(Notifications.this, Menu.class);
+                startActivity(intent);
+            });
+
+            // Añado onCreate para botón perfil
+            ImageView profileBtn = findViewById(R.id.profileIconNotifications);
+            profileBtn.setOnClickListener(v -> {
+                Intent intent = new Intent(Notifications.this, Profile.class);
+                startActivity(intent);
+            });
         }
+        else{//Comprrbamos si hemos llegado desde AdminConfig
+            String mode = extras.getString("key");
 
-        // Añado onCreate para botón home
-        ImageView homeBtn = findViewById(R.id.menuIconNotifications);
-        homeBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(Notifications.this, Menu.class);
-            startActivity(intent);
-        });
-
-        // Añado onCreate para botón perfil
-        ImageView profileBtn = findViewById(R.id.profileIconNotifications);
-        profileBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(Notifications.this, Profile.class);
-            startActivity(intent);
-        });
+            if(mode == "admin"){//Si lo hemos hecho
+                //TODO mostrar los artistas a aprobar
+            }
+            else{
+                System.out.println("Bad intent, mode value incorrect\n");
+                finish();
+            }
+        }
     }
 }

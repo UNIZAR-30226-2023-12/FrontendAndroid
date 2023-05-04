@@ -51,5 +51,8 @@
     <string name="Upload_send">Solicitar</string>
     <string name="FavoritesList">Favoritos</string>
     <string name="Notifications">Notificaciones</string>
+    <string name="Admin_title">Administración</string>
+    <string name="Admin_artist">Nuevos\n Artistas</string>
+    <string name="Admin_views">Escuchas\n totales</string>
 
 </resources>

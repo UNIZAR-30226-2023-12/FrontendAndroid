@@ -50,6 +50,9 @@ public class Menu extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         getSupportActionBar().hide();
 
+        //TODO funcion para designar si es admin
+        Boolean Admin = true;
+
         // Obtengo el tipo de usuario
         String[] response = new String[]{"Error"};
         try {

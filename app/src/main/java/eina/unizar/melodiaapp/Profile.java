@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -51,6 +52,7 @@ public class Profile extends AppCompatActivity {
 
         TextView becomeArist = findViewById(R.id.bBecomeArtist);
         TextView upload = findViewById(R.id.bUploadSong);
+        ImageView configAdmin = findViewById(R.id.bAdmin);
 
         if (response[1].equals("normalUser")){//Escondemos Subir cancion
             upload.setVisibility(View.GONE);
@@ -65,12 +67,24 @@ public class Profile extends AppCompatActivity {
         else{//Escondemos Ser artista
             becomeArist.setVisibility(View.GONE);
 
-            // Configuración del botón de subir canción
-            TextView bUpload = findViewById(R.id.bUploadSong);
-            bUpload.setOnClickListener(v -> {
-                Intent intent = new Intent(this, upload_audio.class);
-                startActivity(intent);
-            });
+            if(response[1].equals("admin")){
+
+
+                configAdmin.setOnClickListener(v -> {
+                    Intent intent = new Intent(this, AdminConfig.class);
+                    startActivity(intent);
+                });
+            }
+            else {//Escondemos el boton de admin
+                configAdmin.setVisibility(View.GONE);
+
+                // Configuración del botón de subir canción
+                TextView bUpload = findViewById(R.id.bUploadSong);
+                bUpload.setOnClickListener(v -> {
+                    Intent intent = new Intent(this, upload_audio.class);
+                    startActivity(intent);
+                });
+            }
         }
 
         // Configuración del botón de home
