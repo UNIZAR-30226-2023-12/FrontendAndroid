@@ -97,7 +97,6 @@ public class Notifications extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-
                 // Muestro los nombres de las canciones en la interfaz
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.notificationsListView, nombreNotificaciones);
                 ListView listView = findViewById(R.id.notificationsListView);

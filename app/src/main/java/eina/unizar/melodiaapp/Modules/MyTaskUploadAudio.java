@@ -30,6 +30,7 @@ public class MyTaskUploadAudio extends AsyncTask<String, Void, String> {
         String duracion = params[5];
         String genero = params[6];
         String calidad = params[7];
+        String nombreArtista = params[8];
         String result = "";
 
         try {
@@ -40,7 +41,7 @@ public class MyTaskUploadAudio extends AsyncTask<String, Void, String> {
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"nombre\": \"" + nombre + "\" , \"audio\": \"" + audio + "\" , \"esCancion\": \"" + esCancion + "\" , \"duracion\": \"" + duracion + "\" , \"genero\": \"" + genero + "\" , \"calidad\": \"" + calidad + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"nombre\": \"" + nombre + "\" , \"audio\": \"" + audio + "\" , \"esPodcast\": \"" + esCancion + "\" , \"longitud\": \"" + duracion + "\" , \"genero\": \"" + genero + "\" , \"calidad\": \"" + calidad + "\" , \"artista\": \"" + nombreArtista + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);

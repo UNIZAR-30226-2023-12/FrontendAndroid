@@ -37,6 +37,7 @@ public class upload_audio extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         String idUsuario = preferences.getString("idUsuario", "");
         String contrasenya = preferences.getString("contrasenya", "");
+        String nombreArtista = preferences.getString("nombre", "");
 
         // Obtengo los campos de la pantalla
         EditText nombre = findViewById(R.id.Name);
@@ -67,7 +68,7 @@ public class upload_audio extends AppCompatActivity {
         // Hago la petición para subir la canción
         MyTaskUploadAudio task = new MyTaskUploadAudio();
 
-        return task.execute(idUsuario, contrasenya, nombre.getText().toString(), cadenaLimpia, esCancion.getText().toString(), duracion.getText().toString(), genero.getText().toString(), calidad.getText().toString()).get();
+        return task.execute(idUsuario, contrasenya, nombre.getText().toString(), cadenaLimpia, esCancion.getText().toString(), duracion.getText().toString(), genero.getText().toString(), calidad.getText().toString(), nombreArtista).get();
     }
 
     /**
@@ -108,7 +109,7 @@ public class upload_audio extends AppCompatActivity {
 
             if (response.equals("200")) {
                 Toast.makeText(getApplicationContext(), "Canción subida correctamente", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(upload_audio.this, MainActivity.class);
+                Intent intent = new Intent(upload_audio.this, Menu.class);
                 startActivity(intent);
             }
             else {
