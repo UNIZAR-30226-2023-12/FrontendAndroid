@@ -81,6 +81,9 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
         getSupportActionBar().hide();
 
+        TextView errorL = findViewById(R.id.hiddenLoginError);
+        errorL.setVisibility(View.GONE);
+
         TextView acces = findViewById(R.id.bAcceder);
         acces.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +100,7 @@ public class LogIn extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), Menu.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Error en el login", Toast.LENGTH_SHORT).show();
+                    errorL.setVisibility(View.VISIBLE);
                 }
             }
         });

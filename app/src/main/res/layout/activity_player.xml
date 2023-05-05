@@ -297,4 +297,23 @@
         app:layout_constraintTop_toBottomOf="@+id/title_favorites_bar"
         app:srcCompat="@drawable/addsong" />
 
+
+    <ScrollView
+        android:layout_width="411dp"
+        android:layout_height="248dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/volume_bar_slot">
+
+        <TextView
+            android:id="@+id/hidden_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/text_placeholder_long"
+            android:textColor="@color/regular_text"
+            android:textSize="10pt" />
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,14 +4,17 @@
     <string name="app_login">Iniciar Sesión</string>
     <string name="app_register">Registrarse</string>
     <string name="LogIn_step1">Introduce tus credenciales</string>
+    <string name="LogIn_error">Usuario o contraseña incorrectos</string>
     <string name="LogIn_recover"><u>He olvidado mi contraseña</u></string>
     <string name="LogIn_enter">Acceder</string>
     <string name="LogIn_hint">Contraseña</string>
-    <string name="Menu_Search" fontFamily="Arial">Buscar    🔍</string>
+    <string name="Menu_Search" fontFamily="Arial">Buscar</string>
+    <string name="Menu_SearchConfirm">🔍</string>
     <string name="Menu_Folders">Mis Carpetas</string>
     <string name="Menu_Playlist">Mis Listas</string>
     <string name="Register_step1">Introduce tu correo</string>
     <string name="Register_step2">Introduce tu \n nombre de usuario</string>
+    <string name="Register_error">Error al registrar el usuario</string>
     <string name="Username_hint">Usuario</string>
     <string name="Register_step3">Introduce tu contraseña</string>
     <string name="PasswordRecover_title">Recuperar contraseña</string>
@@ -28,6 +31,7 @@
     <string name="player_author">Autor:</string>
     <string name="player_genre">Género:</string>
     <string name="text_placeholder">Lorem Ipsum</string>
+    <string name="text_placeholder_long">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum </string>
     <string name="PasswordRecoverCode_codeHint">Código de verificación</string>
     <string name="PasswordRecoverCode_paswd">Nueva contraseña</string>
     <string name="PasswordRecoverCode_repeatPaswd">Repetir contraseña</string>

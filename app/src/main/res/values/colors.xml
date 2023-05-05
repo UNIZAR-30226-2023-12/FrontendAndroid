@@ -10,4 +10,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="regular_text">#FFFFFFFF</color>
     <color name="button_text">#118DD5</color>
+    <color name="error_red">#ff4d4d</color>
 </resources>

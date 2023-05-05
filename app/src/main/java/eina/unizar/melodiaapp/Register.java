@@ -58,6 +58,9 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         getSupportActionBar().hide();
 
+        TextView hiddenErrorR = findViewById(R.id.hiddenRegisterError);
+        hiddenErrorR.setVisibility(View.GONE);
+
         // Añado el listener para el botón de registrarse
         TextView RegisterBtn = findViewById(R.id.bRegisterConfirm);
         RegisterBtn.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +80,7 @@ public class Register extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LogIn.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Error al registrar el usuario", Toast.LENGTH_SHORT).show();
+                    hiddenErrorR.setVisibility(View.VISIBLE);
                 }
             }
         });

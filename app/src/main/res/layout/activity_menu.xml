@@ -24,7 +24,7 @@
 
     <EditText
         android:id="@+id/menuSearch"
-        android:layout_width="288dp"
+        android:layout_width="248dp"
         android:layout_height="94dp"
         android:layout_marginTop="180dp"
         android:backgroundTint="@color/regular_text"
@@ -166,6 +166,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bell" />
 
+    <TextView
+        android:id="@+id/bSearchConfirm"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button1"
+        android:gravity="center"
+        android:text="@string/Menu_SearchConfirm"
+        android:textColor="@color/button_text"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toEndOf="@+id/menuSearch"
+        app:layout_constraintTop_toTopOf="@+id/menuSearch" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

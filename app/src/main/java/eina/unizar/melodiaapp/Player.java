@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import org.json.JSONException;
@@ -58,6 +59,23 @@ public class Player extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
         getSupportActionBar().hide();
+        Bundle extras = getIntent().getExtras();
+
+        TextView hidden = findViewById(R.id.hidden_description);
+        TextView author = findViewById(R.id.author_text);
+
+        if ( extras != null){//Colocamos valores extra de demo música
+
+            String body = extras.getString("body");
+            String name = extras.getString("name");
+
+            hidden.setText(body);
+            author.setText(name);
+        }
+        else{//Eliminamos la descripción escondida
+
+            hidden.setVisibility(View.GONE);
+        }
 
         Map<String, Object> data = new HashMap<>();
         data.put("idSong", "idAudio:1");

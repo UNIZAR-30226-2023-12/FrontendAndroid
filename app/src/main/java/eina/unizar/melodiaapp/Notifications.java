@@ -123,6 +123,21 @@ public class Notifications extends AppCompatActivity {
 
             if(mode == "admin"){//Si lo hemos hecho
                 //TODO mostrar los artistas a aprobar
+                //Debemos conocer como guarda el backend los valores de las peticiones de artista para extraerlos
+
+                //Pasaremos información en el intent de la siguiente manera:
+                Intent reproducirDemo = new Intent(getApplicationContext(), Reproductions.class);
+
+                //Valores
+                String body = "Descripción y porque quiere ser un artista";
+                String nombreUsuario = "Nombre artista";
+                String idSong = "idCancion"; //No se hasta que punto se necesita aqui
+
+                //Introducción en el intent extras
+                reproducirDemo.putExtra("song",idSong);
+                reproducirDemo.putExtra("body",body);
+                reproducirDemo.putExtra("name",nombreUsuario);
+                startActivity(reproducirDemo);
             }
             else{
                 System.out.println("Bad intent, mode value incorrect\n");
