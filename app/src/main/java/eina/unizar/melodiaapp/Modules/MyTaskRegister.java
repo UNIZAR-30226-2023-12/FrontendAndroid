@@ -32,7 +32,7 @@ public class MyTaskRegister extends AsyncTask<String, Void, String> {
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + username + "\", \"email\": \"" + email + "\", \"contrasenya\": \"" + password + "\", \"tipoUsuario\": \"normalUser\", \"alias\": \"" + username + "\"}";
+            String jsonInputString = "{\"email\": \"" + email + "\", \"contrasenya\": \"" + password + "\", \"tipoUsuario\": \"normalUser\", \"alias\": \"" + username + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);

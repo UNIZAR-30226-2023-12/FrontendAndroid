@@ -55,9 +55,9 @@ public class MyTaskAskNameNotifications extends AsyncTask<String, Void, String> 
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                String name = jsonObject.get("notificaciones").getAsString();
+                String mensaje = jsonObject.get("notificaciones").getAsJsonObject().get("mensaje").getAsString();
 
-                return "200," + name;
+                return "200," + mensaje;
             }
             else {
                 return "Error";

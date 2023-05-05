@@ -48,6 +48,11 @@ public class Profile extends AppCompatActivity {
         TextView name = findViewById(R.id.displayProfileName);
         TextView email = findViewById(R.id.displayEmail);
         name.setText(response[2]);
+        // Añado el nombre a shared preferences
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("nombre", response[2]);
+        editor.apply();
         email.setText(response[3]);
 
         TextView becomeArist = findViewById(R.id.bBecomeArtist);
