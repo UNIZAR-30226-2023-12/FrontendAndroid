@@ -60,4 +60,5 @@
     <string name="Admin_views">Escuchas\n totales</string>
     <string name="Reproduction_titleArtist">Reproducciones</string>
     <string name="Reproduction_titleAdmin">Reproducciones totales</string>
+    <string name="Results_title">Resultados: </string>
 </resources>

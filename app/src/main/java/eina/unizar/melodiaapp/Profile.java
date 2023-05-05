@@ -53,6 +53,8 @@ public class Profile extends AppCompatActivity {
         TextView becomeArist = findViewById(R.id.bBecomeArtist);
         TextView upload = findViewById(R.id.bUploadSong);
         ImageView configAdmin = findViewById(R.id.bAdmin);
+        //Escondemos el boton de admin
+        configAdmin.setVisibility(View.GONE);
 
         if (response[1].equals("normalUser")){//Escondemos Subir cancion
             upload.setVisibility(View.GONE);
@@ -68,15 +70,15 @@ public class Profile extends AppCompatActivity {
             becomeArist.setVisibility(View.GONE);
 
             if(response[1].equals("admin")){
-
+                configAdmin.setVisibility(View.VISIBLE);
 
                 configAdmin.setOnClickListener(v -> {
                     Intent intent = new Intent(this, AdminConfig.class);
                     startActivity(intent);
                 });
             }
-            else {//Escondemos el boton de admin
-                configAdmin.setVisibility(View.GONE);
+            else {
+
 
                 // Configuración del botón de subir canción
                 TextView bUpload = findViewById(R.id.bUploadSong);
