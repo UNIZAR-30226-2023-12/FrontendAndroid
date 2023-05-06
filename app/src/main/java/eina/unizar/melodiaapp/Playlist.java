@@ -23,6 +23,7 @@ import java.util.concurrent.ExecutionException;
 import eina.unizar.melodiaapp.Modules.MyTaskAskPlaylists;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNamePlaylist;
 import eina.unizar.melodiaapp.Modules.MyTaskChangeNamePlaylist;
+import eina.unizar.melodiaapp.Modules.MyTaskDeletePlaylist;
 import eina.unizar.melodiaapp.Modules.MyTaskSetSongLista;
 
 /**
@@ -105,6 +106,25 @@ public class Playlist extends AppCompatActivity {
         MyTaskSetSongLista task = new MyTaskSetSongLista();
 
         return task.execute(idUsuario, contrasenya, idLista, idSong).get();
+    }
+
+    /**
+     * Función que llama a la task encargada de borrar una lista de reproducción
+     * @param idPlaylist
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    protected String doRequestDeletePlaylist(String idPlaylist) throws ExecutionException, InterruptedException {
+        // Obtengo usuario, contraseña e id de la playlist a modificar
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        // Hago la petición
+        MyTaskDeletePlaylist task = new MyTaskDeletePlaylist();
+
+        return task.execute(idUsuario, contrasenya, idPlaylist).get();
     }
 
     /**
@@ -194,8 +214,23 @@ public class Playlist extends AppCompatActivity {
                         public void onClick(View v) {
                             // Obtengo el id de la lista
                             String idLista = (String) textView.getTag();
+                            String response = "Error";
+                            try {
+                                response = doRequestDeletePlaylist(idLista);
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
 
-                            //TODO hacer la request al backend que borre la lista
+                            if (response.equals("200")) {
+                                Toast.makeText(getApplicationContext(), "Lista de reproducción borrada", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), Playlist.class);
+                                startActivity(intent);
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(), "Error al borrar la lista de reproducción", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
                 }
