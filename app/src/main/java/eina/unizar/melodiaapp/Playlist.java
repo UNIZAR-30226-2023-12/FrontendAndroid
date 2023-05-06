@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Notification;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -113,7 +115,7 @@ public class Playlist extends AppCompatActivity {
                 }
 
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, nombresListas);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.playlist_item, R.id.listTextView, nombresListas);
                 ListView listView = findViewById(R.id.listPlsylist);
                 listView.setAdapter(adapter);
                 /*
@@ -129,6 +131,35 @@ public class Playlist extends AppCompatActivity {
                     // Añadir el tag con la id de la lista
                     String idLista = listaListasRepUser[j+1];
                     textView.setTag(idLista);
+
+                    // Añado listeners para borrar playlist y editar playlist
+                    Button editBtn = listItem.findViewById(R.id.editButton);
+                    editBtn.setOnClickListener(new AdapterView.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Obtengo el id de la lista
+                            String idLista = (String) textView.getTag();
+                            // Guardo el idLista en sharedPreferences
+                            SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("idListaChangeName", idLista);
+                            editor.apply();
+
+                            Intent intent = new Intent(getApplicationContext(), ChangeNamePlaylist.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                    ImageView deleteBtn = listItem.findViewById(R.id.imageView5);
+                    deleteBtn.setOnClickListener(new AdapterView.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Obtengo el id de la lista
+                            String idLista = (String) textView.getTag();
+
+                            //TODO hacer la request al backend que borre la lista
+                        }
+                    });
                 }
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -152,9 +183,6 @@ public class Playlist extends AppCompatActivity {
                         }
                     }
                 });
-
-
-
             }
 
         } catch (ExecutionException e) {
