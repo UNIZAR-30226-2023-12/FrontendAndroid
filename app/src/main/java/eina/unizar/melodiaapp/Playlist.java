@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import eina.unizar.melodiaapp.Modules.MyTaskAskPlaylists;
@@ -122,7 +123,7 @@ public class Playlist extends AppCompatActivity {
 
 
                 /*
-                 * Bucle para añadirun tag con el id de cada lista.
+                 * Bucle para añadir un tag con el id de cada lista.
                  * Se podría añadir en el bucle anterior pero de momento
                  * esta separado para facilitar cambios al código
                  */
@@ -141,6 +142,7 @@ public class Playlist extends AppCompatActivity {
 
                     TextView row = header.findViewById(R.id.listTextView);
                     row.setText(nombresListas[j]);
+                    row.setTag(listaListasRepUser[j+1]);
 
                     // Añado listeners para borrar playlist y editar playlist
                     Button editBtn = header.findViewById(R.id.editButton);
@@ -193,8 +195,8 @@ public class Playlist extends AppCompatActivity {
                         }
                     }
                 });
+                listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>()));
             }
-
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
