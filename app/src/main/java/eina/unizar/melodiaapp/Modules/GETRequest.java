@@ -13,6 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import eina.unizar.melodiaapp.MySingleton;
+
 /*
  * Haciendo uso de las distintas funciones que ofrece el backend en su API llamar con urls
  * distintas al constructor para hacer uso de las mismas.
@@ -24,7 +26,9 @@ import org.json.JSONObject;
 public class GETRequest extends AsyncTask<String, Void, JSONObject> {
 
     private Exception exception;
-    private String url = "http://10.0.2.2:8081/";
+    MySingleton singleton = MySingleton.getInstance();
+    
+    private String url = "http://" + singleton.getMyGlobalVariable() + ":8081/";
 
     /**
      * Metodo que realiza la petición GET con los datos especificados

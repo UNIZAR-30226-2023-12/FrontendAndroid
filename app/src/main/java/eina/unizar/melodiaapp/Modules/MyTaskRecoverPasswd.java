@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import eina.unizar.melodiaapp.MySingleton;
+
 public class MyTaskRecoverPasswd extends AsyncTask<String, Void, String> {
     @Override
     public String doInBackground(String... params) {
@@ -20,7 +22,8 @@ public class MyTaskRecoverPasswd extends AsyncTask<String, Void, String> {
         String result = "";
 
         try {
-            URL url = new URL("http://10.0.2.2:8081/ChangePasswd/");
+            MySingleton singleton = MySingleton.getInstance();
+            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/ChangePasswd/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
