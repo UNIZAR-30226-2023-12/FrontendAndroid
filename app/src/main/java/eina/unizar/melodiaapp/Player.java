@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import android.media.AudioManager;
 
 import eina.unizar.melodiaapp.Modules.GETRequest;
 
@@ -40,11 +42,12 @@ public class Player extends AppCompatActivity {
     AudioPlayer reproductor = new AudioPlayer();
     LayoutInflater vi;
     View volumeBar;
-    LinearLayout volumeBarSlot;
+    SeekBar volumeBarSlot;
     Boolean isVolumeBarPresent = false;
     MediaPlayer mediaPlayer = new MediaPlayer();
     ToggleButton play_pause;
     ImageButton stop;
+
 
     /**
      * Función invocada al crear la pantalla. Inicializa todos los elementos de la interfaz de usuario
@@ -133,6 +136,29 @@ public class Player extends AppCompatActivity {
         vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         volumeBar = vi.inflate(R.layout.volume_bar, null);
         volumeBarSlot = findViewById(R.id.volume_bar_slot);
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        // Configurar el rango de valores del SeekBar
+        volumeBarSlot.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+        volumeBarSlot.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+
+        // Agregar un listener para el cambio de valor del SeekBar
+        volumeBarSlot.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // Actualizar el volumen del audio
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // No se necesita implementación
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // No se necesita implementación
+            }
+        });
 
         ImageButton equalizer = findViewById(R.id.equalizer);
         ImageButton volume = findViewById(R.id.volume);
@@ -176,10 +202,10 @@ public class Player extends AppCompatActivity {
     protected void displayBar(){
 
         if(isVolumeBarPresent) {
-            volumeBarSlot.removeView(volumeBar);
+            volumeBarSlot.setVisibility(View.GONE);
             isVolumeBarPresent = false;
         }else{
-            volumeBarSlot.addView(volumeBar);
+            volumeBarSlot.setVisibility(View.VISIBLE);
             isVolumeBarPresent = true;
         }
     }
