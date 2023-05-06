@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -77,23 +78,11 @@ public class Player extends AppCompatActivity {
             hidden.setVisibility(View.GONE);
         }
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("idSong", "idAudio:1");
-        data.put("calidadAlta", "False");
+        // Obtengo el idUsr de SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsr = preferences.getString("idUsuario", "");
 
-        StringBuilder sb = new StringBuilder("");
-        try {
-            for (Map.Entry<String, Object> entry : data.entrySet()) {
-                sb.append(entry.getKey());
-                sb.append("=");
-                sb.append(URLEncoder.encode(entry.getValue().toString(), "UTF-8"));
-                sb.append("&");
-            }
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        sb.deleteCharAt(sb.length() - 1);
+        String InputString = "?idAudio=idAudio:1&calidad=False&esCancion=True&idUsr=" + idUsr;
 
         new GETRequest() {
             @Override
@@ -139,7 +128,7 @@ public class Player extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }.execute("GetSong/", sb.toString());
+        }.execute("GetFicheroSong/", InputString);
 
         vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         volumeBar = vi.inflate(R.layout.volume_bar, null);

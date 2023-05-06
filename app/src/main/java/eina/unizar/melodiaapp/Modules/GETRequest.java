@@ -37,7 +37,6 @@ public class GETRequest extends AsyncTask<String, Void, JSONObject> {
 
         StringBuilder sb = new StringBuilder(url);
         sb.append(endpoint);
-        sb.append("?");
         sb.append(data);
 
         int status = 0;

@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.google.gson.internal.bind.ArrayTypeAdapter;
 
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import eina.unizar.melodiaapp.Modules.MyTaskAskNotifications;
@@ -98,7 +99,7 @@ public class Notifications extends AppCompatActivity {
                     }
                 }
                 // Muestro los nombres de las canciones en la interfaz
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.notificationsListView, nombreNotificaciones);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, nombreNotificaciones);
                 ListView listView = findViewById(R.id.notificationsListView);
                 listView.setAdapter(adapter);
             }
@@ -117,10 +118,11 @@ public class Notifications extends AppCompatActivity {
                 startActivity(intent);
             });
         }
-        else{//Comprrbamos si hemos llegado desde AdminConfig
+        /*
+        else{//Comprobamos si hemos llegado desde AdminConfig
             String mode = extras.getString("key");
 
-            if(mode == "admin"){//Si lo hemos hecho
+            if(mode.equals("admin")){//Si lo hemos hecho
                 //TODO mostrar los artistas a aprobar
                 //Debemos conocer como guarda el backend los valores de las peticiones de artista para extraerlos
 
@@ -142,6 +144,6 @@ public class Notifications extends AppCompatActivity {
                 System.out.println("Bad intent, mode value incorrect\n");
                 finish();
             }
-        }
+        }*/
     }
 }
