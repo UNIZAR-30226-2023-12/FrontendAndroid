@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -94,6 +95,7 @@ public class Playlist extends AppCompatActivity {
         setContentView(R.layout.activity_playlist);
 
 
+
         try {
             listaListasRepUser = doRequestAskPlaylists(); //Id playlists
             if (listaListasRepUser[0].equals("Error")) {
@@ -114,10 +116,11 @@ public class Playlist extends AppCompatActivity {
                     }
                 }
 
-
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.playlist_item, R.id.listTextView, nombresListas);
                 ListView listView = findViewById(R.id.listPlsylist);
                 listView.setAdapter(adapter);
+
+
                 /*
                  * Bucle para añadirun tag con el id de cada lista.
                  * Se podría añadir en el bucle anterior pero de momento
@@ -132,8 +135,15 @@ public class Playlist extends AppCompatActivity {
                     String idLista = listaListasRepUser[j+1];
                     textView.setTag(idLista);
 
+                    LayoutInflater inflater = getLayoutInflater();
+                    View header = inflater.inflate(R.layout.playlist_item, listView, false);
+                    listView.addHeaderView(header, null, false);
+
+                    TextView row = header.findViewById(R.id.listTextView);
+                    row.setText(nombresListas[j]);
+
                     // Añado listeners para borrar playlist y editar playlist
-                    Button editBtn = listItem.findViewById(R.id.editButton);
+                    Button editBtn = header.findViewById(R.id.editButton);
                     editBtn.setOnClickListener(new AdapterView.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -150,7 +160,7 @@ public class Playlist extends AppCompatActivity {
                         }
                     });
 
-                    ImageView deleteBtn = listItem.findViewById(R.id.imageView5);
+                    ImageView deleteBtn = header.findViewById(R.id.imageView5);
                     deleteBtn.setOnClickListener(new AdapterView.OnClickListener() {
                         @Override
                         public void onClick(View v) {

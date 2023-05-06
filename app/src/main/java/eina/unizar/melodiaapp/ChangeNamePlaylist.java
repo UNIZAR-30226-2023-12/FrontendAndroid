@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
@@ -71,7 +72,22 @@ public class ChangeNamePlaylist extends AppCompatActivity {
         changeName.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                String response = "Error";
+                try {
+                    response = doRequestChangeNamePlaylist();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
+                if (response.equals("200")) {
+                    Intent intent = new Intent(getApplicationContext(), Playlist.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Error al cambiar el nombre de la playlist", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
