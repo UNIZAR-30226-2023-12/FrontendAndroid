@@ -22,6 +22,8 @@ import java.util.concurrent.ExecutionException;
 
 import eina.unizar.melodiaapp.Modules.MyTaskAskPlaylists;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNamePlaylist;
+import eina.unizar.melodiaapp.Modules.MyTaskChangeNamePlaylist;
+import eina.unizar.melodiaapp.Modules.MyTaskSetSongLista;
 
 /**
  * Clase que codifica la actividad de lista de reproducción
@@ -79,6 +81,30 @@ public class Playlist extends AppCompatActivity {
         else {
             return "Error";
         }
+    }
+
+    /**
+     * Función que llama a la task encargada de añadir una canción a una lista de reproducción
+     * Si ha ido bien devuelve el resultado de task.execute
+     * Sino devuelve un código de error
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    protected String doRequestSetSongLista(String idSong, String idLista) throws ExecutionException, InterruptedException {
+        // Obtengo usuario, contraseña e id de la playlist a modificar
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        // Obtengo el nombre de la playlist
+        TextView nombrePlaylist = findViewById(R.id.NewPlaylistName);
+        String nombre = nombrePlaylist.getText().toString();
+
+        // Hago la petición
+        MyTaskSetSongLista task = new MyTaskSetSongLista();
+
+        return task.execute(idUsuario, contrasenya, idLista, idSong).get();
     }
 
     /**
@@ -178,14 +204,23 @@ public class Playlist extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         String[] test = new String[listaListasRepUser.length - 1];
+                        String idLista = "" + test[position];
 
                         Bundle extras = getIntent().getExtras();
                         if (extras != null) {
                             String option = extras.getString("key");
+                            String idAudio = extras.getString("songId");
 
                             if (option == "Append"){//Estamos en modo añadir canción
                                 //Función añadir cancion
-                                Toast.makeText(getApplicationContext(), "Añadir canción en playlist Id: " + test[position], Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Añadir canción en playlist Id: " + idLista, Toast.LENGTH_SHORT).show();
+                                try {//Intentamos realizar el cambio en el backend
+                                    String addResult = doRequestSetSongLista(idAudio, idLista);
+                                } catch (ExecutionException e) {
+                                    e.printStackTrace();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                                 finish();
                             }
                         }

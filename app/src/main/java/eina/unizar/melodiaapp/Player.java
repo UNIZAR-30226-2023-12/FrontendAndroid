@@ -36,7 +36,7 @@ import eina.unizar.melodiaapp.Modules.GETRequest;
 
 import eina.unizar.melodiaapp.Modules.AudioPlayer;
 
-public class Player extends AppCompatActivity {
+public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado? donde esta la id de la canción
 
     byte[] AudioFile = null;
     AudioPlayer reproductor = new AudioPlayer();
@@ -185,6 +185,7 @@ public class Player extends AppCompatActivity {
                 String opcion = "Append";
                 Intent intent = new Intent(getApplicationContext(), Playlist.class);
                 intent.putExtra("key", opcion);
+                intent.putExtra("songId", "idAudio");
                 startActivity(intent);
             }
         });
