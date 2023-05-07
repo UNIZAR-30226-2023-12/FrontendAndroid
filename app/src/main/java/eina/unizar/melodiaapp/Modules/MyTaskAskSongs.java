@@ -52,7 +52,7 @@ public class MyTaskAskSongs extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                JsonArray jsonArray = jsonObject.getAsJsonArray("songs");
+                JsonArray jsonArray = jsonObject.getAsJsonArray("audio");
                 // Obtengo los ids de todas las listas del array y los concateno en un string
                 String idSong = "";
                 for (int i = 0; i < jsonArray.size(); i++) {

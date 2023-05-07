@@ -98,9 +98,6 @@ public class Playlist extends AppCompatActivity {
         String idUsuario = preferences.getString("idUsuario", "");
         String contrasenya = preferences.getString("contrasenya", "");
 
-        // Obtengo el nombre de la playlist
-        TextView nombrePlaylist = findViewById(R.id.NewPlaylistName);
-        String nombre = nombrePlaylist.getText().toString();
 
         // Hago la petición
         MyTaskSetSongLista task = new MyTaskSetSongLista();
@@ -233,38 +230,46 @@ public class Playlist extends AppCompatActivity {
                             }
                         }
                     });
-                }
 
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String[] test = new String[listaListasRepUser.length - 1];
-                        String idLista = "" + test[position];
+                    TextView btnView = header.findViewById(R.id.listTextView);
+                    btnView.setOnClickListener(new AdapterView.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String[] test = new String[listaListasRepUser.length - 1];
+                            String idLista = (String) v.getTag();
 
-                        Bundle extras = getIntent().getExtras();
-                        if (extras != null) {
-                            String option = extras.getString("key");
-                            String idAudio = extras.getString("songId");
+                            Bundle extras = getIntent().getExtras();
+                            if (extras != null) {
+                                String option = extras.getString("key");
+                                String idAudio = extras.getString("songId");
 
-                            if (option == "Append"){//Estamos en modo añadir canción
-                                //Función añadir cancion
-                                Toast.makeText(getApplicationContext(), "Añadir canción en playlist Id: " + idLista, Toast.LENGTH_SHORT).show();
-                                try {//Intentamos realizar el cambio en el backend
-                                    String addResult = doRequestSetSongLista(idAudio, idLista);
-                                } catch (ExecutionException e) {
-                                    e.printStackTrace();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
+                                if (option.equals("Append")){//Estamos en modo añadir canción
+                                    //Función añadir cancion
+                                    Toast.makeText(getApplicationContext(), "Añadir canción en playlist Id: " + idLista, Toast.LENGTH_SHORT).show();
+                                    try {//Intentamos realizar el cambio en el backend
+                                        String addResult = doRequestSetSongLista(idAudio, idLista);
+                                    } catch (ExecutionException e) {
+                                        e.printStackTrace();
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    finish();
                                 }
-                                finish();
+                            }
+                            else {
+                                System.arraycopy(listaListasRepUser, 1, test, 0, test.length);
+                                Toast.makeText(getApplicationContext(), "Playlist Id: " + idLista, Toast.LENGTH_SHORT).show();
+                                SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putString("idPlaylistActual", idLista);
+                                editor.apply();
+                                Intent intent = new Intent(getApplicationContext(), listaReproduccion.class);
+                                startActivity(intent);
                             }
                         }
-                        else {
-                            System.arraycopy(listaListasRepUser, 1, test, 0, test.length);
-                            Toast.makeText(getApplicationContext(), "Playlist Id: " + test[position], Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                    });
+                }
+
                 listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>()));
             }
         } catch (ExecutionException e) {

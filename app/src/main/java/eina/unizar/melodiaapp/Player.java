@@ -185,7 +185,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                 String opcion = "Append";
                 Intent intent = new Intent(getApplicationContext(), Playlist.class);
                 intent.putExtra("key", opcion);
-                intent.putExtra("songId", "idAudio");
+                intent.putExtra("songId", "idAudio:1");
                 startActivity(intent);
             }
         });
