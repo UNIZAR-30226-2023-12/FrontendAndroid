@@ -118,7 +118,6 @@ public class Notifications extends AppCompatActivity {
                 startActivity(intent);
             });
         }
-        /*
         else{//Comprobamos si hemos llegado desde AdminConfig
             String mode = extras.getString("key");
 
@@ -127,7 +126,7 @@ public class Notifications extends AppCompatActivity {
                 //Debemos conocer como guarda el backend los valores de las peticiones de artista para extraerlos
 
                 //Pasaremos información en el intent de la siguiente manera:
-                Intent reproducirDemo = new Intent(getApplicationContext(), Reproductions.class);
+                Intent reproducirDemo = new Intent(getApplicationContext(), Player.class);
 
                 //Valores
                 String body = "Descripción y porque quiere ser un artista";
@@ -135,6 +134,7 @@ public class Notifications extends AppCompatActivity {
                 String idSong = "idCancion"; //No se hasta que punto se necesita aqui
 
                 //Introducción en el intent extras
+                reproducirDemo.putExtra("mode", "demo");
                 reproducirDemo.putExtra("song",idSong);
                 reproducirDemo.putExtra("body",body);
                 reproducirDemo.putExtra("name",nombreUsuario);
@@ -144,6 +144,6 @@ public class Notifications extends AppCompatActivity {
                 System.out.println("Bad intent, mode value incorrect\n");
                 finish();
             }
-        }*/
+        }
     }
 }
