@@ -166,7 +166,9 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         equalizer.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Equalizer.class);
+                // Envío en los extras el id de la canción en el MediaPlayer
+                Intent intent = new Intent(getApplicationContext(), EqualizerScreen.class);
+                intent.putExtra("audioID", String.valueOf(mediaPlayer.getAudioSessionId()));
                 startActivity(intent);
             }
         });
