@@ -80,6 +80,18 @@ public class Menu extends AppCompatActivity {
             artistsSongsBTN.setVisibility(View.GONE);
         }
 
+        TextView boton_buscar = findViewById(R.id.bSearchConfirm);
+        boton_buscar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                TextView TVquery = findViewById(R.id.menuSearch);
+                String query = TVquery.getText().toString();
+                Intent intent = new Intent(getApplicationContext(), Results.class);
+                intent.putExtra("query",query);
+                startActivity(intent);
+            }
+        });
+
         TextView boton_aleatoria = findViewById(R.id.bRandom);
         boton_aleatoria.setOnClickListener(new View.OnClickListener(){
             @Override
