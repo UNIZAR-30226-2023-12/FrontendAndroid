@@ -14,7 +14,7 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
-public class MyTaskAskNameSongs extends AsyncTask<String, Void, String> {
+public class MyTaskAskNameSongs extends AsyncTask<String, Void, String> {//TODO DUPLICADO CON GENRE AND ARTIST
     @Override
     public String doInBackground(String... params) {
         String idUsuario = params[0];

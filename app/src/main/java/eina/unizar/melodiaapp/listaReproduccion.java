@@ -26,6 +26,8 @@ import java.util.concurrent.ExecutionException;
 
 import eina.unizar.melodiaapp.Modules.MyTaskAskNameSongs;
 import eina.unizar.melodiaapp.Modules.MyTaskAskSongs;
+import eina.unizar.melodiaapp.Modules.MyTaskAskArtistSong;
+import eina.unizar.melodiaapp.Modules.MyTaskAskGenreSong;
 
 public class listaReproduccion extends AppCompatActivity {
 
@@ -56,6 +58,42 @@ public class listaReproduccion extends AppCompatActivity {
         String contrasenya = preferences.getString("contrasenya", "");
 
         MyTaskAskNameSongs task = new MyTaskAskNameSongs();
+        String respuesta = task.execute(idUsuario, contrasenya, idPlaylist).get();
+        String[] response = respuesta.split(",");
+
+        if (response[0].equals("200")) {
+            return response[1];
+        }
+        else {
+            return "Error";
+        }
+    }
+
+    public String doRequestAskArtistSong(String idPlaylist) throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contraseña
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        MyTaskAskArtistSong task = new MyTaskAskArtistSong();
+        String respuesta = task.execute(idUsuario, contrasenya, idPlaylist).get();
+        String[] response = respuesta.split(",");
+
+        if (response[0].equals("200")) {
+            return response[1];
+        }
+        else {
+            return "Error";
+        }
+    }
+
+    public String doRequestAskGenreSong(String idPlaylist) throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contraseña
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        MyTaskAskGenreSong task = new MyTaskAskGenreSong();
         String respuesta = task.execute(idUsuario, contrasenya, idPlaylist).get();
         String[] response = respuesta.split(",");
 
@@ -121,6 +159,50 @@ public class listaReproduccion extends AppCompatActivity {
             }
         });
 
+        // Botón para la ordenación por artista
+        TextView ordenarArtista = findViewById(R.id.bOrdenarArtista);
+        ordenarArtista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
+                String idsCanciones = preferences.getString("idsCanciones", "");
+                String nombresCanciones = preferences.getString("nombresCanciones", "");
+                String artistasCanciones = preferences.getString("artistasCanciones", "");
+
+                // Obtener una referencia al ListView
+                ListView listView = findViewById(R.id.listCRep);
+                // Obtener la vista de encabezado
+                for (int i = 0; i < listView.getChildCount(); i++) {
+                    View headerView = listView.getChildAt(i);
+                    listView.removeHeaderView(headerView);
+                }
+
+                ordenarPorWildcard(idsCanciones, nombresCanciones, artistasCanciones);
+            }
+        });
+
+        // Botón para la ordenación por género
+        TextView ordenarGenero = findViewById(R.id.bOrdenarGenero);
+        ordenarGenero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
+                String idsCanciones = preferences.getString("idsCanciones", "");
+                String nombresCanciones = preferences.getString("nombresCanciones", "");
+                String generoCanciones = preferences.getString("generoCanciones", "");
+
+                // Obtener una referencia al ListView
+                ListView listView = findViewById(R.id.listCRep);
+                // Obtener la vista de encabezado
+                for (int i = 0; i < listView.getChildCount(); i++) {
+                    View headerView = listView.getChildAt(i);
+                    listView.removeHeaderView(headerView);
+                }
+
+                ordenarPorWildcard(idsCanciones, nombresCanciones, generoCanciones);
+            }
+        });
+
         // Pongo las canciones en pantalla y almaceno los ids en Shared preferences
         SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
         String idPlaylist = preferences.getString("idPlaylistActual", "");
@@ -134,20 +216,29 @@ public class listaReproduccion extends AppCompatActivity {
 
         String idsCancionesString = String.join(",", idsCanciones);
         String nombresCancionesString = "";
+        String artistasCancionesString = "";
+        String generoCancionesString = "";
 
         String[] nombresCanciones = new String[idsCanciones.length-1];
+        String[] artistasCanciones = new String[idsCanciones.length-1];
+        String[] generoCanciones = new String[idsCanciones.length-1];
         for (int i = 1; i < idsCanciones.length; i++) {
             try {
                 nombresCanciones[i-1] = doRequestAskNameSongs(idsCanciones[i]);
+                artistasCanciones[i-1] = doRequestAskArtistSong(idsCanciones[i]);
+                generoCanciones[i-1] = doRequestAskGenreSong(idsCanciones[i]);
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
         nombresCancionesString = String.join(",", nombresCanciones);
         // Guardo los ids y los nombres de las canciones en shared preferences
+        // Guardo ademas los artistas y generos para ordenar
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("idsCanciones", idsCancionesString.substring(idsCancionesString.indexOf(",") + 1));
         editor.putString("nombresCanciones", nombresCancionesString);
+        editor.putString("artistasCanciones", artistasCancionesString);
+        editor.putString("generoCanciones", generoCancionesString);
         editor.apply();
 
         // Pongo las canciones en pantalla
@@ -290,6 +381,113 @@ public class listaReproduccion extends AppCompatActivity {
             listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>()));
 
         }
+
+    public void ordenarPorWildcard(String idsCancionesString, String nombresCancionesString, String wildcardString) {
+        String[] idsCanciones = idsCancionesString.split(",");
+        String[] nombresCanciones = nombresCancionesString.split(","); //Seguimos necesitando los nombres para el setText
+        String[] wildcardCanciones = wildcardString.split(",");
+
+        ObjetoConIdNombreYWildcard [] objetos = new ObjetoConIdNombreYWildcard [idsCanciones.length];
+        for (int i = 0; i < idsCanciones.length; i++) {
+            objetos[i] = new ObjetoConIdNombreYWildcard (idsCanciones[i], nombresCanciones[i], wildcardCanciones[i]);
+        }
+
+        // Ordenar el array de objetos por el nombre utilizando un comparador
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Arrays.sort(objetos, Comparator.comparing(ObjetoConIdNombreYWildcard ::getWildcard));
+        }
+
+        SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        String idsCancionesOrdenadas = "";
+        String nombresCancionesOrdenadas = "";
+        String wildcardCancionesOrdenadas = "";
+        for (int i = 0; i < objetos.length; i++) {
+            idsCancionesOrdenadas += objetos[i].getId() + ",";
+            nombresCancionesOrdenadas += objetos[i].getNombre() + ",";
+            wildcardCancionesOrdenadas += objetos[i].getWildcard() + ",";
+        }
+        editor.putString("idsCanciones", idsCancionesOrdenadas);
+        editor.putString("nombresCanciones", nombresCancionesOrdenadas);
+        editor.putString("wildcardCanciones", wildcardCancionesOrdenadas);
+        editor.apply();
+
+        nombresCanciones = nombresCancionesOrdenadas.split(",");
+        idsCanciones = idsCancionesOrdenadas.split(",");
+        wildcardCanciones = wildcardCancionesOrdenadas.split(",");
+
+        // Añado un elemento a las izqda que sea "200"
+        String[] idsCanciones2 = new String[idsCanciones.length+1];
+        idsCanciones2[0] = "200";
+        for (int i = 0; i < idsCanciones.length; i++) {
+            idsCanciones2[i+1] = idsCanciones[i];
+        }
+        idsCanciones = idsCanciones2;
+
+        // Añado un elemento a las izqda que sea "200"
+        String[] nombresCanciones2 = new String[wildcardCanciones.length+1];
+        nombresCanciones2[0] = "200";
+        for (int i = 0; i < wildcardCanciones.length; i++) {
+            nombresCanciones2[i+1] = wildcardCanciones[i];
+        }
+        wildcardCanciones = nombresCanciones2;
+
+        // Añado un elemento a las izqda que sea "200"
+        String[] wildcardCanciones2 = new String[wildcardCanciones.length+1];
+        wildcardCanciones2[0] = "200";
+        for (int i = 0; i < wildcardCanciones.length; i++) {
+            wildcardCanciones2[i+1] = wildcardCanciones[i];
+        }
+        wildcardCanciones = wildcardCanciones2;
+
+
+        // Pongo las canciones en pantalla
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, wildcardCanciones);
+        ListView listView = findViewById(R.id.listCRep);
+        listView.setAdapter(adapter);
+
+        for (int j = 0; j < idsCanciones.length-1; j++) {
+            View item = adapter.getView(j, null, listView);
+            item.setTag(idsCanciones[j+1]);
+            TextView textView = item.findViewById(R.id.listTextView);
+
+            LayoutInflater inflater = getLayoutInflater();
+            View header = inflater.inflate(R.layout.cancion_item, null);
+            listView.addHeaderView(header);
+
+            TextView row = header.findViewById(R.id.listTextView);
+            row.setText(nombresCanciones[j+1]);
+            row.setTag(idsCanciones[j+1]);
+
+            row.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO ENVIAR AL REPRODUCTOR LA PLAYLIST
+                    String idCancion = (String) v.getTag();
+                    SharedPreferences preferences = getSharedPreferences("cancionActual", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("idCancionActual", idCancion);
+                    editor.apply();
+                    Intent intent = new Intent(getApplicationContext(), Player.class);
+                    startActivity(intent);
+                }
+            });
+
+            ImageView deleteBtn = header.findViewById(R.id.imageView5);
+            deleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO ELIMINAR CANCION DE LA PLAYLIST
+                    String idCancion = (String) v.getTag();
+                    Intent intent = new Intent(getApplicationContext(), Player.class);
+                    startActivity(intent);
+                }
+            });
+
+        }
+        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>()));
+
+    }
         class ObjetoConIdYNombre {
             private String id;
             private String nombre;
@@ -305,6 +503,33 @@ public class listaReproduccion extends AppCompatActivity {
 
             public String getNombre() {
                 return nombre;
+            }
+        }
+
+        class ObjetoConIdNombreYWildcard {
+
+            private String id;
+
+            private String nombre;
+
+            private String wildcard; //Puede ser genero, artista, u otra cosa si fuese necesario
+
+            public ObjetoConIdNombreYWildcard(String id, String nombre, String wildcard) {
+                this.id = id;
+                this.nombre = nombre;
+                this.wildcard = wildcard;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public String getNombre() {
+                return nombre;
+            }
+
+            public String getWildcard() {
+                return wildcard;
             }
         }
 }

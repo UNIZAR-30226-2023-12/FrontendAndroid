@@ -73,7 +73,7 @@
         android:background="@drawable/button1"
         android:gravity="center"
         android:padding="8dp"
-        android:text="@string/Results_orderArtist   "
+        android:text="@string/Results_orderArtist"
         android:textColor="@color/button_text"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
