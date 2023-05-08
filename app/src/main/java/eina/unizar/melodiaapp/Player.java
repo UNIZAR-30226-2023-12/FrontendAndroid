@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -30,9 +31,12 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
 import android.media.AudioManager;
 
 import eina.unizar.melodiaapp.Modules.GETRequest;
+import eina.unizar.melodiaapp.Modules.MyTaskSetSecHeared;
 
 import eina.unizar.melodiaapp.Modules.AudioPlayer;
 
@@ -47,7 +51,17 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
     MediaPlayer mediaPlayer = new MediaPlayer();
     ToggleButton play_pause;
     ImageButton stop;
+    private String idAudioActual;
 
+    protected String doRequestSetLastSecondHeared(String seconds) throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contrasenya de shared preferences
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsr = preferences.getString("idUsuario", "");
+        String passwd = preferences.getString("contrasenya", "");
+
+        MyTaskSetSecHeared task = new MyTaskSetSecHeared();
+        return task.execute(idUsr, passwd, idAudioActual, seconds).get();
+    }
 
     /**
      * Función invocada al crear la pantalla. Inicializa todos los elementos de la interfaz de usuario
@@ -91,7 +105,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
             @Override
             protected void onPostExecute(JSONObject feed) {
                 try {
-                    AudioFile = android.util.Base64.decode(feed.getString("fichero"), android.util.Base64.DEFAULT);
+                    AudioFile = Base64.decode(feed.getString("fichero"), Base64.DEFAULT);
                     // create temp file that will hold byte array
                     File tempMp3 = File.createTempFile("playing_sound", "mp3");
                     tempMp3.deleteOnExit();
@@ -100,7 +114,9 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                     fos.close();
                     AudioFile = null;
 
-                    reproductor.play(tempMp3.getAbsolutePath());
+                    mediaPlayer.setDataSource(tempMp3.getAbsolutePath());
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
 
                     play_pause = findViewById(R.id.play_pause);
                     play_pause.setChecked(true);
@@ -108,9 +124,9 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                         @Override
                         public void onClick(View v) {
                             if (play_pause.isChecked()) {
-                                reproductor.resume();
+                                mediaPlayer.start();
                             } else {
-                                reproductor.pause();
+                                mediaPlayer.pause();
                             }
                         }
                     });
@@ -119,7 +135,15 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                     stop.setOnClickListener(new ImageButton.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            reproductor.stop();
+                            mediaPlayer.stop();
+                            int currentTime = mediaPlayer.getCurrentPosition();
+                            try {
+                                doRequestSetLastSecondHeared(String.valueOf(currentTime));
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             play_pause.setChecked(false);
                         }
                     });
