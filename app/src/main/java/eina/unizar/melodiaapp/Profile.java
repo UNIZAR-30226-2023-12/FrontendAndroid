@@ -75,6 +75,12 @@ public class Profile extends AppCompatActivity {
         Boolean visitor = false;
         String idA = "";
 
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        TextView idAñadirAmigo = findViewById(R.id.userIdentification);
+        idAñadirAmigo.setText("IdAmigo: " + idUsuario);
+
+
         Bundle extras = getIntent().getExtras();
         if ( extras != null) {//Buscamos los valores extra
 
@@ -111,7 +117,6 @@ public class Profile extends AppCompatActivity {
         TextView email = findViewById(R.id.displayEmail);
         name.setText(response[2]);
         // Añado el nombre a shared preferences
-        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("nombre", response[2]);
         editor.apply();

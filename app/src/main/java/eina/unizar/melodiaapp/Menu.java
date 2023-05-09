@@ -92,6 +92,14 @@ public class Menu extends AppCompatActivity {
             }
         });
 
+        TextView add_friend = findViewById(R.id.bAddFriend);
+        add_friend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AddFriend.class);
+                startActivity(intent);
+            }
+        });
         TextView boton_aleatoria = findViewById(R.id.bRandom);
         boton_aleatoria.setOnClickListener(new View.OnClickListener(){
             @Override

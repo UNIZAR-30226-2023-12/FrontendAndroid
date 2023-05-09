@@ -22,6 +22,8 @@
     <string name="Menu_Favourites">Fav</string>
     <string name="Menu_Random">♫ Aleatoria</string>
     <string name="Menu_Social">Social</string>
+    <string name="Menu_addFriends">Añadir\n amigos</string>
+    <string name="Menu_addFriends2">Añadir amigos</string>
     <string name="quantity_Placeholder">X.X</string>
     <string name="song_placeholder">Canción</string>
     <string name="CC_title">Añadir carpeta</string>
@@ -65,4 +67,6 @@
     <string name="Results_orderName">Ordenar por\nnombre </string>
     <string name="Results_orderGenre">Ordenar por\ngénero </string>
     <string name="Results_orderArtist">Ordenar por\nartista </string>
+    <string name="AddFriend_hint">Introduce el alias\n de tu amigo</string>
+    <string name="AddFriend_add">Añadir</string>
 </resources>

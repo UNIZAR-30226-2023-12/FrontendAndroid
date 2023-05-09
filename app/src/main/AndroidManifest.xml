@@ -22,6 +22,9 @@
         android:theme="@style/Theme.MelodiaApp"
         tools:targetApi="31">
         <activity
+            android:name=".AddFriend"
+            android:exported="false" />
+        <activity
             android:name=".ListenFromLink"
             android:exported="false">
             <meta-data
