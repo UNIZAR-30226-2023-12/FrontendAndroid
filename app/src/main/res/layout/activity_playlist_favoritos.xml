@@ -53,6 +53,37 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/home" />
 
+    <TextView
+        android:id="@+id/bOrdenarGenero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:background="@drawable/button1"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Ordenar por género"
+        android:textColor="@color/button_text"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listSongsArtist" />
+
+    <TextView
+        android:id="@+id/bOrdenarTipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/button1"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Ordenar por tipo"
+        android:textColor="@color/button_text"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.126"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listSongsArtist" />
+
     <ListView
         android:id="@+id/listSongsArtist"
         android:layout_width="410dp"
