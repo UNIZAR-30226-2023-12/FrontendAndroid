@@ -124,6 +124,19 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
 
+  <TextView
+      android:id="@+id/bSubscribe"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@drawable/buttonbotleft"
+      android:gravity="center"
+      android:padding="8dp"
+      android:text="@string/Profile_subscribe"
+      android:textColor="@color/button_text"
+      android:textSize="22sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
   <ImageView
       android:id="@+id/bAdmin"
       android:layout_width="106dp"

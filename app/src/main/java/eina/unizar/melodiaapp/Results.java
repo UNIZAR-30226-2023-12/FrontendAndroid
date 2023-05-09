@@ -22,6 +22,7 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskGlobalSearchResults;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNamePlaylist;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNameSongs;
 import eina.unizar.melodiaapp.Modules.MyTaskAskPlaylists;
+import eina.unizar.melodiaapp.Modules.MyTaskAskProfile;
 
 public class Results extends AppCompatActivity {
 
@@ -63,83 +64,95 @@ public class Results extends AppCompatActivity {
             return "Error";
         }
     }
-    protected String[] doRequestAskGlobalSearchResults(String query, String n) throws ExecutionException, InterruptedException {
 
-        MyTaskAskGlobalSearchResults task = new MyTaskAskGlobalSearchResults();
-        String respuesta = task.execute(query, n).get();
-        String response[] = respuesta.split(",");
+    public class Profile extends AppCompatActivity {
+        protected String doRequestAskArtistName(String idUsuario) throws ExecutionException, InterruptedException {
+            // Obtengo usuario y contraseña de shared preferences
 
-        if (response[0].equals("200")) {
-            return response;
+            String contrasenya = "none";
+
+            MyTaskAskProfile task = new MyTaskAskProfile();
+            String respuesta = task.execute(idUsuario, contrasenya).get();
+            String response[] = respuesta.split(",");
+
+            if (response[0].equals("200")) {
+                return response[1];
+            } else {
+                return "Error";
+            }
         }
-        else {
-            return new String[]{"Error"};
+
+        protected String[] doRequestAskGlobalSearchResults(String query, String n) throws ExecutionException, InterruptedException {
+
+            MyTaskAskGlobalSearchResults task = new MyTaskAskGlobalSearchResults();
+            String respuesta = task.execute(query, n).get();
+            String response[] = respuesta.split(",");
+
+            if (response[0].equals("200")) {
+                return response;
+            } else {
+                return new String[]{"Error"};
+            }
         }
-    }
 
-    protected String whatAmI(String id) {
+        protected String whatAmI(String id) {
 
-        String response[] = id.split(":");
+            String response[] = id.split(":");
 
-        if (response[0] == "idAudio"){
-            return "cancion";
+            if (response[0] == "idAudio") {
+                return "cancion";
+            } else if (response[0] == "idArtista") {
+                return "artista";
+            } else if (response[0] == "idLista") {
+                return "playlist";
+            } else {
+                return "iAmError";
+            }
         }
-        else if (response[0] == "idArtista"){
-            return "artista";
-        }
-        else if (response[0] == "idLista"){
-            return "playlist";
-        }
-        else{
-            return "iAmError";
-        }
-    }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_results);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_results);
 
 
+            try {
 
-        try {
+                Bundle extras = getIntent().getExtras();
+                if (extras != null) {
+                    String searchQuery = extras.getString("query");
+                    //String searchN = extras.getString("amount"); de momento lo hardcodeamos
+                    String searchN = "15";
 
-            Bundle extras = getIntent().getExtras();
-            if (extras != null) {
-                String searchQuery = extras.getString("query");
-                //String searchN = extras.getString("amount"); de momento lo hardcodeamos
-                String searchN = "15";
+                    listaIdResultados = doRequestAskGlobalSearchResults(searchQuery, searchN); //Id objeto
+                    if (listaIdResultados[0].equals("Error")) {
+                        Toast.makeText(getApplicationContext(), "Error al obtener los resultados", Toast.LENGTH_SHORT).show();
+                    } else {
+                        //Obtengo los nombres de los elementos
+                        String nombresElementos[] = new String[listaIdResultados.length - 1];
 
-                listaIdResultados = doRequestAskGlobalSearchResults(searchQuery, searchN); //Id objeto
-                if (listaIdResultados[0].equals("Error")) {
-                    Toast.makeText(getApplicationContext(), "Error al obtener los resultados", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    //Obtengo los nombres de los elementos
-                    String nombresElementos[] = new String[listaIdResultados.length - 1];
+                        Integer i = 1;
+                        for (i = 1; i <= nombresElementos.length; i++) {
 
-                    Integer i = 1;
-                    for (i = 1; i <= nombresElementos.length; i++) {
-
-                        //Necesitamos diferenciar entre canción, artista y autor
-                        switch (whatAmI(listaIdResultados[i])) {
-                            case "cancion":
-                                // Si el elemento es una canción
-                                nombresElementos[i - 1] = doRequestAskNameSongs(listaIdResultados[i]);
-                                break;
-                            case "artista":
-                                // Si el elemento es un artista
-                                //nombresElementos[i - 1] = //TODO pedir al backend una función con el nombre del artista si das su id
-                                break;
-                            case "playlist":
-                                // Si el elemento es una playlist
-                                nombresElementos[i - 1] = doRequestAskNameListas(listaIdResultados[i]);
-                                break;
-                            default:
-                                // handle unknown result
-                                break;
-                        }
+                            //Necesitamos diferenciar entre canción, artista y autor
+                            switch (whatAmI(listaIdResultados[i])) {
+                                case "cancion":
+                                    // Si el elemento es una canción
+                                    nombresElementos[i - 1] = doRequestAskNameSongs(listaIdResultados[i]);
+                                    break;
+                                case "artista":
+                                    // Si el elemento es un artista
+                                    nombresElementos[i - 1] = doRequestAskArtistName(listaIdResultados[i]);
+                                    break;
+                                case "playlist":
+                                    // Si el elemento es una playlist
+                                    nombresElementos[i - 1] = doRequestAskNameListas(listaIdResultados[i]);
+                                    break;
+                                default:
+                                    // handle unknown result
+                                    break;
+                            }
 
 
 
@@ -153,120 +166,125 @@ public class Results extends AppCompatActivity {
                     }
 
                     */
-                    }
+                        }
 
 
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.textview_item, R.id.listTextViewSingle, nombresElementos);
-                    ListView listView = findViewById(R.id.listResults);
-                    listView.setAdapter(adapter);
-
-
-                    /*
-                     * Bucle para añadir un tag con el id de cada elemento.
-                     * Se podría añadir en el bucle anterior pero de momento
-                     * esta separado para facilitar cambios al código
-                     */
-                    for (int j = 0; j < listaIdResultados.length-1; j++) {
-                        // Obtener una referencia a la lista en concreto
-                        View listItem = adapter.getView(j, null, listView);
-                        TextView textView = listItem.findViewById(R.id.listTextViewSingle);
-
-                        // Añadir el tag con la id de la lista
-                        String idElemento = listaIdResultados[j+1];
-                        textView.setTag(idElemento);
-
-                        LayoutInflater inflater = getLayoutInflater();
-                        View header = inflater.inflate(R.layout.textview_item, listView, false);
-                        listView.addHeaderView(header, null, false);
-
-                        TextView row = header.findViewById(R.id.listTextViewSingle);
-                        row.setText(nombresElementos[j]);
-                        row.setTag(listaIdResultados[j+1]);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.textview_item, R.id.listTextViewSingle, nombresElementos);
+                        ListView listView = findViewById(R.id.listResults);
+                        listView.setAdapter(adapter);
 
 
-                        TextView btnView = header.findViewById(R.id.listTextViewSingle);
-                        btnView.setOnClickListener(new AdapterView.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String[] test = new String[listaIdResultados.length - 1];
-                                String idElemento = (String) v.getTag();
+                        /*
+                         * Bucle para añadir un tag con el id de cada elemento.
+                         * Se podría añadir en el bucle anterior pero de momento
+                         * esta separado para facilitar cambios al código
+                         */
+                        for (int j = 0; j < listaIdResultados.length - 1; j++) {
+                            // Obtener una referencia a la lista en concreto
+                            View listItem = adapter.getView(j, null, listView);
+                            TextView textView = listItem.findViewById(R.id.listTextViewSingle);
+
+                            // Añadir el tag con la id de la lista
+                            String idElemento = listaIdResultados[j + 1];
+                            textView.setTag(idElemento);
+
+                            LayoutInflater inflater = getLayoutInflater();
+                            View header = inflater.inflate(R.layout.textview_item, listView, false);
+                            listView.addHeaderView(header, null, false);
+
+                            TextView row = header.findViewById(R.id.listTextViewSingle);
+                            row.setText(nombresElementos[j]);
+                            row.setTag(listaIdResultados[j + 1]);
 
 
-                                System.arraycopy(listaIdResultados, 1, test, 0, test.length);
-                                Toast.makeText(getApplicationContext(), "Elemento Id: " + idElemento, Toast.LENGTH_SHORT).show();
-                                //Por defecto lo escribimos como cancionActual, pero si no es asi lo cambiamos
-                                SharedPreferences preferences = getSharedPreferences("cancionActual", MODE_PRIVATE);
-                                SharedPreferences.Editor editor = preferences.edit();
+                            TextView btnView = header.findViewById(R.id.listTextViewSingle);
+                            btnView.setOnClickListener(new AdapterView.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    String[] test = new String[listaIdResultados.length - 1];
+                                    String idElemento = (String) v.getTag();
 
-                                switch (whatAmI(idElemento)) {
-                                    case "cancion":
-                                        // Si el elemento es una canción
 
-                                        editor.putString("idCancionActual", idElemento);
-                                        editor.apply();
-                                        Intent intent = new Intent(getApplicationContext(), Player.class);
-                                        startActivity(intent);
-                                        break;
-                                    case "artista":
-                                        // Si el elemento es un artista
-                                        //TODO ver el perfil de un artista
-                                        break;
-                                    case "playlist":
-                                        // Si el elemento es una playlist
-                                        preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
-                                        editor.putString("idPlaylistActual", idElemento);
-                                        editor.apply();
-                                        Intent intentP = new Intent(getApplicationContext(), listaReproduccion.class);
-                                        startActivity(intentP);
-                                        break;
-                                    default:
-                                        // handle unknown result
-                                        break;
+                                    System.arraycopy(listaIdResultados, 1, test, 0, test.length);
+                                    Toast.makeText(getApplicationContext(), "Elemento Id: " + idElemento, Toast.LENGTH_SHORT).show();
+                                    //Por defecto lo escribimos como cancionActual, pero si no es asi lo cambiamos
+                                    SharedPreferences preferences = getSharedPreferences("cancionActual", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = preferences.edit();
+
+                                    switch (whatAmI(idElemento)) {
+                                        case "cancion":
+                                            // Si el elemento es una canción
+
+                                            editor.putString("idCancionActual", idElemento);
+                                            editor.apply();
+                                            Intent intent = new Intent(getApplicationContext(), Player.class);
+                                            startActivity(intent);
+                                            break;
+                                        case "artista":
+                                            // Si el elemento es un artista
+                                            editor.putString("idArtistaActual", idElemento);
+                                            editor.apply();
+                                            Intent intentA = new Intent(getApplicationContext(), Player.class);
+                                            intentA.putExtra("mode", "visitor");
+                                            intentA.putExtra("idArtista", idElemento);
+                                            startActivity(intentA);
+                                            break;
+                                        case "playlist":
+                                            // Si el elemento es una playlist
+                                            preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
+                                            editor.putString("idPlaylistActual", idElemento);
+                                            editor.apply();
+                                            Intent intentP = new Intent(getApplicationContext(), listaReproduccion.class);
+                                            startActivity(intentP);
+                                            break;
+                                        default:
+                                            // handle unknown result
+                                            break;
+                                    }
+
+
                                 }
+                            });
+                        }
 
-
-                            }
-                        });
+                        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>()));
                     }
-
-                    listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>()));
                 }
+
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+            ImageView profileIcon = findViewById(R.id.profileIconAResults);
+            profileIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), Profile.class);
+                    startActivity(intent);
+                }
+            });
+
+            ImageView bellIcon = findViewById(R.id.bellIconAResults);
+            bellIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), Notifications.class);
+                    startActivity(intent);
+                }
+            });
+
+            ImageView homeIcon = findViewById(R.id.imageHomeResults);
+            homeIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), Menu.class);
+                    startActivity(intent);
+                }
+            });
         }
-        
 
-
-        ImageView profileIcon = findViewById(R.id.profileIconAResults);
-        profileIcon.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Profile.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageView bellIcon = findViewById(R.id.bellIconAResults);
-        bellIcon.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Notifications.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageView homeIcon = findViewById(R.id.imageHomeResults);
-        homeIcon.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Menu.class);
-                startActivity(intent);
-            }
-        });
     }
 }

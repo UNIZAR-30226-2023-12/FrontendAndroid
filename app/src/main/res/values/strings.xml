@@ -39,6 +39,7 @@
     <string name="Profile_changePassword">Cambiar contraseña</string>
     <string name="Profile_artist">Ser artista</string>
     <string name="Profile_upload">Subir canción</string>
+    <string name="Profile_subscribe">Suscribirme</string>
     <string name="Profile_singOut">Cerrar sesion</string>
     <string name="Profile_audioCuality">Calidad de audio:</string>
     <string name="Profile_radioHD">Alta fidelidad</string>
