@@ -5,6 +5,8 @@ import static android.util.Log.d;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import org.json.JSONException;
@@ -36,6 +39,7 @@ import java.util.concurrent.ExecutionException;
 import android.media.AudioManager;
 
 import eina.unizar.melodiaapp.Modules.GETRequest;
+import eina.unizar.melodiaapp.Modules.MyTaskAskLink;
 import eina.unizar.melodiaapp.Modules.MyTaskSetSecHeared;
 
 import eina.unizar.melodiaapp.Modules.AudioPlayer;
@@ -61,6 +65,23 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
 
         MyTaskSetSecHeared task = new MyTaskSetSecHeared();
         return task.execute(idUsr, passwd, idAudioActual, seconds).get();
+    }
+
+    protected String doRequestAskLink() throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contrasenya de shared preferences
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsr = preferences.getString("idUsuario", "");
+        String passwd = preferences.getString("contrasenya", "");
+
+        MyTaskAskLink task = new MyTaskAskLink();
+        String result = task.execute(idUsr, passwd, idAudioActual).get();
+        String response[] = result.split(",");
+
+        if (response[0].equals("200")) {
+            return response[1];
+        } else {
+            return "Error";
+        }
     }
 
     /**
@@ -216,7 +237,33 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
             }
         });
 
+        // OnClick para el botón de compartir
+        ImageButton share = findViewById(R.id.share_button);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String response = "Error";
+                try {
+                    response = doRequestAskLink();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
+                if (!response.equals("Error")) {
+                    // Copio el link en el portapapeles del dispositivo
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("link", response);
+                    clipboard.setPrimaryClip(clip);
+
+                    Toast.makeText(getApplicationContext(), "Link copiado al portapapeles", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Error al obtener el link", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
     }
