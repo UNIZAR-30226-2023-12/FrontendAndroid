@@ -33,6 +33,8 @@ public class listaReproduccion extends AppCompatActivity {
 
     protected  ArrayAdapter<String> adapterPrueba;
 
+    protected String mode = "linear";
+
     public String[] doRequestAskSongs(String idPlaylist) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -125,6 +127,22 @@ public class listaReproduccion extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Notifications.class);
                 startActivity(intent);
+            }
+        });
+
+        ImageView reproductionType = findViewById(R.id.reproductionMode);
+        reproductionType.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                if(mode.equals("linear")){
+                    mode = "random";
+                    reproductionType.setImageResource(R.drawable.random);
+                }
+                else{
+                    mode = "linear";
+                    reproductionType.setImageResource(R.drawable.regular);
+                }
             }
         });
 
@@ -269,6 +287,7 @@ public class listaReproduccion extends AppCompatActivity {
                     editor.putString("idCancionActual", idCancion);
                     editor.apply();
                     Intent intent = new Intent(getApplicationContext(), Player.class);
+                    intent.putExtra("playingMode",mode);
                     startActivity(intent);
                 }
             });

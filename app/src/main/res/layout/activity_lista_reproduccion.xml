@@ -112,4 +112,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listCRep" />
 
+    <ImageView
+        android:id="@+id/reproductionMode"
+        android:layout_width="71dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/bellIconAlistarep"
+        app:layout_constraintHorizontal_bias="0.21"
+        app:layout_constraintStart_toEndOf="@+id/menuIconAlistarep"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/regular" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
