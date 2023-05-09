@@ -14,7 +14,7 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
-public class MyTaskAskLink extends AsyncTask<String, Void, String> {
+public class MyTaskGetAudioFromLink extends AsyncTask<String, Void, String> {
     /**
      * Método que se ejecuta en segundo plano para realizar la petición al servidor y que
      * sube un audio y devuelve el código de respuesta http
@@ -26,19 +26,19 @@ public class MyTaskAskLink extends AsyncTask<String, Void, String> {
     public String doInBackground(String... params) {
         String idUsuario = params[0];
         String contrasenya = params[1];
-        String idAudio = params[2];
+        String link = params[2];
         String result = "";
 
         try {
             MySingleton singleton = MySingleton.getInstance();
-            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/GetLinkAudio/");
+            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/GetAudioFromLink/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"idAudio\": \"" + idAudio + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"link\": \"" + link + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
@@ -58,8 +58,8 @@ public class MyTaskAskLink extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                String link = jsonObject.get("link").getAsString();
-                return responseCode + "," + link;
+                String audio = jsonObject.get("audio").getAsString();
+                return responseCode + "," + audio;
             }
             else {
                 return responseCode;

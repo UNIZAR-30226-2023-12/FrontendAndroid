@@ -198,6 +198,12 @@ public class Profile extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // OnClick para el botón de obtener audio
+        TextView bGetAudio = findViewById(R.id.ObtAudio);
+        bGetAudio.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ListenFromLink.class);
+            startActivity(intent);
+        });
 
     }
 }

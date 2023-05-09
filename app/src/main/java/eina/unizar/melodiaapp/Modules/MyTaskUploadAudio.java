@@ -39,7 +39,7 @@ public class MyTaskUploadAudio extends AsyncTask<String, Void, String> {
             MySingleton singleton = MySingleton.getInstance();
             URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/SetSong/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
+            conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
