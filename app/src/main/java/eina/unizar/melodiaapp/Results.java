@@ -95,6 +95,19 @@ public class Results extends AppCompatActivity {
             }
         }
 
+        protected String[] doRequestAskTop10() throws ExecutionException, InterruptedException {
+
+            MyTaskAskGlobalSearchResults task = new MyTaskAskGlobalSearchResults();
+            String respuesta = task.execute("10", "False").get();
+            String response[] = respuesta.split(",");
+
+            if (response[0].equals("200")) {
+                return response;
+            } else {
+                return new String[]{"Error"};
+            }
+        }
+
         protected String whatAmI(String id) {
 
             String response[] = id.split(":");
@@ -121,133 +134,214 @@ public class Results extends AppCompatActivity {
 
                 Bundle extras = getIntent().getExtras();
                 if (extras != null) {
-                    String searchQuery = extras.getString("query");
-                    //String searchN = extras.getString("amount"); de momento lo hardcodeamos
-                    String searchN = "15";
 
-                    listaIdResultados = doRequestAskGlobalSearchResults(searchQuery, searchN); //Id objeto
-                    if (listaIdResultados[0].equals("Error")) {
-                        Toast.makeText(getApplicationContext(), "Error al obtener los resultados", Toast.LENGTH_SHORT).show();
-                    } else {
-                        //Obtengo los nombres de los elementos
-                        String nombresElementos[] = new String[listaIdResultados.length - 1];
-
-                        Integer i = 1;
-                        for (i = 1; i <= nombresElementos.length; i++) {
-
-                            //Necesitamos diferenciar entre canción, artista y autor
-                            switch (whatAmI(listaIdResultados[i])) {
-                                case "cancion":
-                                    // Si el elemento es una canción
-                                    nombresElementos[i - 1] = doRequestAskNameSongs(listaIdResultados[i]);
-                                    break;
-                                case "artista":
-                                    // Si el elemento es un artista
-                                    nombresElementos[i - 1] = doRequestAskArtistName(listaIdResultados[i]);
-                                    break;
-                                case "playlist":
-                                    // Si el elemento es una playlist
-                                    nombresElementos[i - 1] = doRequestAskNameListas(listaIdResultados[i]);
-                                    break;
-                                default:
-                                    // handle unknown result
-                                    break;
-                            }
+                    if (extras.getString(("mode")).equals("regularSearch")) {
 
 
+                        String searchQuery = extras.getString("query");
+                        //String searchN = extras.getString("amount"); de momento lo hardcodeamos
+                        String searchN = "15";
 
-                    /*
-                    // Si el nombre es la de Favoritos se guarda en SharedPreferences con su id
-                    if (nombresListas[i - 1].equals("Favoritos")) {
-                        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("idListaFavoritos", listaListasRepUser[i]);
-                        editor.apply();
-                    }
+                        listaIdResultados = doRequestAskGlobalSearchResults(searchQuery, searchN); //Id objeto
+                        if (listaIdResultados[0].equals("Error")) {
+                            Toast.makeText(getApplicationContext(), "Error al obtener los resultados", Toast.LENGTH_SHORT).show();
+                        } else {
+                            //Obtengo los nombres de los elementos
+                            String nombresElementos[] = new String[listaIdResultados.length - 1];
 
-                    */
-                        }
+                            Integer i = 1;
+                            for (i = 1; i <= nombresElementos.length; i++) {
 
+                                //Necesitamos diferenciar entre canción, artista y autor
+                                switch (whatAmI(listaIdResultados[i])) {
+                                    case "cancion":
+                                        // Si el elemento es una canción
+                                        nombresElementos[i - 1] = doRequestAskNameSongs(listaIdResultados[i]);
+                                        break;
+                                    case "artista":
+                                        // Si el elemento es un artista
+                                        nombresElementos[i - 1] = doRequestAskArtistName(listaIdResultados[i]);
+                                        break;
+                                    case "playlist":
+                                        // Si el elemento es una playlist
+                                        nombresElementos[i - 1] = doRequestAskNameListas(listaIdResultados[i]);
+                                        break;
+                                    default:
+                                        // handle unknown result
+                                        break;
+                                }
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.textview_item, R.id.listTextViewSingle, nombresElementos);
-                        ListView listView = findViewById(R.id.listResults);
-                        listView.setAdapter(adapter);
 
 
                         /*
-                         * Bucle para añadir un tag con el id de cada elemento.
-                         * Se podría añadir en el bucle anterior pero de momento
-                         * esta separado para facilitar cambios al código
-                         */
-                        for (int j = 0; j < listaIdResultados.length - 1; j++) {
-                            // Obtener una referencia a la lista en concreto
-                            View listItem = adapter.getView(j, null, listView);
-                            TextView textView = listItem.findViewById(R.id.listTextViewSingle);
+                        // Si el nombre es la de Favoritos se guarda en SharedPreferences con su id
+                        if (nombresListas[i - 1].equals("Favoritos")) {
+                            SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("idListaFavoritos", listaListasRepUser[i]);
+                            editor.apply();
+                        }
 
-                            // Añadir el tag con la id de la lista
-                            String idElemento = listaIdResultados[j + 1];
-                            textView.setTag(idElemento);
-
-                            LayoutInflater inflater = getLayoutInflater();
-                            View header = inflater.inflate(R.layout.textview_item, listView, false);
-                            listView.addHeaderView(header, null, false);
-
-                            TextView row = header.findViewById(R.id.listTextViewSingle);
-                            row.setText(nombresElementos[j]);
-                            row.setTag(listaIdResultados[j + 1]);
+                        */
+                            }
 
 
-                            TextView btnView = header.findViewById(R.id.listTextViewSingle);
-                            btnView.setOnClickListener(new AdapterView.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    String[] test = new String[listaIdResultados.length - 1];
-                                    String idElemento = (String) v.getTag();
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.textview_item, R.id.listTextViewSingle, nombresElementos);
+                            ListView listView = findViewById(R.id.listResults);
+                            listView.setAdapter(adapter);
 
 
-                                    System.arraycopy(listaIdResultados, 1, test, 0, test.length);
-                                    Toast.makeText(getApplicationContext(), "Elemento Id: " + idElemento, Toast.LENGTH_SHORT).show();
-                                    //Por defecto lo escribimos como cancionActual, pero si no es asi lo cambiamos
-                                    SharedPreferences preferences = getSharedPreferences("cancionActual", MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = preferences.edit();
+                            /*
+                             * Bucle para añadir un tag con el id de cada elemento.
+                             * Se podría añadir en el bucle anterior pero de momento
+                             * esta separado para facilitar cambios al código
+                             */
+                            for (int j = 0; j < listaIdResultados.length - 1; j++) {
+                                // Obtener una referencia a la lista en concreto
+                                View listItem = adapter.getView(j, null, listView);
+                                TextView textView = listItem.findViewById(R.id.listTextViewSingle);
 
-                                    switch (whatAmI(idElemento)) {
-                                        case "cancion":
-                                            // Si el elemento es una canción
+                                // Añadir el tag con la id de la lista
+                                String idElemento = listaIdResultados[j + 1];
+                                textView.setTag(idElemento);
+
+                                LayoutInflater inflater = getLayoutInflater();
+                                View header = inflater.inflate(R.layout.textview_item, listView, false);
+                                listView.addHeaderView(header, null, false);
+
+                                TextView row = header.findViewById(R.id.listTextViewSingle);
+                                row.setText(nombresElementos[j]);
+                                row.setTag(listaIdResultados[j + 1]);
+
+
+                                TextView btnView = header.findViewById(R.id.listTextViewSingle);
+                                btnView.setOnClickListener(new AdapterView.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        String[] test = new String[listaIdResultados.length - 1];
+                                        String idElemento = (String) v.getTag();
+
+
+                                        System.arraycopy(listaIdResultados, 1, test, 0, test.length);
+                                        Toast.makeText(getApplicationContext(), "Elemento Id: " + idElemento, Toast.LENGTH_SHORT).show();
+                                        //Por defecto lo escribimos como cancionActual, pero si no es asi lo cambiamos
+                                        SharedPreferences preferences = getSharedPreferences("cancionActual", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = preferences.edit();
+
+                                        switch (whatAmI(idElemento)) {
+                                            case "cancion":
+                                                // Si el elemento es una canción
+
+                                                editor.putString("idCancionActual", idElemento);
+                                                editor.apply();
+                                                Intent intent = new Intent(getApplicationContext(), Player.class);
+                                                startActivity(intent);
+                                                break;
+                                            case "artista":
+                                                // Si el elemento es un artista
+                                                editor.putString("idArtistaActual", idElemento);
+                                                editor.apply();
+                                                Intent intentA = new Intent(getApplicationContext(), Player.class);
+                                                intentA.putExtra("mode", "visitor");
+                                                intentA.putExtra("idArtista", idElemento);
+                                                startActivity(intentA);
+                                                break;
+                                            case "playlist":
+                                                // Si el elemento es una playlist
+                                                preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
+                                                editor.putString("idPlaylistActual", idElemento);
+                                                editor.apply();
+                                                Intent intentP = new Intent(getApplicationContext(), listaReproduccion.class);
+                                                startActivity(intentP);
+                                                break;
+                                            default:
+                                                // handle unknown result
+                                                break;
+                                        }
+
+
+                                    }
+                                });
+                            }
+
+                            listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>()));
+                        }
+                    }
+                    else{
+
+                        if(extras.getString(("mode")).equals("top10")){
+                            listaIdResultados = doRequestAskTop10(); //Id canción
+                            if (listaIdResultados[0].equals("Error")) {
+                                Toast.makeText(getApplicationContext(), "Error al obtener los resultados", Toast.LENGTH_SHORT).show();
+                            } else {
+                                //Obtengo los nombres de los elementos
+                                String nombresElementos[] = new String[listaIdResultados.length - 1];
+
+                                Integer i = 1;
+                                for (i = 1; i <= nombresElementos.length; i++) {
+
+                                    nombresElementos[i - 1] = doRequestAskNameSongs(listaIdResultados[i]);
+
+                                }
+
+
+                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.textview_item, R.id.listTextViewSingle, nombresElementos);
+                                ListView listView = findViewById(R.id.listResults);
+                                listView.setAdapter(adapter);
+
+
+                                /*
+                                 * Bucle para añadir un tag con el id de cada canción.
+                                 * Se podría añadir en el bucle anterior pero de momento
+                                 * esta separado para facilitar cambios al código
+                                 */
+                                for (int j = 0; j < listaIdResultados.length - 1; j++) {
+                                    // Obtener una referencia a la lista en concreto
+                                    View listItem = adapter.getView(j, null, listView);
+                                    TextView textView = listItem.findViewById(R.id.listTextViewSingle);
+
+                                    // Añadir el tag con la id de la lista
+                                    String idElemento = listaIdResultados[j + 1];
+                                    textView.setTag(idElemento);
+
+                                    LayoutInflater inflater = getLayoutInflater();
+                                    View header = inflater.inflate(R.layout.textview_item, listView, false);
+                                    listView.addHeaderView(header, null, false);
+
+                                    TextView row = header.findViewById(R.id.listTextViewSingle);
+                                    row.setText(nombresElementos[j]);
+                                    row.setTag(listaIdResultados[j + 1]);
+
+
+                                    TextView btnView = header.findViewById(R.id.listTextViewSingle);
+                                    btnView.setOnClickListener(new AdapterView.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            String[] test = new String[listaIdResultados.length - 1];
+                                            String idElemento = (String) v.getTag();
+
+
+                                            System.arraycopy(listaIdResultados, 1, test, 0, test.length);
+                                            Toast.makeText(getApplicationContext(), "Canción Id: " + idElemento, Toast.LENGTH_SHORT).show();
+                                            //Por defecto lo escribimos como cancionActual, pero si no es asi lo cambiamos
+                                            SharedPreferences preferences = getSharedPreferences("cancionActual", MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = preferences.edit();
 
                                             editor.putString("idCancionActual", idElemento);
                                             editor.apply();
                                             Intent intent = new Intent(getApplicationContext(), Player.class);
                                             startActivity(intent);
-                                            break;
-                                        case "artista":
-                                            // Si el elemento es un artista
-                                            editor.putString("idArtistaActual", idElemento);
-                                            editor.apply();
-                                            Intent intentA = new Intent(getApplicationContext(), Player.class);
-                                            intentA.putExtra("mode", "visitor");
-                                            intentA.putExtra("idArtista", idElemento);
-                                            startActivity(intentA);
-                                            break;
-                                        case "playlist":
-                                            // Si el elemento es una playlist
-                                            preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
-                                            editor.putString("idPlaylistActual", idElemento);
-                                            editor.apply();
-                                            Intent intentP = new Intent(getApplicationContext(), listaReproduccion.class);
-                                            startActivity(intentP);
-                                            break;
-                                        default:
-                                            // handle unknown result
-                                            break;
-                                    }
 
-
+                                        }
+                                    });
                                 }
-                            });
-                        }
 
-                        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>()));
+                                listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>()));
+                            }
+                        }
+                        else{
+                            System.out.println("Error, bad mode");
+                        }
                     }
                 }
 

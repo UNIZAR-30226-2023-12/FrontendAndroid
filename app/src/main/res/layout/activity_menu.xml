@@ -160,6 +160,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bCarpetas" />
 
+    <TextView
+        android:id="@+id/bTopTen"
+        android:layout_width="101dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="156dp"
+        android:background="@drawable/bigbutton1"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/Menu_top10"
+        android:textColor="@color/button_text"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.609"
+        app:layout_constraintStart_toEndOf="@+id/ArtistSongs"
+        app:layout_constraintTop_toBottomOf="@+id/bCarpetas" />
+
     <ImageView
         android:id="@+id/profileIcon"
         android:layout_width="101dp"

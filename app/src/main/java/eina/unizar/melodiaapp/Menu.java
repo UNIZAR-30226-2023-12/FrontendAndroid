@@ -88,6 +88,17 @@ public class Menu extends AppCompatActivity {
                 String query = TVquery.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), Results.class);
                 intent.putExtra("query",query);
+                intent.putExtra("mode","regularSearch");
+                startActivity(intent);
+            }
+        });
+
+        TextView boton_top10 = findViewById(R.id.bTopTen);
+        boton_top10.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Results.class);
+                intent.putExtra("mode","top10");
                 startActivity(intent);
             }
         });
