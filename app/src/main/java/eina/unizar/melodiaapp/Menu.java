@@ -17,6 +17,8 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskProfile;
  * Clase que codifica la actividad del menu principal de la aplicación
  */
 public class Menu extends AppCompatActivity {
+
+    protected String searchKin = "regular";
     protected String[] doRequestAskUser() throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -49,6 +51,8 @@ public class Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         getSupportActionBar().hide();
+
+
 
         //TODO funcion para designar si es admin
         Boolean Admin = true;
@@ -88,7 +92,16 @@ public class Menu extends AppCompatActivity {
                 String query = TVquery.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), Results.class);
                 intent.putExtra("query",query);
-                intent.putExtra("mode","regularSearch");
+
+                if(searchKin.equals("regular")) {
+                    intent.putExtra("mode", "regularSearch");
+                }
+                else if (searchKin.equals("randomizer")){
+                    intent.putExtra("mode", "randomizer");
+                }
+                else{
+                    System.out.println("Error, unknown query search mode");
+                }
                 startActivity(intent);
             }
         });
@@ -175,6 +188,21 @@ public class Menu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UserFriends.class);
                 startActivity(intent);
+            }
+        });
+
+        ImageView searchKind = findViewById(R.id.searchTypeIcon);
+        searchKind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                if(searchKin.equals("regular")){
+                    searchKin = "randomizer";
+                    searchKind.setImageResource(R.drawable.random);
+                }
+                else if (searchKin.equals("randomizer")){
+                    searchKin = "regular";
+                    searchKind.setImageResource(R.drawable.regular);
+                }
             }
         });
     }

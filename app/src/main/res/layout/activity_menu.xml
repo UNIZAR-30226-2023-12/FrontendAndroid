@@ -213,5 +213,15 @@
         app:layout_constraintStart_toEndOf="@+id/menuSearch"
         app:layout_constraintTop_toTopOf="@+id/menuSearch" />
 
+    <ImageView
+        android:id="@+id/searchTypeIcon"
+        android:layout_width="67dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/menuSearch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/menuSearch"
+        app:srcCompat="@drawable/regular" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
