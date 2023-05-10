@@ -25,14 +25,14 @@ public class MyTaskSetRating extends AsyncTask<String, Void, String> {
 
         try { //SetSongLista(String idUsr, String contrasenya, String idLista, String idAudio): int
             MySingleton singleton = MySingleton.getInstance();
-            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/SetRating/");
+            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/SetValoracion/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\", \"val\": \"" + rating + "\" , \"idAudio\": \"" + idAudio + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\", \"valoracion\": \"" + rating + "\" , \"idAudio\": \"" + idAudio + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);

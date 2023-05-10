@@ -22,7 +22,7 @@ public class MyTaskSendEmail extends AsyncTask<String, Void, String> {
 
         try {
             MySingleton singleton = MySingleton.getInstance();
-            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/SendEmail/");
+            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/GenerateRandomCodeUsr/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");

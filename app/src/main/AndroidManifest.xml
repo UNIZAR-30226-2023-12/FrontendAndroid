@@ -106,7 +106,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Equalizer"
+            android:name=".EqualizerScreen"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Translucent">
             <meta-data

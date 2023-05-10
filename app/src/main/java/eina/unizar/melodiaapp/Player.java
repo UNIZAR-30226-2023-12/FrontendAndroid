@@ -58,7 +58,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
     MediaPlayer mediaPlayer = new MediaPlayer();
     ToggleButton play_pause;
     ImageButton stop;
-    private String idAudioActual;
+    private String idAudioActual = "idAudio:2";
 
     protected String doRequestSetLastSecondHeared(String seconds) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
@@ -160,7 +160,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         String idUsr = preferences.getString("idUsuario", "");
 
-        String InputString = "?idAudio=idAudio:2&calidad=False&esCancion=True&idUsr=" + idUsr;
+        String InputString = "?idAudio=idAudio:1&calidad=False&esCancion=True&idUsr=" + idUsr;
 
         new GETRequest() {
             @Override
@@ -253,7 +253,8 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
             public void onClick(View v) {
                 // Envío en los extras el id de la canción en el MediaPlayer
                 Intent intent = new Intent(getApplicationContext(), EqualizerScreen.class);
-                intent.putExtra("audioID", String.valueOf(mediaPlayer.getAudioSessionId()));
+                String sessionId = String.valueOf(mediaPlayer.getAudioSessionId());
+                intent.putExtra("audioID", sessionId);
                 startActivity(intent);
             }
         });
@@ -306,7 +307,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         });
 
         // OnClick para la ratingbar
-        RatingBar ratingBar = findViewById(R.id.ratingBar);
+        ratingBar = findViewById(R.id.ratingBar);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             // Se ejecuta cuando se cambia el valor de la ratingbar
             @Override

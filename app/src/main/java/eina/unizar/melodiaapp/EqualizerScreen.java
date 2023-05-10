@@ -48,7 +48,7 @@ public class EqualizerScreen extends AppCompatActivity {
         mSeekBarTreble = findViewById(R.id.seekBar4);
 
         // Creo una instancia de la clase Equalizer
-        mEqualizer = new Equalizer(0, 0);
+        mEqualizer = new Equalizer(0, Integer.parseInt(audioID));
         mEqualizer.setEnabled(true);
 
         mSeekBarBass.setOnSeekBarChangeListener(mOnSeekBarChangeListener);

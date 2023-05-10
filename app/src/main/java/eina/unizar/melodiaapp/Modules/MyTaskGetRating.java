@@ -29,7 +29,7 @@ public class MyTaskGetRating extends AsyncTask<String, Void, String> {
 
         try { //SetSongLista(String idUsr, String contrasenya, String idLista, String idAudio): int
             MySingleton singleton = MySingleton.getInstance();
-            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/SetRating/");
+            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/GetValoracion/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");

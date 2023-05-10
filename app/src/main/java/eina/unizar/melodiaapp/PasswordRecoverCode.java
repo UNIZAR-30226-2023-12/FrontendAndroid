@@ -17,16 +17,15 @@ import eina.unizar.melodiaapp.Modules.MyTaskRecoverPasswd;
  * Clase que codifica la actividad para cambio de contraseña
  */
 public class PasswordRecoverCode extends AppCompatActivity {
-    protected String doRequestChangePasswd() throws ExecutionException, InterruptedException {
+    protected String doRequestChangePasswd(String email, String contrasenya) throws ExecutionException, InterruptedException {
 
-        EditText eTemail = findViewById(R.id.inEmail);
+        EditText code = findViewById(R.id.inCodeRecover);
         EditText eTcontra = findViewById(R.id.inPasswd);
 
-        String email = eTemail.getText().toString();
-        String contra = eTcontra.getText().toString();
+        String codeString = code.getText().toString();
 
         MyTaskRecoverPasswd task = new MyTaskRecoverPasswd();
-        String respuesta = task.execute(email, contra).get();
+        String respuesta = task.execute(email, contrasenya, codeString).get();
 
         return respuesta;
     }
@@ -45,6 +44,9 @@ public class PasswordRecoverCode extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_recover_code);
 
+        Intent intent = getIntent();
+        String email = intent.getStringExtra("email");
+
         TextView bCheckPasswd = findViewById(R.id.bNewPasswordConfirm);
         bCheckPasswd.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -62,7 +64,7 @@ public class PasswordRecoverCode extends AppCompatActivity {
                 else if(pass1.equals(pass2)){
                     String response = "Error";
                     try {
-                        response = doRequestChangePasswd();
+                        response = doRequestChangePasswd(email, pass1);
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {

@@ -17,20 +17,22 @@ import eina.unizar.melodiaapp.MySingleton;
 public class MyTaskRecoverPasswd extends AsyncTask<String, Void, String> {
     @Override
     public String doInBackground(String... params) {
-        String codigo = params[0];
+        String email = params[0];
         String contrasenya = params[1];
+        String codigo = params[2];
+
         String result = "";
 
         try {
             MySingleton singleton = MySingleton.getInstance();
-            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/ChangePasswd/");
+            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/RecuperarContrasenya/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
+            conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"code\": \"" + codigo + "\", \"contrasenya\": \"" + contrasenya + "\"}";
+            String jsonInputString = "{\"codigo\": \"" + codigo + "\", \"contrasenya\": \"" + contrasenya + "\" , \"email\": \"" + email + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);

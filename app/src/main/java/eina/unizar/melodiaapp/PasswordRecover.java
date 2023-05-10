@@ -20,7 +20,7 @@ public class PasswordRecover extends AppCompatActivity {
 
     protected String doRequestSendEmail() throws ExecutionException, InterruptedException {
 
-        EditText eTemail = findViewById(R.id.inEmail);
+        EditText eTemail = findViewById(R.id.inEmailRecover);
 
         String email = eTemail.getText().toString();
 
@@ -59,6 +59,7 @@ public class PasswordRecover extends AppCompatActivity {
 
                 if (response.equals("200")) {
                     Intent intent = new Intent(getApplicationContext(), PasswordRecoverCode.class);
+                    intent.putExtra("email", ((EditText) findViewById(R.id.inEmailRecover)).getText().toString());
                     startActivity(intent);
                 }
                 else {

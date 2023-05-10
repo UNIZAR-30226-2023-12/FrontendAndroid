@@ -47,7 +47,7 @@ public class Playlist extends AppCompatActivity {
         String contrasenya = preferences.getString("contrasenya", "");
 
         MyTaskAskPlaylists task = new MyTaskAskPlaylists();
-        String respuesta = task.execute(idUsuario, contrasenya).get();
+        String respuesta = task.execute(idUsuario, contrasenya, idUsuario).get();
         String response[] = respuesta.split(",");
 
         if (response[0].equals("200")) {

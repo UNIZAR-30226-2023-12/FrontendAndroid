@@ -19,6 +19,7 @@ public class MyTaskAskPlaylists extends AsyncTask<String, Void, String> {
     public String doInBackground(String... params) {
         String idUsuario = params[0];
         String contrasenya = params[1];
+        String idUsrGet = params[2];
         String result = "";
 
         try {
@@ -30,7 +31,7 @@ public class MyTaskAskPlaylists extends AsyncTask<String, Void, String> {
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"idUsrGet\": \"" + idUsrGet + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);

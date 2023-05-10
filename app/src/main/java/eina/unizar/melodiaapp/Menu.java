@@ -24,7 +24,7 @@ public class Menu extends AppCompatActivity {
         String contrasenya = preferences.getString("contrasenya", "");
 
         MyTaskAskProfile task = new MyTaskAskProfile();
-        String respuesta = task.execute(idUsuario, contrasenya).get();
+        String respuesta = task.execute(idUsuario, contrasenya, idUsuario).get();
         String response[] = respuesta.split(",");
 
         if (response[0].equals("200")) {
