@@ -95,6 +95,19 @@ public class Results extends AppCompatActivity {
             }
         }
 
+        protected String[] doRequestAskMyTaskByWordSearch(String query, String n) throws ExecutionException, InterruptedException {
+
+            MyTaskAskGlobalSearchResults task = new MyTaskAskGlobalSearchResults();
+            String respuesta = task.execute(query, n).get();
+            String response[] = respuesta.split(",");
+
+            if (response[0].equals("200")) {
+                return response;
+            } else {
+                return new String[]{"Error"};
+            }
+        }
+
         protected String[] doRequestAskTop10() throws ExecutionException, InterruptedException {
 
             MyTaskAskGlobalSearchResults task = new MyTaskAskGlobalSearchResults();
@@ -135,14 +148,20 @@ public class Results extends AppCompatActivity {
                 Bundle extras = getIntent().getExtras();
                 if (extras != null) {
 
-                    if (extras.getString(("mode")).equals("regularSearch")) {
+                    if (extras.getString(("mode")).equals("regularSearch") || extras.getString(("mode")).equals("randomizer")) {
 
 
                         String searchQuery = extras.getString("query");
                         //String searchN = extras.getString("amount"); de momento lo hardcodeamos
                         String searchN = "15";
 
-                        listaIdResultados = doRequestAskGlobalSearchResults(searchQuery, searchN); //Id objeto
+                        if (extras.getString(("mode")).equals("regularSearch")) {
+                            listaIdResultados = doRequestAskGlobalSearchResults(searchQuery, searchN); //Id objeto
+                        }
+                        else{
+                            listaIdResultados = doRequestAskMyTaskByWordSearch(searchQuery, searchN); //Id objeto
+                        }
+
                         if (listaIdResultados[0].equals("Error")) {
                             Toast.makeText(getApplicationContext(), "Error al obtener los resultados", Toast.LENGTH_SHORT).show();
                         } else {
