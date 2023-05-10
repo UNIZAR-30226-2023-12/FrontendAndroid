@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,8 @@ import android.media.AudioManager;
 
 import eina.unizar.melodiaapp.Modules.GETRequest;
 import eina.unizar.melodiaapp.Modules.MyTaskAskLink;
+import eina.unizar.melodiaapp.Modules.MyTaskGetRating;
+import eina.unizar.melodiaapp.Modules.MyTaskSetRating;
 import eina.unizar.melodiaapp.Modules.MyTaskSetSecHeared;
 
 import eina.unizar.melodiaapp.Modules.AudioPlayer;
@@ -65,6 +68,32 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
 
         MyTaskSetSecHeared task = new MyTaskSetSecHeared();
         return task.execute(idUsr, passwd, idAudioActual, seconds).get();
+    }
+
+    protected String doRequestSetRating(String rating) throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contrasenya de shared preferences
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsr = preferences.getString("idUsuario", "");
+        String passwd = preferences.getString("contrasenya", "");
+
+        MyTaskSetRating task = new MyTaskSetRating();
+        return task.execute(idUsr, passwd, idAudioActual, rating).get();
+    }
+
+    protected String doRequestGetRating() throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contrasenya de shared preferences
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsr = preferences.getString("idUsuario", "");
+        String passwd = preferences.getString("contrasenya", "");
+
+        MyTaskGetRating task = new MyTaskGetRating();
+        String[] respuesta = task.execute(idUsr, passwd, idAudioActual).get().split(",");
+
+        if (respuesta[0].equals("200")) {
+            return respuesta[1];
+        } else {
+            return "Error";
+        }
     }
 
     protected String doRequestAskLink() throws ExecutionException, InterruptedException {
@@ -114,6 +143,17 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         else{//Eliminamos la descripción escondida
 
             hidden.setVisibility(View.GONE);
+        }
+
+        // Seteo el rating
+        RatingBar ratingBar = findViewById(R.id.ratingBar);
+        try {
+            String rating = doRequestGetRating();
+            if (!rating.equals("Error")) {
+                ratingBar.setRating(Float.parseFloat(rating));
+            }
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
         }
 
         // Obtengo el idUsr de SharedPreferences
@@ -261,6 +301,23 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "Error al obtener el link", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // OnClick para la ratingbar
+        RatingBar ratingBar = findViewById(R.id.ratingBar);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            // Se ejecuta cuando se cambia el valor de la ratingbar
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                String ratingValue = String.valueOf(ratingBar.getRating());
+                try {
+                    doRequestSetRating(ratingValue);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
