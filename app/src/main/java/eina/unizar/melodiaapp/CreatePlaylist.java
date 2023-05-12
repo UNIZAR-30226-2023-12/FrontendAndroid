@@ -79,6 +79,8 @@ public class CreatePlaylist extends AppCompatActivity {
 
     }
 
+
+
     /**
      * Función que se ejecuta al crear la actividad. Se encarga de asignar los listeners a los botones
      * de la actividad y de iniciar los distintos componentes de la pantalla
@@ -89,6 +91,79 @@ public class CreatePlaylist extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_playlist);
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null){
+
+            String mode = extras.getString("mode");
+
+            if (mode.equals("admin")){
+
+                RadioButton privado = findViewById(R.id.radioButtonPrivate);
+                privado.setVisibility(View.GONE);
+
+                RadioButton global = findViewById(R.id.radioButtonPublic);
+                global.setText("Global");
+                global.setChecked(true);
+
+                // Añado el listener para el botón de crear playlist de administrador
+                TextView createPlaylistbtn = findViewById(R.id.bCrearLista);
+
+                createPlaylistbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String response = null;
+                        try {
+                            response = doRequest();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException | JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if(response == "200"){
+                            Toast.makeText(getApplicationContext(), "Playlist creada correctamente", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), Playlist.class);
+                            startActivity(intent);
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "Error al crear la playlist", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+            else{
+                System.out.println("Error, unknown mode");
+                finish();
+            }
+        }
+        else{//Creación de playlist normal
+
+            // Añado el listener para el botón de crear playlist
+            TextView createPlaylistbtn = findViewById(R.id.bCrearLista);
+
+            createPlaylistbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String response = null;
+                    try {
+                        response = doRequest();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if(response == "200"){
+                        Toast.makeText(getApplicationContext(), "Playlist creada correctamente", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), Playlist.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Error al crear la playlist", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
 
         ImageView profileIcon = findViewById(R.id.profileIconAcreatePlaylist);
         profileIcon.setOnClickListener(new View.OnClickListener(){
@@ -118,29 +193,6 @@ public class CreatePlaylist extends AppCompatActivity {
             }
         });
 
-        // Añado el listener para el botón de crear playlist
-        TextView createPlaylistbtn = findViewById(R.id.bCrearLista);
 
-        createPlaylistbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String response = null;
-                try {
-                    response = doRequest();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException | JSONException e) {
-                    e.printStackTrace();
-                }
-                if(response == "200"){
-                    Toast.makeText(getApplicationContext(), "Playlist creada correctamente", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), Playlist.class);
-                    startActivity(intent);
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "Error al crear la playlist", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 }
