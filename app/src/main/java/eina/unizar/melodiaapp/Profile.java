@@ -199,11 +199,11 @@ public class Profile extends AppCompatActivity {
                 });
             } else {//Escondemos Ser artista
                 becomeArist.setVisibility(View.GONE);
-                upload.setVisibility(View.GONE);
+
 
                 if (response[1].equals("admin")) {
                     configAdmin.setVisibility(View.VISIBLE);
-
+                    upload.setVisibility(View.GONE);
                     configAdmin.setOnClickListener(v -> {
                         Intent intent = new Intent(this, AdminConfig.class);
                         startActivity(intent);
