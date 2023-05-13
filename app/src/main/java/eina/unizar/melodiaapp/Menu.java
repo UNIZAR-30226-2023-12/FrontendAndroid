@@ -177,6 +177,7 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Notifications.class);
+                intent.putExtra("key", "admin");
                 startActivity(intent);
             }
         });

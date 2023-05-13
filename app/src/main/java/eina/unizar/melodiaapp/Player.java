@@ -160,7 +160,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         String idUsr = preferences.getString("idUsuario", "");
 
-        String InputString = "?idAudio=idAudio:1&calidad=False&esCancion=True&idUsr=" + idUsr;
+        String InputString = "?idAudio=idAudio:2&calidad=False&esCancion=True&idUsr=" + idUsr;
 
         new GETRequest() {
             @Override
@@ -273,7 +273,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                 String opcion = "Append";
                 Intent intent = new Intent(getApplicationContext(), Playlist.class);
                 intent.putExtra("key", opcion);
-                intent.putExtra("songId", "idAudio:1");
+                intent.putExtra("songId", "idAudio:2");
                 startActivity(intent);
             }
         });

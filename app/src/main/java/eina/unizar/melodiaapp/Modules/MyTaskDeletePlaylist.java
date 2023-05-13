@@ -24,7 +24,7 @@ public class MyTaskDeletePlaylist extends AsyncTask<String, Void, String> {
 
         try {
             MySingleton singleton = MySingleton.getInstance();
-            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/DeleteLista/");
+            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/RemoveListaRepUsr/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
