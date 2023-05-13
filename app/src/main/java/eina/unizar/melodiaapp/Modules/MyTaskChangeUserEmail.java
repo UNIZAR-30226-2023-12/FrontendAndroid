@@ -16,10 +16,9 @@ public class MyTaskChangeUserEmail extends AsyncTask<String, Void, String> {
      */
     @Override
     public String doInBackground(String... params) {
-        String nombreCarpeta = params[0];
-        String idUsuario = params[1];
-        String contrasenya = params[2];
-        String email = params[3];
+        String idUsuario = params[0];
+        String contrasenya = params[1];
+        String email = params[2];
         String result = "";
 
         try {//SetAliasUsr

@@ -2,18 +2,13 @@ package eina.unizar.melodiaapp.Modules;
 
 import android.os.AsyncTask;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
-public class MyTaskChangeUserAlias extends AsyncTask<String, Void, String> {
+public class MyTaskChooseQuality extends AsyncTask<String, Void, String> {
     /**
      * Método que se ejecuta en segundo plano para realizar la petición al servidor y cambiar el alias
      * @param params
@@ -23,7 +18,7 @@ public class MyTaskChangeUserAlias extends AsyncTask<String, Void, String> {
     public String doInBackground(String... params) {
         String idUsuario = params[0];
         String contrasenya = params[1];
-        String alias = params[2];
+        String calidadPreferida = params[2];
         String result = "";
 
         try {//SetAliasUsr
@@ -35,7 +30,7 @@ public class MyTaskChangeUserAlias extends AsyncTask<String, Void, String> {
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"alias\": \"" + alias + "\", \"contrasenya\": \"" + contrasenya + "\", \"idUsr2\": \"" + idUsuario + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\", \"calidadPreferida\": \"" + calidadPreferida + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);

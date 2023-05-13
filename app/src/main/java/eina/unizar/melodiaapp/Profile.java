@@ -20,6 +20,7 @@ import java.util.concurrent.ExecutionException;
 import eina.unizar.melodiaapp.Modules.MyTaskAskProfile;
 import eina.unizar.melodiaapp.Modules.MyTaskChangeUserAlias;
 import eina.unizar.melodiaapp.Modules.MyTaskChangeUserEmail;
+import eina.unizar.melodiaapp.Modules.MyTaskChooseQuality;
 import eina.unizar.melodiaapp.Modules.MyTaskSetSongLista;
 import eina.unizar.melodiaapp.Modules.MyTaskSubscribe;
 
@@ -75,6 +76,24 @@ public class Profile extends AppCompatActivity {
             return "Error";
         }
     }
+
+    protected String doRequestChangeQuality(String quality) throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contraseña de shared preferences
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        MyTaskChooseQuality task = new MyTaskChooseQuality();
+        String response = task.execute(idUsuario, contrasenya, "quality").get();
+
+        if (response.equals("200")) {
+            return response;
+        }
+        else {
+            return "Error";
+        }
+    }
+
 
     protected String doRequestChangeEmail(String email) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
@@ -258,8 +277,28 @@ public class Profile extends AppCompatActivity {
 
         RadioButton HD = findViewById(R.id.radioButton2);
         HD.setOnClickListener(v -> {
-            Intent intent = new Intent(this, PasswordRecover.class);
-            startActivity(intent);
+            try {
+                String cambioCalidad = doRequestChangeQuality("alta");
+                //Toast con el resultado
+                Toast.makeText(getApplicationContext(), "Calidad cambiada a: " + "alta", Toast.LENGTH_SHORT).show();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        RadioButton LD = findViewById(R.id.radioButton);
+        LD.setOnClickListener(v -> {
+            try {
+                String cambioCalidad = doRequestChangeQuality("baja");
+                //Toast con el resultado
+                Toast.makeText(getApplicationContext(), "Calidad cambiada a: " + "baja", Toast.LENGTH_SHORT).show();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         });
 
         ImageView editarAlias = findViewById(R.id.profileNameEdit);
