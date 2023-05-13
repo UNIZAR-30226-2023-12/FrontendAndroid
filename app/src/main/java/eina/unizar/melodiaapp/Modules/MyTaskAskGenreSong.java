@@ -53,7 +53,7 @@ public class MyTaskAskGenreSong extends AsyncTask<String, Void, String> {
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
                 JsonObject jsonArray = jsonObject.getAsJsonObject("idAudio");
-                String name = jsonArray.get("genero").getAsString();
+                String name = jsonArray.get("generos").getAsString();
 
                 return "200," + name;
             } else {

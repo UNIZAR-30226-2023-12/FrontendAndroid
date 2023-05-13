@@ -252,6 +252,8 @@ public class listaReproduccion extends AppCompatActivity {
         nombresCancionesString = String.join(",", nombresCanciones);
         // Guardo los ids y los nombres de las canciones en shared preferences
         // Guardo ademas los artistas y generos para ordenar
+        artistasCancionesString = String.join(",", artistasCanciones);
+        generoCancionesString = String.join(",", generoCanciones);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("idsCanciones", idsCancionesString.substring(idsCancionesString.indexOf(",") + 1));
         editor.putString("nombresCanciones", nombresCancionesString);
@@ -443,25 +445,9 @@ public class listaReproduccion extends AppCompatActivity {
         }
         idsCanciones = idsCanciones2;
 
-        // Añado un elemento a las izqda que sea "200"
-        String[] nombresCanciones2 = new String[wildcardCanciones.length+1];
-        nombresCanciones2[0] = "200";
-        for (int i = 0; i < wildcardCanciones.length; i++) {
-            nombresCanciones2[i+1] = wildcardCanciones[i];
-        }
-        wildcardCanciones = nombresCanciones2;
-
-        // Añado un elemento a las izqda que sea "200"
-        String[] wildcardCanciones2 = new String[wildcardCanciones.length+1];
-        wildcardCanciones2[0] = "200";
-        for (int i = 0; i < wildcardCanciones.length; i++) {
-            wildcardCanciones2[i+1] = wildcardCanciones[i];
-        }
-        wildcardCanciones = wildcardCanciones2;
-
 
         // Pongo las canciones en pantalla
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, wildcardCanciones);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, nombresCanciones);
         ListView listView = findViewById(R.id.listCRep);
         listView.setAdapter(adapter);
 
@@ -475,7 +461,7 @@ public class listaReproduccion extends AppCompatActivity {
             listView.addHeaderView(header);
 
             TextView row = header.findViewById(R.id.listTextView);
-            row.setText(nombresCanciones[j+1]);
+            row.setText(nombresCanciones[j]);
             row.setTag(idsCanciones[j+1]);
 
             row.setOnClickListener(new View.OnClickListener() {

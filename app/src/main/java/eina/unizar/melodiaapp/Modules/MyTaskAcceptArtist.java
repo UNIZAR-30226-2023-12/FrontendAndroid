@@ -29,7 +29,7 @@ public class MyTaskAcceptArtist extends AsyncTask<String, Void, String> {
 
         try {
             MySingleton singleton = MySingleton.getInstance();
-            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/AskAdminToBeArtist/");
+            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/AcceptArtist/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
