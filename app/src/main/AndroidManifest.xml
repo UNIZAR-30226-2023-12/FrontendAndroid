@@ -43,7 +43,8 @@
         </activity>
         <activity
             android:name=".Results"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".Reproductions"
             android:exported="false" />
