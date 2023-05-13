@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +18,8 @@ import org.w3c.dom.Text;
 import java.util.concurrent.ExecutionException;
 
 import eina.unizar.melodiaapp.Modules.MyTaskAskProfile;
+import eina.unizar.melodiaapp.Modules.MyTaskChangeUserAlias;
+import eina.unizar.melodiaapp.Modules.MyTaskChangeUserEmail;
 import eina.unizar.melodiaapp.Modules.MyTaskSetSongLista;
 import eina.unizar.melodiaapp.Modules.MyTaskSubscribe;
 
@@ -52,6 +56,40 @@ public class Profile extends AppCompatActivity {
         }
         else {
             return new String[]{"Error"};
+        }
+    }
+
+    protected String doRequestChangeAlias(String alias) throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contraseña de shared preferences
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        MyTaskChangeUserAlias task = new MyTaskChangeUserAlias();
+        String response = task.execute(idUsuario, contrasenya, alias).get();
+
+        if (response.equals("200")) {
+            return response;
+        }
+        else {
+            return "Error";
+        }
+    }
+
+    protected String doRequestChangeEmail(String email) throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contraseña de shared preferences
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        MyTaskChangeUserEmail task = new MyTaskChangeUserEmail();
+        String response = task.execute(idUsuario, contrasenya, email).get();
+
+        if (response.equals("200")) {
+            return response;
+        }
+        else {
+            return "Error";
         }
     }
 
@@ -113,8 +151,8 @@ public class Profile extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        TextView name = findViewById(R.id.displayProfileName);
-        TextView email = findViewById(R.id.displayEmail);
+        EditText name = findViewById(R.id.displayProfileName);
+        EditText email = findViewById(R.id.displayEmail);
         name.setText(response[2]);
         // Añado el nombre a shared preferences
         SharedPreferences.Editor editor = preferences.edit();
@@ -161,6 +199,7 @@ public class Profile extends AppCompatActivity {
                 });
             } else {//Escondemos Ser artista
                 becomeArist.setVisibility(View.GONE);
+                upload.setVisibility(View.GONE);
 
                 if (response[1].equals("admin")) {
                     configAdmin.setVisibility(View.VISIBLE);
@@ -217,5 +256,38 @@ public class Profile extends AppCompatActivity {
             startActivity(intent);
         });
 
+        RadioButton HD = findViewById(R.id.radioButton2);
+        HD.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PasswordRecover.class);
+            startActivity(intent);
+        });
+
+        ImageView editarAlias = findViewById(R.id.profileNameEdit);
+        editarAlias.setOnClickListener(v -> {
+            String alias = name.getText().toString();
+            try {
+                String cambioAlias = doRequestChangeAlias(alias);
+                //Toast con el resultado
+                Toast.makeText(getApplicationContext(), "Alias cambiado a: " + cambioAlias, Toast.LENGTH_SHORT).show();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        ImageView editarEmail = findViewById(R.id.profileNameEdit);
+        editarEmail.setOnClickListener(v -> {
+            String correo = email.getText().toString();
+            try {
+                String cambioAlias = doRequestChangeEmail(correo);
+                //Toast con el resultado
+                Toast.makeText(getApplicationContext(), "Correo cambiado a: " + cambioAlias, Toast.LENGTH_SHORT).show();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

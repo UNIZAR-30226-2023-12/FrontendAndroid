@@ -32,7 +32,7 @@
 
 
 
-  <TextView
+  <EditText
       android:id="@+id/displayProfileName"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
       app:layout_constraintStart_toEndOf="@+id/displayProfileName"
       app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
-  <TextView
+  <EditText
       android:id="@+id/displayEmail"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -75,11 +75,11 @@
       android:id="@+id/profileEmailEdit"
       android:layout_width="32dp"
       android:layout_height="32dp"
-      android:layout_marginTop="20dp"
+      android:layout_marginTop="16dp"
       android:src="@drawable/pencil"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.121"
-      app:layout_constraintStart_toEndOf="@+id/displayProfileName"
+      app:layout_constraintHorizontal_bias="0.277"
+      app:layout_constraintStart_toEndOf="@+id/displayEmail"
       app:layout_constraintTop_toBottomOf="@+id/profileNameEdit" />
 
   <TextView
