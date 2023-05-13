@@ -51,14 +51,26 @@ public class MyTaskAskGlobalSearchResults extends AsyncTask<String, Void, String
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                JsonArray jsonArray = jsonObject.getAsJsonArray("resultados");
+                JsonArray audios = jsonObject.getAsJsonArray("audios");
+                JsonArray artistas = jsonObject.getAsJsonArray("artistas");
+                JsonArray listas = jsonObject.getAsJsonArray("listas");
+
+
                 // Obtengo los ids de todas los resultados del array y los concateno en un string
-                String idDevuelto = "";
-                for (int i = 0; i < jsonArray.size(); i++) {
-                    idDevuelto += jsonArray.get(i).getAsString() + ",";
+                String idsAudios = "";
+                String idsArtistas = "";
+                String idsListas = "";
+                for (int i = 0; i < audios.size(); i++) {
+                    idsAudios += audios.get(i).getAsString() + ",";
+                }
+                for (int i = 0; i < artistas.size(); i++) {
+                    idsArtistas += artistas.get(i).getAsString() + ",";
+                }
+                for (int i = 0; i < listas.size(); i++) {
+                    idsListas += listas.get(i).getAsString() + ",";
                 }
 
-                return "200," + idDevuelto;
+                return "200;" + idsAudios + ";" + idsArtistas + ";" + idsListas;
             }
             else {
                 return "Error";
