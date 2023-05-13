@@ -21,6 +21,7 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskProfile;
 import eina.unizar.melodiaapp.Modules.MyTaskChangeUserAlias;
 import eina.unizar.melodiaapp.Modules.MyTaskChangeUserEmail;
 import eina.unizar.melodiaapp.Modules.MyTaskChooseQuality;
+import eina.unizar.melodiaapp.Modules.MyTaskGetDefaultQuality;
 import eina.unizar.melodiaapp.Modules.MyTaskSetSongLista;
 import eina.unizar.melodiaapp.Modules.MyTaskSubscribe;
 
@@ -124,7 +125,25 @@ public class Profile extends AppCompatActivity {
 
         return task.execute(idUsuario, contrasenya, idArtista).get();
     }
-    
+
+    protected String doRequestGetDefaultQuality() throws ExecutionException, InterruptedException {
+        // Obtengo usuario, contraseña e id de la playlist a modificar
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        // Hago la petición
+        MyTaskGetDefaultQuality task = new MyTaskGetDefaultQuality();
+        String respuesta[] = task.execute(idUsuario, contrasenya).get().split(",");
+
+        if (respuesta[0].equals("200")) {
+            return respuesta[1];
+        }
+        else {
+            return "Error";
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -301,6 +320,21 @@ public class Profile extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
+
+        // Pido la calidad actual y la pongo en el radiobutton
+        try {
+            String calidad = doRequestGetDefaultQuality();
+            if (calidad.equals("alta")) {
+                HD.setChecked(true);
+            } else {
+                LD.setChecked(true);
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
         ImageView editarAlias = findViewById(R.id.profileNameEdit);
         editarAlias.setOnClickListener(v -> {
