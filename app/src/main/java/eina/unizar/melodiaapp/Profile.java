@@ -210,5 +210,12 @@ public class Profile extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // Onclick para cambiar la contraseña
+        TextView bChangePassword = findViewById(R.id.bChangePassword);
+        bChangePassword.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PasswordRecover.class);
+            startActivity(intent);
+        });
+
     }
 }
