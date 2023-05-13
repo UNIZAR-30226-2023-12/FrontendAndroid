@@ -62,6 +62,7 @@
     <string name="Admin_title">Administración</string>
     <string name="Admin_artist">Nuevos\n Artistas</string>
     <string name="Admin_views">Escuchas\n totales</string>
+    <string name="Admin_list">Crear lista global</string>
     <string name="Reproduction_titleArtist">Reproducciones</string>
     <string name="Reproduction_titleAdmin">Reproducciones totales</string>
     <string name="Results_title">Resultados: </string>
@@ -70,4 +71,12 @@
     <string name="Results_orderArtist">Ordenar por\nartista </string>
     <string name="AddFriend_hint">Introduce el alias\n de tu amigo</string>
     <string name="AddFriend_add">Añadir</string>
+    <string name="AllSeconds_title">Segundos reproducidos\n por día</string>
+    <string name="AllSeconds_Today">Hoy:            </string>
+    <string name="AllSeconds_aDago">Hace un dia     </string>
+    <string name="AllSeconds_2Dago">Hace dos dias   </string>
+    <string name="AllSeconds_3Dago">Hace tres dias  </string>
+    <string name="AllSeconds_4Dago">Hace cuatro dias</string>
+    <string name="AllSeconds_5Dago">Hace cinco dias </string>
+    <string name="AllSeconds_6Dago">Hace seis dias  </string>
 </resources>

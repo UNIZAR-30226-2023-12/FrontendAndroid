@@ -226,7 +226,7 @@ public class Playlist extends AppCompatActivity {
                                 startActivity(intent);
                             }
                             else {
-                                Toast.makeText(getApplicationContext(), "Error al borrar la lista de reproducción", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Error al borrar la lista de reproducción, no tiene los permisos necesarios", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
