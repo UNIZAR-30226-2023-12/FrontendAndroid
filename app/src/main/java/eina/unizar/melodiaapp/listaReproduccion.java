@@ -28,6 +28,7 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskNameSongs;
 import eina.unizar.melodiaapp.Modules.MyTaskAskSongs;
 import eina.unizar.melodiaapp.Modules.MyTaskAskArtistSong;
 import eina.unizar.melodiaapp.Modules.MyTaskAskGenreSong;
+import eina.unizar.melodiaapp.Modules.MyTaskDeleteSongLista;
 
 public class listaReproduccion extends AppCompatActivity {
 
@@ -101,6 +102,24 @@ public class listaReproduccion extends AppCompatActivity {
 
         if (response[0].equals("200")) {
             return response[1];
+        }
+        else {
+            return "Error";
+        }
+    }
+
+    protected String doRequestDeleteSongLista(String idPlaylist, String idCancion) throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contraseña
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        MyTaskDeleteSongLista task = new MyTaskDeleteSongLista();
+        String respuesta = task.execute(idUsuario, contrasenya, idPlaylist, idCancion).get();
+        String[] response = respuesta.split(",");
+
+        if (response[0].equals("200")) {
+            return "200";
         }
         else {
             return "Error";
@@ -298,10 +317,14 @@ public class listaReproduccion extends AppCompatActivity {
             deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO ELIMINAR CANCION DE LA PLAYLIST
                     String idCancion = (String) v.getTag();
-                    Intent intent = new Intent(getApplicationContext(), Player.class);
-                    startActivity(intent);
+                    SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
+                    String idPlaylist = preferences.getString("idPlaylistActual", "");
+                    try {
+                        doRequestDeleteSongLista(idPlaylist, idCancion);
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -391,10 +414,14 @@ public class listaReproduccion extends AppCompatActivity {
                 deleteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO ELIMINAR CANCION DE LA PLAYLIST
                         String idCancion = (String) v.getTag();
-                        Intent intent = new Intent(getApplicationContext(), Player.class);
-                        startActivity(intent);
+                        SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
+                        String idPlaylist = preferences.getString("idPlaylistActual", "");
+                        try {
+                            doRequestDeleteSongLista(idPlaylist, idCancion);
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
 
@@ -482,10 +509,14 @@ public class listaReproduccion extends AppCompatActivity {
             deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO ELIMINAR CANCION DE LA PLAYLIST
                     String idCancion = (String) v.getTag();
-                    Intent intent = new Intent(getApplicationContext(), Player.class);
-                    startActivity(intent);
+                    SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
+                    String idPlaylist = preferences.getString("idPlaylistActual", "");
+                    try {
+                        doRequestDeleteSongLista(idPlaylist, idCancion);
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 

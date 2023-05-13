@@ -85,7 +85,7 @@
             style="@style/Widget.Button.favToggle"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:checked="true"
+            android:checked="false"
             android:clickable="true"
             android:focusable="true"
             android:text="ToggleButton"

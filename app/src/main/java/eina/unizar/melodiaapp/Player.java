@@ -41,11 +41,13 @@ import android.media.AudioManager;
 
 import eina.unizar.melodiaapp.Modules.GETRequest;
 import eina.unizar.melodiaapp.Modules.MyTaskAskLink;
+import eina.unizar.melodiaapp.Modules.MyTaskDeleteSongLista;
 import eina.unizar.melodiaapp.Modules.MyTaskGetRating;
 import eina.unizar.melodiaapp.Modules.MyTaskSetRating;
 import eina.unizar.melodiaapp.Modules.MyTaskSetSecHeared;
 
 import eina.unizar.melodiaapp.Modules.AudioPlayer;
+import eina.unizar.melodiaapp.Modules.MyTaskSetSongLista;
 
 public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado? donde esta la id de la canción
 
@@ -105,6 +107,44 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         MyTaskAskLink task = new MyTaskAskLink();
         String result = task.execute(idUsr, passwd, idAudioActual).get();
         String response[] = result.split(",");
+
+        if (response[0].equals("200")) {
+            return response[1];
+        } else {
+            return "Error";
+        }
+    }
+
+    // Para añadir canción a la lista favoritos
+    protected String doRequestAddFav() throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contrasenya de shared preferences
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsr = preferences.getString("idUsuario", "");
+        String passwd = preferences.getString("contrasenya", "");
+        String idLista = preferences.getString("idListaFavoritos", "");
+
+        MyTaskSetSongLista task = new MyTaskSetSongLista();
+        String result = task.execute(idUsr, passwd, idLista, idAudioActual).get();
+        String[] response = result.split(",");
+
+        if (response[0].equals("200")) {
+            return response[1];
+        } else {
+            return "Error";
+        }
+    }
+
+    // Para borrar canción de favoritos
+    protected String doRequestDeleteFav() throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contrasenya de shared preferences
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsr = preferences.getString("idUsuario", "");
+        String passwd = preferences.getString("contrasenya", "");
+        String idLista = preferences.getString("idListaFavoritos", "");
+
+        MyTaskDeleteSongLista task = new MyTaskDeleteSongLista();
+        String result = task.execute(idUsr, passwd, idAudioActual, idLista).get();
+        String[] response = result.split(",");
 
         if (response[0].equals("200")) {
             return response[1];
@@ -329,7 +369,36 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         TextView ratingValue = findViewById(R.id.ratingCuantity);
         ratingValue.setText(String.valueOf(ratingBar.getRating()));
 
+        // OnClick para el botón de añadir a favoritos
+        ToggleButton fav = findViewById(R.id.favorite_button);
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Activo el botón de favoritos
+                ToggleButton favBtn = v.findViewById(R.id.favorite_button);
+                if (!favBtn.isChecked()) {
+                    //favBtn.setChecked(false);
+                    try {
+                        doRequestDeleteFav();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    //favBtn.setChecked(true);
+                    try {
+                        doRequestAddFav();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
 
+            }
+        });
     }
 
     /**
