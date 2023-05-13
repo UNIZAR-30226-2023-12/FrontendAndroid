@@ -58,7 +58,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
     MediaPlayer mediaPlayer = new MediaPlayer();
     ToggleButton play_pause;
     ImageButton stop;
-    private String idAudioActual = "idAudio:2";
+    private String idAudioActual = "idAudio:1";
 
     protected String doRequestSetLastSecondHeared(String seconds) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
@@ -160,7 +160,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         String idUsr = preferences.getString("idUsuario", "");
 
-        String InputString = "?idAudio=idAudio:2&calidad=False&esCancion=True&idUsr=" + idUsr;
+        String InputString = "?idAudio=idAudio:1&calidad=False&esCancion=True&idUsr=" + idUsr;
 
         new GETRequest() {
             @Override
@@ -273,7 +273,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                 String opcion = "Append";
                 Intent intent = new Intent(getApplicationContext(), Playlist.class);
                 intent.putExtra("key", opcion);
-                intent.putExtra("songId", "idAudio:2");
+                intent.putExtra("songId", "idAudio:1");
                 startActivity(intent);
             }
         });
@@ -313,6 +313,8 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 String ratingValue = String.valueOf(ratingBar.getRating());
+                TextView ratingValueTextFinal = findViewById(R.id.ratingCuantity);
+                ratingValueTextFinal.setText(ratingValue);
                 try {
                     doRequestSetRating(ratingValue);
                 } catch (ExecutionException e) {
@@ -322,6 +324,10 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                 }
             }
         });
+
+        // Setear la valoración numérica
+        TextView ratingValue = findViewById(R.id.ratingCuantity);
+        ratingValue.setText(String.valueOf(ratingBar.getRating()));
 
 
     }

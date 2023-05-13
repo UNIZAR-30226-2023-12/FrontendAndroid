@@ -23,7 +23,7 @@ public class MyTaskChooseQuality extends AsyncTask<String, Void, String> {
 
         try {//SetAliasUsr
             MySingleton singleton = MySingleton.getInstance();
-            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/SetAliasUsr/");
+            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/SetCalidadPorDefectoUsr/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");

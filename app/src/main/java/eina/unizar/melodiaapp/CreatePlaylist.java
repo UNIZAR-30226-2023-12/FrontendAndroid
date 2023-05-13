@@ -92,7 +92,8 @@ public class CreatePlaylist extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_playlist);
 
-        Bundle extras = getIntent().getExtras();
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
 
         if (extras != null){
 

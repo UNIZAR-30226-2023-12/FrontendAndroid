@@ -38,7 +38,7 @@ public class MyTaskGetAudioFromLink extends AsyncTask<String, Void, String> {
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"link\": \"" + link + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"linkAudio\": \"" + link + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
@@ -58,7 +58,7 @@ public class MyTaskGetAudioFromLink extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                String audio = jsonObject.get("audio").getAsString();
+                String audio = jsonObject.get("lista").getAsString();
                 return responseCode + "," + audio;
             }
             else {

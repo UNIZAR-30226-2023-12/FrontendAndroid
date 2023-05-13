@@ -30,16 +30,6 @@ public class AdminConfig extends AppCompatActivity {
         reproducciones.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {//TODO reproducciones
-                Intent intent = new Intent(getApplicationContext(), Reproductions.class);
-                intent.putExtra("key",mode);
-                startActivity(intent);
-            }
-        });
-
-        TextView lista = findViewById(R.id.bCrearListaGlobal);
-        lista.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {//TODO reproducciones
                 Intent intent = new Intent(getApplicationContext(), AllSeconds.class);
                 intent.putExtra("key",mode);
                 startActivity(intent);

@@ -1,5 +1,7 @@
 package eina.unizar.melodiaapp.Modules;
 
+import android.os.AsyncTask;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -12,7 +14,7 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
-public class MyTaskAskTopReproductions {//GetTopReproducciones(Int n, Bool esPodcast) : Set<String> topAudios
+public class MyTaskAskTopReproductions extends AsyncTask<String, Void, String> {//GetTopReproducciones(Int n, Bool esPodcast) : Set<String> topAudios
     public String doInBackground(String... params) {
         String n = params[0];
         String esPodcast = params[1];
@@ -27,7 +29,7 @@ public class MyTaskAskTopReproductions {//GetTopReproducciones(Int n, Bool esPod
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"n\": \"" + n + "\", \"esPodcast\": \"" + esPodcast + "\"}";
+            String jsonInputString = "{\"n\": \"" + n + "\", \"esPodcast\": \"" + "1" + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
@@ -48,7 +50,7 @@ public class MyTaskAskTopReproductions {//GetTopReproducciones(Int n, Bool esPod
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                JsonArray jsonArray = jsonObject.getAsJsonArray("resultados");
+                JsonArray jsonArray = jsonObject.getAsJsonArray("topAudios");
                 // Obtengo los ids de todas los resultados del array y los concateno en un string
                 String idDevuelto = "";
                 for (int i = 0; i < jsonArray.size(); i++) {

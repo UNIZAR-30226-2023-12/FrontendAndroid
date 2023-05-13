@@ -124,6 +124,7 @@ public class Profile extends AppCompatActivity {
 
         return task.execute(idUsuario, contrasenya, idArtista).get();
     }
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

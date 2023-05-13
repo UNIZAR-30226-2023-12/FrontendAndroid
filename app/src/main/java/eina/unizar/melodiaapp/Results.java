@@ -23,6 +23,7 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskNamePlaylist;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNameSongs;
 import eina.unizar.melodiaapp.Modules.MyTaskAskPlaylists;
 import eina.unizar.melodiaapp.Modules.MyTaskAskProfile;
+import eina.unizar.melodiaapp.Modules.MyTaskAskTopReproductions;
 
 public class Results extends AppCompatActivity {
 
@@ -109,7 +110,7 @@ public class Results extends AppCompatActivity {
 
     protected String[] doRequestAskTop10() throws ExecutionException, InterruptedException {
 
-        MyTaskAskGlobalSearchResults task = new MyTaskAskGlobalSearchResults();
+        MyTaskAskTopReproductions task = new MyTaskAskTopReproductions();
         String respuesta = task.execute("10", "False").get();
         String response[] = respuesta.split(",");
 
@@ -295,7 +296,7 @@ public class Results extends AppCompatActivity {
                             //Obtengo los nombres de los elementos
                             String nombresElementos[] = new String[listaIdResultados.length - 1];
 
-                            Integer i = 1;
+                            int i = 1;
                             for (i = 1; i <= nombresElementos.length; i++) {
 
                                 nombresElementos[i - 1] = doRequestAskNameSongs(listaIdResultados[i]);

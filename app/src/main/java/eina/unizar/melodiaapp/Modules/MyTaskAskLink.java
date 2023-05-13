@@ -58,7 +58,7 @@ public class MyTaskAskLink extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                String link = jsonObject.get("link").getAsString();
+                String link = jsonObject.get("linkAudio").getAsString();
                 return responseCode + "," + link;
             }
             else {

@@ -22,6 +22,7 @@ import java.util.concurrent.ExecutionException;
 
 import eina.unizar.melodiaapp.Modules.MyTaskAskPlaylists;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNamePlaylist;
+import eina.unizar.melodiaapp.Modules.MyTaskAskProfile;
 import eina.unizar.melodiaapp.Modules.MyTaskChangeNamePlaylist;
 import eina.unizar.melodiaapp.Modules.MyTaskDeletePlaylist;
 import eina.unizar.melodiaapp.Modules.MyTaskSetSongLista;
@@ -32,6 +33,25 @@ import eina.unizar.melodiaapp.Modules.MyTaskSetSongLista;
 public class Playlist extends AppCompatActivity {
 
     private String listaListasRepUser[];
+
+    protected String[] doRequestAskUser() throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contraseña de shared preferences
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        MyTaskAskProfile task = new MyTaskAskProfile();
+        String respuesta = task.execute(idUsuario, contrasenya, idUsuario).get();
+        String response[] = respuesta.split(",");
+
+        if (response[0].equals("200")) {
+            return response;
+        }
+        else {
+            return new String[]{"Error"};
+        }
+    }
+
     /**
      * Función que llama a la task encargada de pedir al servidor las listas de reproducción del usuario
      * Si ha ido bien devuelve un array con el código de respuesta y el json con las listas de reproducción
@@ -300,6 +320,16 @@ public class Playlist extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CreatePlaylist.class);
+                // Obtengo si el user es admin
+                String respuesta[] = new String[]{"Error"};
+                try {
+                    respuesta = doRequestAskUser();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                intent.putExtra("mode", respuesta[1]);
                 startActivity(intent);
                 //fillData();
             }

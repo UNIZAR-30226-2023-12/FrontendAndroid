@@ -19,18 +19,19 @@ public class MyTaskAskSongsArtist extends AsyncTask<String, Void, String> {
     public String doInBackground(String... params) {
         String idUsuario = params[0];
         String contrasenya = params[1];
+        String idUsuarioArtista = idUsuario;
         String result = "";
 
         try {
             MySingleton singleton = MySingleton.getInstance();
-            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/GetArtistSongs/");
+            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/GetSongsArtist/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"idUsrArtista\": \"" + idUsuarioArtista + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
@@ -51,7 +52,7 @@ public class MyTaskAskSongsArtist extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                JsonArray jsonArray = jsonObject.getAsJsonArray("listas");
+                JsonArray jsonArray = jsonObject.getAsJsonArray("canciones");
                 // Obtengo los ids de todas las listas del array y los concateno en un string
                 String idDevuelto = "";
                 for (int i = 0; i < jsonArray.size(); i++) {

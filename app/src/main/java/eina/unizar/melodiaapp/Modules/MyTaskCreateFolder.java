@@ -26,6 +26,8 @@ public class MyTaskCreateFolder extends AsyncTask<String, Void, String> {
         String contrasenya = params[2];
         String result = "";
 
+        String privacidadCarpeta = "privada";
+
         try {
             MySingleton singleton = MySingleton.getInstance();
             URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/SetFolder/");
@@ -35,7 +37,7 @@ public class MyTaskCreateFolder extends AsyncTask<String, Void, String> {
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"nombreCarpeta\": \"" + nombreCarpeta + "\", \"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\"}";
+            String jsonInputString = "{\"nombreCarpeta\": \"" + nombreCarpeta + "\", \"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"privacidadCarpeta\": \"" + privacidadCarpeta + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
