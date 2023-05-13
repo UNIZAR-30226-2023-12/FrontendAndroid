@@ -163,10 +163,21 @@ public class Notifications extends AppCompatActivity {
                     deleteBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // TODO ELIMINAR CANCION DE LA PLAYLIST
-                            String idCancion = (String) v.getTag();
-                            Intent intent = new Intent(getApplicationContext(), Player.class);
-                            startActivity(intent);
+                            // Elimino notificación
+                            String idNot = v.getTag().toString();
+                            try {
+                                String respuesta = doRequestRejectArtist(idNot);
+                                if (respuesta.equals("200")) {
+                                    Toast.makeText(Notifications.this, "Notificación eliminada", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(Notifications.this, Notifications.class);
+                                    startActivity(intent);
+                                }
+                                else {
+                                    Toast.makeText(Notifications.this, "Error al eliminar la notificación", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                 }
@@ -220,14 +231,14 @@ public class Notifications extends AppCompatActivity {
                         TextView textView = item.findViewById(R.id.listTextView);
 
                         LayoutInflater inflater = getLayoutInflater();
-                        View header = inflater.inflate(R.layout.cancion_item, null);
+                        View header = inflater.inflate(R.layout.artist_approval_item, null);
                         listView.addHeaderView(header);
 
                         TextView row = header.findViewById(R.id.listTextView);
                         row.setText(nombreNotificaciones[j]);
                         row.setTag(response[j+1]);
 
-                        ImageView deleteBtn = header.findViewById(R.id.imageView5);
+                        ImageView deleteBtn = header.findViewById(R.id.BorradoCancionArtist);
                         deleteBtn.setTag(response[j+1]);
                         deleteBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -250,7 +261,7 @@ public class Notifications extends AppCompatActivity {
                             }
                         });
                         //Botón de options para aceptar ser artista
-                        ImageView optionsBtn = header.findViewById(R.id.imageView4);
+                        ImageView optionsBtn = header.findViewById(R.id.optionsSongsArtist);
                         optionsBtn.setTag(response[j+1]);
                         optionsBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
