@@ -158,6 +158,10 @@ public class listaReproduccion extends AppCompatActivity {
                     mode = "random";
                     reproductionType.setImageResource(R.drawable.random);
                 }
+                else if(mode.equals("random")){
+                    mode = "repeat";
+                    reproductionType.setImageResource(R.drawable.random);
+                }
                 else{
                     mode = "linear";
                     reproductionType.setImageResource(R.drawable.regular);
