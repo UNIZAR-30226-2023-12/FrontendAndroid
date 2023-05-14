@@ -350,7 +350,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        ImageView editarEmail = findViewById(R.id.profileNameEdit);
+        ImageView editarEmail = findViewById(R.id.profileEmailEdit);
         editarEmail.setOnClickListener(v -> {
             String correo = email.getText().toString();
             try {
