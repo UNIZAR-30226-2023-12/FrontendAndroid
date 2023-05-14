@@ -455,6 +455,41 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
 
             }
         });
+
+        // Botón para pasar de canción
+        ImageButton nextSong = findViewById(R.id.next_track);
+        nextSong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                posicionCancionActual = (posicionCancionActual + 1) % idsCancionesPlaylistArray.length;
+                mediaPlayer.release();
+                mediaPlayer = null;
+                mediaPlayer = new MediaPlayer();
+                SharedPreferences prefs = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+                String idUsr = prefs.getString("idUsuario", "");
+                ReproducirAudio(idUsr);
+            }
+        });
+
+        // Botón para pasar de canción
+        ImageButton previousSong = findViewById(R.id.previous_track);
+        previousSong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (posicionCancionActual == 0) {
+                    posicionCancionActual = idsCancionesPlaylistArray.length - 1;
+                }
+                else {
+                    posicionCancionActual = (posicionCancionActual - 1) % idsCancionesPlaylistArray.length;
+                }
+                mediaPlayer.release();
+                mediaPlayer = null;
+                mediaPlayer = new MediaPlayer();
+                SharedPreferences prefs = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+                String idUsr = prefs.getString("idUsuario", "");
+                ReproducirAudio(idUsr);
+            }
+        });
     }
 
     /**

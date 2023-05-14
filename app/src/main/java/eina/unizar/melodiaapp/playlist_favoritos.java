@@ -198,11 +198,14 @@ public class playlist_favoritos extends AppCompatActivity {
                     public void onClick(View v) {
                         // TODO ENVIAR AL REPRODUCTOR LA PLAYLIST
                         String idCancion = (String) v.getTag();
-                        SharedPreferences preferences = getSharedPreferences("cancionActual", MODE_PRIVATE);
+                        SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("idCancionActual", idCancion);
+                        editor.putString("idsCancionesPlaylist", idsCancionesString);
                         editor.apply();
                         Intent intent = new Intent(getApplicationContext(), Player.class);
+                        intent.putExtra("tipoRep", "playlistNormal");
+                        intent.putExtra("playingMode","linear");
                         startActivity(intent);
                     }
                 });
