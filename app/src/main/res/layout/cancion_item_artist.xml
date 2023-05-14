@@ -5,16 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/optionsSongsArtist"
-        android:layout_width="71dp"
-        android:layout_height="83dp"
-        android:layout_marginTop="4dp"
+    <TextView
+        android:id="@+id/countSongsArtist"
+        android:layout_width="85dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/options" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/listTextView"

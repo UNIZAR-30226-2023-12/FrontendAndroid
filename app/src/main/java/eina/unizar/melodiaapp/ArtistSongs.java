@@ -18,7 +18,9 @@ import java.util.concurrent.ExecutionException;
 
 import eina.unizar.melodiaapp.Modules.MyTaskAskNameSongs;
 import eina.unizar.melodiaapp.Modules.MyTaskAskSongsArtist;
+import eina.unizar.melodiaapp.Modules.MyTaskGetReproductionsArtist;
 import eina.unizar.melodiaapp.Modules.MyTaskGetSongSeconds;
+import eina.unizar.melodiaapp.Modules.MyTaskGetTime;
 
 public class ArtistSongs extends AppCompatActivity {
     protected String[] doRequestAskSongs() throws ExecutionException, InterruptedException {
@@ -70,6 +72,18 @@ public class ArtistSongs extends AppCompatActivity {
         }
     }
 
+    protected String doRequestGetReproductionsArtist(String idAudio) throws ExecutionException, InterruptedException {
+
+        MyTaskGetReproductionsArtist task = new MyTaskGetReproductionsArtist();
+        String[] respuesta = task.execute(idAudio).get().split(",");
+
+        if (respuesta[0].equals("200")) {
+            return respuesta[1];
+        } else {
+            return "Error";
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +128,14 @@ public class ArtistSongs extends AppCompatActivity {
                 row.setText(nombresCanciones[j]);
                 row.setTag(idsCanciones[j+1] + "," + segundosCanciones[j]);
 
+                TextView count = header.findViewById(R.id.countSongsArtist);
+
+                try {
+                    count.setText(doRequestGetReproductionsArtist(idsCanciones[j+1]));
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 row.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -139,6 +161,7 @@ public class ArtistSongs extends AppCompatActivity {
                     }
                 });
 
+                /*
                 //Botón de options para mostrar los segundos que ha sido escuchada una canción
                 ImageView optionsBtn = header.findViewById(R.id.optionsSongsArtist);
                 optionsBtn.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +174,7 @@ public class ArtistSongs extends AppCompatActivity {
 
                     }
                 });
-
+                */
             }
             listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>()));
         }
