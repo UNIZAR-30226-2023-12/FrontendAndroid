@@ -39,8 +39,11 @@ public class UserFriends extends AppCompatActivity {
     }
 
     protected String doRequesAskNameFriend(String idUsrAmigo) throws Exception {
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
         MyTaskAskNameFriends task = new MyTaskAskNameFriends();
-        String respuesta = task.execute(idUsrAmigo).get();
+        String respuesta = task.execute(idUsuario, contrasenya, idUsrAmigo).get();
         String response[] = respuesta.split(",");
 
         if (response[0].equals("200")) {

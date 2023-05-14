@@ -51,7 +51,7 @@ public class MyTaskAskFriends extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                JsonArray jsonArray = jsonObject.getAsJsonArray("listas");
+                JsonArray jsonArray = jsonObject.getAsJsonArray("idAmigo");
                 // Obtengo los ids de todas las listas del array y los concateno en un string
                 String idDevuelto = "";
                 for (int i = 0; i < jsonArray.size(); i++) {

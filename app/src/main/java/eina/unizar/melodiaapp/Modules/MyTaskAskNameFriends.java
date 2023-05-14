@@ -17,7 +17,9 @@ import eina.unizar.melodiaapp.MySingleton;
 public class MyTaskAskNameFriends extends AsyncTask<String, Void, String> {
     @Override
     public String doInBackground(String... params) {
-        String idUsuarioAmigo = params[0];
+        String idUsr = params[0];
+        String contrasenya = params[1];
+        String idUsuarioAmigo = params[2];
         String result = "";
 
         try {
@@ -29,7 +31,7 @@ public class MyTaskAskNameFriends extends AsyncTask<String, Void, String> {
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + idUsuarioAmigo + "\", \"contrasenya\": \"" + "None" + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsr + "\", \"contrasenya\": \"" + contrasenya + "\" , \"idUsrGet\": \"" + idUsuarioAmigo + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
@@ -50,7 +52,7 @@ public class MyTaskAskNameFriends extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                String name = jsonObject.get("nombre").getAsString();
+                String name = jsonObject.get("alias").getAsString();
 
                 return "200," + name;
             }

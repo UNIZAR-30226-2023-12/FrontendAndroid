@@ -20,6 +20,7 @@ import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import eina.unizar.melodiaapp.Modules.MyTaskAcceptArtist;
+import eina.unizar.melodiaapp.Modules.MyTaskAcceptFriend;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNotifications;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNameNotifications;
 import eina.unizar.melodiaapp.Modules.MyTaskRejectArtist;
@@ -112,6 +113,22 @@ public class Notifications extends AppCompatActivity {
         }
     }
 
+    protected String doRequestAcceptFriend(String idNot) throws ExecutionException, InterruptedException {
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        MyTaskAcceptFriend task = new MyTaskAcceptFriend();
+        String respuesta = task.execute(idUsuario, contrasenya, idNot).get();
+
+        if (respuesta.equals("200")) {
+            return "200";
+        }
+        else {
+            return "Error";
+        }
+    }
+
     /**
      * Se encarga de generar la interfaz de la actividad
      * @param savedInstanceState
@@ -177,6 +194,30 @@ public class Notifications extends AppCompatActivity {
                                 }
                             } catch (ExecutionException | InterruptedException e) {
                                 e.printStackTrace();
+                            }
+                        }
+                    });
+
+                    //Botón de options para aceptar amigo
+                    ImageView optionsBtn = header.findViewById(R.id.imageView4);
+                    optionsBtn.setTag(response[j+1]);
+                    optionsBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String tag = (String) v.getTag();
+                            String respuesta = "Error";
+                            try {
+                                respuesta = doRequestAcceptFriend(tag);
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (respuesta.equals("200")) {
+                                Toast.makeText(getApplicationContext(), "Solicitud de amigo aceptada", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Error al aceptar la solicitud de amigo", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

@@ -123,6 +123,8 @@ public class Menu extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        String tipoUsuario = response[1];
+
         String[] listaListasRepUser = null; //Id playlists
         try {
             listaListasRepUser = doRequestAskPlaylists();
@@ -266,7 +268,9 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Notifications.class);
-                intent.putExtra("key", "admin");
+                if (tipoUsuario.equals("admin")) {
+                    intent.putExtra("key", tipoUsuario);
+                }
                 startActivity(intent);
             }
         });
