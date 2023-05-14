@@ -216,6 +216,8 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Player.class);
+                intent.putExtra("tipoRep", "RandomRep");
+                intent.putExtra("playingMode","linear");
                 startActivity(intent);
             }
         });
