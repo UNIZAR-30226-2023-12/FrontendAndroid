@@ -10,6 +10,8 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Base64;
@@ -46,6 +48,7 @@ import android.media.AudioManager;
 import eina.unizar.melodiaapp.Modules.GETRequest;
 import eina.unizar.melodiaapp.Modules.MyTaskAskLink;
 import eina.unizar.melodiaapp.Modules.MyTaskDeleteSongLista;
+import eina.unizar.melodiaapp.Modules.MyTaskGetCaratula;
 import eina.unizar.melodiaapp.Modules.MyTaskGetRating;
 import eina.unizar.melodiaapp.Modules.MyTaskGetRecommendedAudio;
 import eina.unizar.melodiaapp.Modules.MyTaskSetRating;
@@ -180,6 +183,21 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         }
     }
 
+    protected String doRequestGetCaratula() throws ExecutionException, InterruptedException {
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsr = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+        MyTaskGetCaratula task = new MyTaskGetCaratula();
+        String result = task.execute(idUsr, contrasenya, idAudioActual).get();
+        String[] response = result.split(",");
+
+        if (response[0].equals("200")) {
+            return response[1];
+        } else {
+            return "Error";
+        }
+    }
+
     /**
      * Función invocada al crear la pantalla. Inicializa todos los elementos de la interfaz de usuario
      *
@@ -217,72 +235,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                     // Obtengo el idUsr de SharedPreferences
                     SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
                     String idUsr = preferences.getString("idUsuario", "");
-
-                    String InputString = "?idAudio=" + idAudioActual + "&calidad=False&esCancion=True&idUsr=" + idUsr;
-
-                    new GETRequest() {
-                        @Override
-                        protected void onPostExecute(JSONObject feed) {
-                            try {
-                                AudioFile = Base64.decode(feed.getString("fichero"), Base64.DEFAULT);
-                                // create temp file that will hold byte array
-                                File tempMp3 = File.createTempFile("playing_sound", "mp3");
-                                tempMp3.deleteOnExit();
-                                FileOutputStream fos = new FileOutputStream(tempMp3);
-                                fos.write(AudioFile);
-                                fos.close();
-                                AudioFile = null;
-
-                                mediaPlayer.setDataSource(tempMp3.getAbsolutePath());
-                                mediaPlayer.prepare();
-                                mediaPlayer.start();
-
-                                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                                    @Override
-                                    public void onCompletion(MediaPlayer mp) {
-                                        mediaPlayer.seekTo(0); // Reinicia la reproducción al inicio
-                                        mediaPlayer.start(); // Inicia la reproducción nuevamente
-                                    }
-                                });
-
-                                play_pause = findViewById(R.id.play_pause);
-                                play_pause.setChecked(true);
-                                play_pause.setOnClickListener(new ToggleButton.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        if (play_pause.isChecked()) {
-                                            mediaPlayer.start();
-                                        } else {
-                                            mediaPlayer.pause();
-                                        }
-                                    }
-                                });
-
-                                stop = findViewById(R.id.stop_track);
-                                stop.setOnClickListener(new ImageButton.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        mediaPlayer.stop();
-                                        int currentTime = mediaPlayer.getCurrentPosition();
-                                        try {
-                                            doRequestSetLastSecondHeared(String.valueOf(currentTime));
-                                        } catch (ExecutionException e) {
-                                            e.printStackTrace();
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                        play_pause.setChecked(false);
-                                    }
-                                });
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }.execute("GetFicheroSong/", InputString);
+                    ReproducirAudioRepeat(idUsr);
                 }
                 else if (modoReproduccion.equals("linear")) {
                     // Obtengo el idUsr de SharedPreferences
@@ -334,6 +287,10 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
             }
             else if (tipoRep.equals("individual")){
                 idAudioActual = extras.getString("idCancionActual");
+                // Obtengo el idUsr de SharedPreferences
+                SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+                String idUsr = preferences.getString("idUsuario", "");
+                ReproducirAudioRepeat(idUsr);
             }
         }
 
@@ -546,6 +503,22 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
     }
 
     private void ReproducirAudio(String idUsr) {
+        // Obtengo la caratula
+        String imagen = "";
+        try {
+            imagen = doRequestGetCaratula();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ImageView caratula = findViewById(R.id.track_image);
+        if (!imagen.equals("")) {
+            byte[] decodedString = Base64.decode(imagen, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            caratula.setImageBitmap(decodedByte);
+        }
+
         String InputString = "?idAudio=" + idsCancionesPlaylistArray[posicionCancionActual] + "&calidad=False&esCancion=True&idUsr=" + idUsr;
 
         new GETRequest() {
@@ -624,6 +597,21 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
     }
 
     private void ReproducirAudioRandom(String idUsr) {
+        // Obtengo la caratula
+        String imagen = "";
+        try {
+            imagen = doRequestGetCaratula();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ImageView caratula = findViewById(R.id.track_image);
+        if (!imagen.equals("")) {
+            byte[] decodedString = Base64.decode(imagen, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            caratula.setImageBitmap(decodedByte);
+        }
         String InputString = "?idAudio=" + idAudioActual + "&calidad=False&esCancion=True&idUsr=" + idUsr;
 
         new GETRequest() {
@@ -664,6 +652,96 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                             mediaPlayer = null;
                             mediaPlayer = new MediaPlayer();
                             ReproducirAudio(idUsr);
+                        }
+                    });
+
+                    play_pause = findViewById(R.id.play_pause);
+                    play_pause.setChecked(true);
+                    play_pause.setOnClickListener(new ToggleButton.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (play_pause.isChecked()) {
+                                mediaPlayer.start();
+                            } else {
+                                mediaPlayer.pause();
+                            }
+                        }
+                    });
+
+                    stop = findViewById(R.id.stop_track);
+                    stop.setOnClickListener(new ImageButton.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mediaPlayer.stop();
+                            int currentTime = mediaPlayer.getCurrentPosition();
+                            try {
+                                doRequestSetLastSecondHeared(String.valueOf(currentTime));
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            play_pause.setChecked(false);
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute("GetFicheroSong/", InputString);
+    }
+
+    private void ReproducirAudioRepeat(String idUsr) {
+        // Obtengo la caratula
+        String imagen = "";
+        try {
+            imagen = doRequestGetCaratula();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ImageView caratula = findViewById(R.id.track_image);
+        if (!imagen.equals("")) {
+            byte[] decodedString = Base64.decode(imagen, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            caratula.setImageBitmap(decodedByte);
+        }
+        String InputString = "?idAudio=" + idAudioActual + "&calidad=False&esCancion=True&idUsr=" + idUsr;
+
+        new GETRequest() {
+            @Override
+            protected void onPostExecute(JSONObject feed) {
+                try {
+                    AudioFile = Base64.decode(feed.getString("fichero"), Base64.DEFAULT);
+                    // create temp file that will hold byte array
+                    File tempMp3 = File.createTempFile("playing_sound", "mp3");
+                    tempMp3.deleteOnExit();
+                    FileOutputStream fos = new FileOutputStream(tempMp3);
+                    fos.write(AudioFile);
+                    fos.close();
+                    AudioFile = null;
+
+                    if (mediaPlayer != null) {
+                        mediaPlayer.release();
+                        mediaPlayer = null;
+                    }
+                    mediaPlayer = new MediaPlayer();
+
+
+                    mediaPlayer.setDataSource(tempMp3.getAbsolutePath());
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            mediaPlayer.seekTo(0); // Reinicia la reproducción al inicio
+                            mediaPlayer.start(); // Inicia la reproducción nuevamente
                         }
                     });
 

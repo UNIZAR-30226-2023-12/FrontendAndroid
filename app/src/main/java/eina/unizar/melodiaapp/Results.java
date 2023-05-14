@@ -250,11 +250,9 @@ public class Results extends AppCompatActivity {
                                     switch (whatAmI(idElemento)) {
                                         case "cancion":
                                             // Si el elemento es una canción
-
-                                            editor.putString("idCancionActual", idElemento);
-                                            editor.putString("tipoRep", "individual");
-                                            editor.apply();
                                             Intent intent = new Intent(getApplicationContext(), Player.class);
+                                            intent.putExtra("tipoRep", "individual");
+                                            intent.putExtra("idCancionActual", idElemento.split(",")[0]);
                                             startActivity(intent);
                                             break;
                                         case "artista":
