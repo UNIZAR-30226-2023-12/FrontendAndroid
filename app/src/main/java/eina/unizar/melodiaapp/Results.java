@@ -252,6 +252,7 @@ public class Results extends AppCompatActivity {
                                             // Si el elemento es una canción
 
                                             editor.putString("idCancionActual", idElemento);
+                                            editor.putString("tipoRep", "individual");
                                             editor.apply();
                                             Intent intent = new Intent(getApplicationContext(), Player.class);
                                             startActivity(intent);

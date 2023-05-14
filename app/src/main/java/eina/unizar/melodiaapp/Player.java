@@ -332,6 +332,9 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                     ReproducirAudioRandom(idUsr);
                 }
             }
+            else if (tipoRep.equals("individual")){
+                idAudioActual = extras.getString("idCancionActual");
+            }
         }
 
 
