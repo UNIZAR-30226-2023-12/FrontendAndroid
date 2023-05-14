@@ -37,7 +37,7 @@ public class MyTaskAskArtist extends AsyncTask<String, Void, String> {
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"fichero\": \"" + file + "\" , \"motivo\": \"" + motivo + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"fichero\": \"" + file + "\" , \"mensaje\": \"" + motivo + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);

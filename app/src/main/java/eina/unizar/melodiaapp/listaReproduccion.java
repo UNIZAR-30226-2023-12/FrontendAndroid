@@ -160,7 +160,7 @@ public class listaReproduccion extends AppCompatActivity {
                 }
                 else if(mode.equals("random")){
                     mode = "repeat";
-                    reproductionType.setImageResource(R.drawable.random);
+                    reproductionType.setImageResource(R.drawable.repeat);
                 }
                 else{
                     mode = "linear";
@@ -313,7 +313,7 @@ public class listaReproduccion extends AppCompatActivity {
                     editor.putString("idsCancionesPlaylist", idsCancionesString);
                     editor.apply();
                     Intent intent = new Intent(getApplicationContext(), Player.class);
-                    intent.putExtra("tipoRep", "playlist");
+                    intent.putExtra("tipoRep", "playlistNormal");
                     intent.putExtra("playingMode",mode);
                     startActivity(intent);
                 }
