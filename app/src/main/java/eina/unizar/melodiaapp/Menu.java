@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
+import eina.unizar.melodiaapp.Modules.MyTaskAskNamePlaylist;
+import eina.unizar.melodiaapp.Modules.MyTaskAskPlaylists;
 import eina.unizar.melodiaapp.Modules.MyTaskAskProfile;
 
 /**
@@ -19,6 +22,59 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskProfile;
 public class Menu extends AppCompatActivity {
 
     protected String searchKin = "regular";
+
+    /**
+     * Función que llama a la task encargada de pedir al servidor las listas de reproducción del usuario
+     * Si ha ido bien devuelve un array con el código de respuesta y el json con las listas de reproducción
+     * Sino devuelve un array con el código de error
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    protected String[] doRequestAskPlaylists() throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contraseña
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        MyTaskAskPlaylists task = new MyTaskAskPlaylists();
+        String respuesta = task.execute(idUsuario, contrasenya, idUsuario).get();
+        String response[] = respuesta.split(",");
+
+        if (response[0].equals("200")) {
+            return response;
+        }
+        else {
+            return new String[]{"Error"};
+        }
+    }
+
+    /**
+     * Función que llama a la task encargada de pedir al servidor el nombre de una lista de reproducción
+     * Si ha ido bien devuelve un string con el nombre de la lista
+     * Sino devuelve un string con el código de error
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    protected String doRequestAskNameListas(String idLista) throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contraseña
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        MyTaskAskNamePlaylist task = new MyTaskAskNamePlaylist();
+        String respuesta = task.execute(idUsuario, contrasenya, idLista).get();
+        String response[] = respuesta.split(",");
+
+        if (response[0].equals("200")) {
+            return response[1];
+        }
+        else {
+            return "Error";
+        }
+    }
+
     protected String[] doRequestAskUser() throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -67,6 +123,37 @@ public class Menu extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        String[] listaListasRepUser = null; //Id playlists
+        try {
+            listaListasRepUser = doRequestAskPlaylists();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (listaListasRepUser[0].equals("Error")) {
+            Toast.makeText(getApplicationContext(), "Error al obtener las listas de reproducción", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            //Obtengo los nombres de las listas
+            String nombresListas[] = new String[listaListasRepUser.length - 1];
+            Integer i = 1;
+            for (i = 1; i <= nombresListas.length; i++) {
+                try {
+                    nombresListas[i - 1] = doRequestAskNameListas(listaListasRepUser[i]);
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // Si el nombre es la de Favoritos se guarda en SharedPreferences con su id
+                if (nombresListas[i - 1].equals("Favoritos")) {
+                    SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("idListaFavoritos", listaListasRepUser[i]);
+                    editor.apply();
+                }
+            }
+        }
+        
         // Configuro el botón para que solo sea visible si el usuario es artista
         TextView artistsSongsBTN = findViewById(R.id.ArtistSongs);
         if (response[0].equals("200") && response[1].equals("artista")) {

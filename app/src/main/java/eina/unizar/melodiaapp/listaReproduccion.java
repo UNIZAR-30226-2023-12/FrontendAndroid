@@ -314,10 +314,11 @@ public class listaReproduccion extends AppCompatActivity {
             });
 
             ImageView deleteBtn = header.findViewById(R.id.imageView5);
+            deleteBtn.setTag(idsCanciones[j+1]);
             deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String idCancion = (String) v.getTag();
+                    String idCancion = v.getTag().toString();
                     SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
                     String idPlaylist = preferences.getString("idPlaylistActual", "");
                     try {
@@ -325,6 +326,7 @@ public class listaReproduccion extends AppCompatActivity {
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
                     }
+                    recreate();
                 }
             });
 

@@ -60,7 +60,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
     MediaPlayer mediaPlayer = new MediaPlayer();
     ToggleButton play_pause;
     ImageButton stop;
-    private String idAudioActual = "idAudio:1";
+    private String idAudioActual = "idAudio:2";
 
     protected String doRequestSetLastSecondHeared(String seconds) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
@@ -128,7 +128,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         String[] response = result.split(",");
 
         if (response[0].equals("200")) {
-            return response[1];
+            return "200";
         } else {
             return "Error";
         }
@@ -143,11 +143,11 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         String idLista = preferences.getString("idListaFavoritos", "");
 
         MyTaskDeleteSongLista task = new MyTaskDeleteSongLista();
-        String result = task.execute(idUsr, passwd, idAudioActual, idLista).get();
+        String result = task.execute(idUsr, passwd, idLista, idAudioActual).get();
         String[] response = result.split(",");
 
         if (response[0].equals("200")) {
-            return response[1];
+            return "200";
         } else {
             return "Error";
         }
@@ -200,7 +200,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         String idUsr = preferences.getString("idUsuario", "");
 
-        String InputString = "?idAudio=idAudio:1&calidad=False&esCancion=True&idUsr=" + idUsr;
+        String InputString = "?idAudio=idAudio:2&calidad=False&esCancion=True&idUsr=" + idUsr;
 
         new GETRequest() {
             @Override
@@ -313,7 +313,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                 String opcion = "Append";
                 Intent intent = new Intent(getApplicationContext(), Playlist.class);
                 intent.putExtra("key", opcion);
-                intent.putExtra("songId", "idAudio:1");
+                intent.putExtra("songId", "idAudio:2");
                 startActivity(intent);
             }
         });
