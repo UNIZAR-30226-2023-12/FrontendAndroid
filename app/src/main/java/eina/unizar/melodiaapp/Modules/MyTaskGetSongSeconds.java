@@ -23,6 +23,7 @@ public class MyTaskGetSongSeconds extends AsyncTask<String, Void, String> {
     @Override
     public String doInBackground(String... params) {
         String idAudio = params[0];
+        String dia = "0";
         String result = "";
 
         try { //SetSongLista(String idUsr, String contrasenya, String idLista, String idAudio): int
@@ -34,7 +35,7 @@ public class MyTaskGetSongSeconds extends AsyncTask<String, Void, String> {
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idAudio\": \"" + idAudio + "\"}";
+            String jsonInputString = "{\"idAudio\": \"" + idAudio + "\" , \"dia\": \"" + dia + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
@@ -56,7 +57,7 @@ public class MyTaskGetSongSeconds extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                String mins = jsonObject.get("seconds").getAsString();
+                String mins = jsonObject.get("second").getAsString();
                 return "200," + mins;
             }
             else {

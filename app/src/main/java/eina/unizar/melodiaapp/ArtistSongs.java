@@ -131,7 +131,7 @@ public class ArtistSongs extends AppCompatActivity {
                 TextView count = header.findViewById(R.id.countSongsArtist);
 
                 try {
-                    count.setText(doRequestGetReproductionsArtist(idsCanciones[j+1]));
+                    count.setText(doRequestGetSongSeconds(idsCanciones[j+1]));
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
