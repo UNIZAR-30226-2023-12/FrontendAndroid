@@ -75,10 +75,10 @@
       android:id="@+id/profileEmailEdit"
       android:layout_width="32dp"
       android:layout_height="32dp"
-      android:layout_marginTop="16dp"
+      android:layout_marginTop="52dp"
       android:src="@drawable/pencil"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.277"
+      app:layout_constraintHorizontal_bias="0.279"
       app:layout_constraintStart_toEndOf="@+id/displayEmail"
       app:layout_constraintTop_toBottomOf="@+id/profileNameEdit" />
 
