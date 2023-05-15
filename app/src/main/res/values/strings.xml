@@ -72,11 +72,11 @@
     <string name="AddFriend_hint">Introduce el alias\n de tu amigo</string>
     <string name="AddFriend_add">Añadir</string>
     <string name="AllSeconds_title">Segundos reproducidos\n por día</string>
-    <string name="AllSeconds_Today">Hoy:            </string>
-    <string name="AllSeconds_aDago">Hace un dia     </string>
-    <string name="AllSeconds_2Dago">Hace dos dias   </string>
-    <string name="AllSeconds_3Dago">Hace tres dias  </string>
-    <string name="AllSeconds_4Dago">Hace cuatro dias</string>
-    <string name="AllSeconds_5Dago">Hace cinco dias </string>
-    <string name="AllSeconds_6Dago">Hace seis dias  </string>
+    <string name="AllSeconds_Today">Lunes:     </string>
+    <string name="AllSeconds_aDago">Martes:    </string>
+    <string name="AllSeconds_2Dago">Miercoles: </string>
+    <string name="AllSeconds_3Dago">Jueves:    </string>
+    <string name="AllSeconds_4Dago">Viernes:   </string>
+    <string name="AllSeconds_5Dago">Sabado:    </string>
+    <string name="AllSeconds_6Dago">Domingo:   </string>
 </resources>

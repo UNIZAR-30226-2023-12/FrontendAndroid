@@ -24,9 +24,10 @@ public class MyTaskGetTime extends AsyncTask<String, Void, String> {
     public String doInBackground(String... params) {
         String idUsuario = params[0];
         String contrasenya = params[1];
+        String dia = params[2];
         String result = "";
 
-        try { //GetTotRepTime(String idUsr, String contrasenya) : int
+        try { //GetTotRepTime(String idUsr, String contrasenya, String dia) : int
             MySingleton singleton = MySingleton.getInstance();
             URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/GetTotRepTime/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -35,7 +36,7 @@ public class MyTaskGetTime extends AsyncTask<String, Void, String> {
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\", \"dia\": \"" + dia + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);

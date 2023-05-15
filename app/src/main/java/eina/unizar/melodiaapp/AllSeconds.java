@@ -18,14 +18,14 @@ import eina.unizar.melodiaapp.Modules.MyTaskGetTime;
 
 public class AllSeconds extends AppCompatActivity {
 
-    protected String doRequestGetTime() throws ExecutionException, InterruptedException {
+    protected String doRequestGetTime(String dia) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         String idUsr = preferences.getString("idUsuario", "");
         String passwd = preferences.getString("contrasenya", "");
 
         MyTaskGetTime task = new MyTaskGetTime();
-        String[] respuesta = task.execute(idUsr, passwd).get().split(",");
+        String[] respuesta = task.execute(idUsr, passwd, dia).get().split(",");
 
         if (respuesta[0].equals("200")) {
             return respuesta[1];
@@ -42,7 +42,7 @@ public class AllSeconds extends AppCompatActivity {
         String response = "Error";
 
         try {
-            response = doRequestGetTime();
+            response = doRequestGetTime("0");
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -56,7 +56,95 @@ public class AllSeconds extends AppCompatActivity {
             hoy.setText(response);
         }
 
+        try {
+            response = doRequestGetTime("1");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (response.equals("Error")){
+            System.out.println("Error, no se puede obtener los segundos");
+        }
+        else{
+            TextView hoy = findViewById(R.id.textday7);
+            hoy.setText(response);
+        }
 
+        try {
+            response = doRequestGetTime("2");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (response.equals("Error")){
+            System.out.println("Error, no se puede obtener los segundos");
+        }
+        else{
+            TextView hoy = findViewById(R.id.textday8);
+            hoy.setText(response);
+        }
+
+        try {
+            response = doRequestGetTime("3");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (response.equals("Error")){
+            System.out.println("Error, no se puede obtener los segundos");
+        }
+        else{
+            TextView hoy = findViewById(R.id.textday9);
+            hoy.setText(response);
+        }
+
+        try {
+            response = doRequestGetTime("4");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (response.equals("Error")){
+            System.out.println("Error, no se puede obtener los segundos");
+        }
+        else{
+            TextView hoy = findViewById(R.id.textday10);
+            hoy.setText(response);
+        }
+
+        try {
+            response = doRequestGetTime("5");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (response.equals("Error")){
+            System.out.println("Error, no se puede obtener los segundos");
+        }
+        else{
+            TextView hoy = findViewById(R.id.textday11);
+            hoy.setText(response);
+        }
+
+        try {
+            response = doRequestGetTime("6");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (response.equals("Error")){
+            System.out.println("Error, no se puede obtener los segundos");
+        }
+        else{
+            TextView hoy = findViewById(R.id.textday12);
+            hoy.setText(response);
+        }
 
 
 
