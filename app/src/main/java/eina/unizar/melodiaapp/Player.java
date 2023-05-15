@@ -49,6 +49,7 @@ import android.media.AudioManager;
 
 import eina.unizar.melodiaapp.Modules.GETRequest;
 import eina.unizar.melodiaapp.Modules.MyTaskAskLink;
+import eina.unizar.melodiaapp.Modules.MyTaskAskNameSongs;
 import eina.unizar.melodiaapp.Modules.MyTaskDeleteSongLista;
 import eina.unizar.melodiaapp.Modules.MyTaskGetCaratula;
 import eina.unizar.melodiaapp.Modules.MyTaskGetRating;
@@ -200,6 +201,24 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         }
     }
 
+    public String doRequestAskNameSongs(String idPlaylist) throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contraseña
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        MyTaskAskNameSongs task = new MyTaskAskNameSongs();
+        String respuesta = task.execute(idUsuario, contrasenya, idPlaylist).get();
+        String[] response = respuesta.split(",");
+
+        if (response[0].equals("200")) {
+            return response[1];
+        }
+        else {
+            return "Error";
+        }
+    }
+
     /**
      * Función invocada al crear la pantalla. Inicializa todos los elementos de la interfaz de usuario
      *
@@ -228,6 +247,18 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                 SharedPreferences preferencesPL = getSharedPreferences("playlistActual", MODE_PRIVATE);
                 String idsCancionesPlaylistNoParser = preferencesPL.getString("idsCancionesPlaylist", "");
                 idAudioActual = preferencesPL.getString("idCancionActual", "");
+
+                // Seteo el título de la canción
+                TextView title = findViewById(R.id.song_title);
+                try {
+                    String name = doRequestAskNameSongs(idAudioActual);
+                    title.setText(name);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
 
                 String[] idsCancionesPlaylistParser = idsCancionesPlaylistNoParser.split(",");
                 idsCancionesPlaylistArray = new String[idsCancionesPlaylistParser.length - 1];
@@ -467,7 +498,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
             }
         });
 
-        // Botón para pasar de canción
+        // Botón para pasar de canción a la anterior
         ImageButton previousSong = findViewById(R.id.previous_track);
         previousSong.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -519,6 +550,17 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
             byte[] decodedString = Base64.decode(imagen, Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             caratula.setImageBitmap(decodedByte);
+        }
+
+        // Seteo el título de la canción
+        TextView title = findViewById(R.id.song_title);
+        try {
+            String name = doRequestAskNameSongs(idAudioActual);
+            title.setText(name);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         String InputString = "?idAudio=" + idsCancionesPlaylistArray[posicionCancionActual] + "&calidad=False&esCancion=True&idUsr=" + idUsr;
@@ -623,6 +665,15 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             caratula.setImageBitmap(decodedByte);
         }
+        // Seteo el título de la canción
+        TextView title = findViewById(R.id.song_title);
+        try {
+            String name = doRequestAskNameSongs(idAudioActual);
+            title.setText(name);
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
         String InputString = "?idAudio=" + idAudioActual + "&calidad=False&esCancion=True&idUsr=" + idUsr;
 
         new GETRequest() {
@@ -733,6 +784,17 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                 caratula.setImageBitmap(decodedByte);
             }
         }
+        // Seteo el título de la canción
+        TextView title = findViewById(R.id.song_title);
+        try {
+            String name = doRequestAskNameSongs(idAudioActual);
+            title.setText(name);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         String InputString = "?idAudio=" + idAudioActual + "&calidad=False&esCancion=True&idUsr=" + idUsr;
 
         new GETRequest() {
