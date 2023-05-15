@@ -24,6 +24,7 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskNameSongs;
 import eina.unizar.melodiaapp.Modules.MyTaskAskPlaylists;
 import eina.unizar.melodiaapp.Modules.MyTaskAskProfile;
 import eina.unizar.melodiaapp.Modules.MyTaskAskTopReproductions;
+import eina.unizar.melodiaapp.Modules.MyTaskByWordSearch;
 import eina.unizar.melodiaapp.Modules.MyTaskDeletePlaylist;
 import eina.unizar.melodiaapp.Modules.MyTaskGetListFolder;
 import eina.unizar.melodiaapp.Modules.MyTaskSubscribeToArtist;
@@ -101,7 +102,7 @@ public class Results extends AppCompatActivity {
 
     protected String[] doRequestAskMyTaskByWordSearch(String query, String n) throws ExecutionException, InterruptedException {
 
-        MyTaskAskGlobalSearchResults task = new MyTaskAskGlobalSearchResults();
+        MyTaskByWordSearch task = new MyTaskByWordSearch();
         String respuesta = task.execute(query, n).get();
         String response[] = respuesta.split(",");
 
@@ -201,12 +202,7 @@ public class Results extends AppCompatActivity {
                     //String searchN = extras.getString("amount"); de momento lo hardcodeamos
                     String searchN = "15";
 
-                    if (extras.getString(("mode")).equals("regularSearch")) {
-                        listaIdResultados = doRequestAskGlobalSearchResults(searchQuery, searchN); //Id objeto
-                    }
-                    else{
-                        listaIdResultados = doRequestAskMyTaskByWordSearch(searchQuery, searchN); //Id objeto
-                    }
+                    listaIdResultados = doRequestAskGlobalSearchResults(searchQuery, searchN); //Id objeto
 
                     if (listaIdResultados[0].equals("Error")) {
                         Toast.makeText(getApplicationContext(), "Error al obtener los resultados", Toast.LENGTH_SHORT).show();
@@ -437,12 +433,15 @@ public class Results extends AppCompatActivity {
                                         System.arraycopy(listaIdResultados, 1, test, 0, test.length);
                                         Toast.makeText(getApplicationContext(), "Canción Id: " + idElemento, Toast.LENGTH_SHORT).show();
                                         //Por defecto lo escribimos como cancionActual, pero si no es asi lo cambiamos
-                                        SharedPreferences preferences = getSharedPreferences("cancionActual", MODE_PRIVATE);
+                                        SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
                                         SharedPreferences.Editor editor = preferences.edit();
 
                                         editor.putString("idCancionActual", idElemento);
+                                        editor.putString("idsCancionesPlaylist", String.join(",", test));
                                         editor.apply();
                                         Intent intent = new Intent(getApplicationContext(), Player.class);
+                                        intent.putExtra("tipoRep", "playlistNormal");
+                                        intent.putExtra("playingMode", "linear");
                                         startActivity(intent);
 
                                     }
