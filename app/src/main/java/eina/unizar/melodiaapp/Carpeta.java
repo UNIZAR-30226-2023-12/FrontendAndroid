@@ -267,12 +267,9 @@ public class Carpeta extends AppCompatActivity {
                             }
                             else {
                                 System.arraycopy(idsCarpetas, 1, test, 0, test.length);
-                                Toast.makeText(getApplicationContext(), "Playlist Id: " + idLista, Toast.LENGTH_SHORT).show();
-                                SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
-                                SharedPreferences.Editor editor = preferences.edit();
-                                editor.putString("idPlaylistActual", idLista);
-                                editor.apply();
-                                Intent intent = new Intent(getApplicationContext(), listaReproduccion.class);
+                                Intent intent = new Intent(getApplicationContext(), Results.class);
+                                intent.putExtra("mode", "carpeta");
+                                intent.putExtra("idCarpeta", idCarpeta);
                                 startActivity(intent);
                             }
                         }

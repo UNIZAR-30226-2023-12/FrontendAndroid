@@ -133,10 +133,6 @@ public class CreatePlaylist extends AppCompatActivity {
                     }
                 });
             }
-            else{
-                System.out.println("Error, unknown mode");
-                finish();
-            }
         }
         else{//Creación de playlist normal
 
@@ -154,7 +150,7 @@ public class CreatePlaylist extends AppCompatActivity {
                     } catch (InterruptedException | JSONException e) {
                         e.printStackTrace();
                     }
-                    if(response == "200"){
+                    if(response.equals("200")){
                         Toast.makeText(getApplicationContext(), "Playlist creada correctamente", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), Playlist.class);
                         startActivity(intent);

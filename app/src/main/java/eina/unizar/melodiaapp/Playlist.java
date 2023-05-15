@@ -344,7 +344,9 @@ public class Playlist extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                intent.putExtra("mode", respuesta[1]);
+                if (respuesta[1].equals("admin")) {
+                    intent.putExtra("mode", respuesta[1]);
+                }
                 startActivity(intent);
                 //fillData();
             }
