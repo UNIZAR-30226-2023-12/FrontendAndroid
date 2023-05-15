@@ -672,6 +672,15 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                         @Override
                         public void onClick(View v) {
                             mediaPlayer.stop();
+                            int currentPosition = mediaPlayer.getCurrentPosition();
+                            int currentSeconds = currentPosition / 1000;
+                            try {
+                                doRequestMyTaskSetLastSecondHeared(String.valueOf(currentSeconds));
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             int currentTime = mediaPlayer.getCurrentPosition();
                             try {
                                 doRequestSetLastSecondHeared(String.valueOf(currentTime));
@@ -801,6 +810,15 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                         @Override
                         public void onClick(View v) {
                             mediaPlayer.stop();
+                            int currentPosition = mediaPlayer.getCurrentPosition();
+                            int currentSeconds = currentPosition / 1000;
+                            try {
+                                doRequestMyTaskSetLastSecondHeared(String.valueOf(currentSeconds));
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             int currentTime = mediaPlayer.getCurrentPosition();
                             try {
                                 doRequestSetLastSecondHeared(String.valueOf(currentTime));
@@ -923,6 +941,15 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                         @Override
                         public void onClick(View v) {
                             mediaPlayer.stop();
+                            int currentPosition = mediaPlayer.getCurrentPosition();
+                            int currentSeconds = currentPosition / 1000;
+                            try {
+                                doRequestMyTaskSetLastSecondHeared(String.valueOf(currentSeconds));
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             int currentTime = mediaPlayer.getCurrentPosition();
                             try {
                                 doRequestSetLastSecondHeared(String.valueOf(currentTime));
