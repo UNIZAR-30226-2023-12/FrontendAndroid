@@ -230,7 +230,7 @@ public class Menu extends AppCompatActivity {
         boton_reanudar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Results.class);
+                Intent intent = new Intent(getApplicationContext(), Player.class);
                 intent.putExtra("tipoRep", "resume");
                 intent.putExtra("playingMode", "repeat");
                 SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);

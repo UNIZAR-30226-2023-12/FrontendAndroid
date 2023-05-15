@@ -57,10 +57,12 @@ public class ListenFromLink extends AppCompatActivity {
             if (!audio.equals("Error")) {
                 SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("idAudioActual", audio);
+                editor.putString("idCancionActual", audio);
                 editor.apply();
 
                 Intent intent = new Intent(getApplicationContext(), Player.class);
+                intent.putExtra("tipoRep", "individual");
+                intent.putExtra("idCancionActual", audio);
                 startActivity(intent);
             }
             else {

@@ -586,7 +586,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         // Seteo el título de la canción
         TextView title = findViewById(R.id.song_title);
         try {
-            String name = doRequestAskNameSongs(idAudioActual);
+            String name = doRequestAskNameSongs(idsCancionesPlaylistArray[posicionCancionActual]);
             title.setText(name);
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -722,7 +722,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         // Seteo el título de la canción
         TextView title = findViewById(R.id.song_title);
         try {
-            String name = doRequestAskNameSongs(idAudioActual);
+            String name = doRequestAskNameSongs(idsCancionesPlaylistArray[posicionCancionActual]);
             title.setText(name);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();

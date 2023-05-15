@@ -22,6 +22,7 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskEsPodcast;
 import eina.unizar.melodiaapp.Modules.MyTaskAskGenreSong;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNameSongs;
 import eina.unizar.melodiaapp.Modules.MyTaskAskSongs;
+import eina.unizar.melodiaapp.Modules.MyTaskDeleteSongLista;
 
 public class playlist_favoritos extends AppCompatActivity {
 
@@ -125,6 +126,24 @@ public class playlist_favoritos extends AppCompatActivity {
         }
     }
 
+    protected String doRequestDeleteSongLista(String idPlaylist, String idCancion) throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contraseña
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        MyTaskDeleteSongLista task = new MyTaskDeleteSongLista();
+        String respuesta = task.execute(idUsuario, contrasenya, idPlaylist, idCancion).get();
+        String[] response = respuesta.split(",");
+
+        if (response[0].equals("200")) {
+            return "200";
+        }
+        else {
+            return "Error";
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -211,13 +230,19 @@ public class playlist_favoritos extends AppCompatActivity {
                 });
 
                 ImageView deleteBtn = header.findViewById(R.id.imageView5);
+                deleteBtn.setTag(idsSongs[j+1]);
                 deleteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO ELIMINAR CANCION DE LA PLAYLIST
-                        String idCancion = (String) v.getTag();
-                        Intent intent = new Intent(getApplicationContext(), Player.class);
-                        startActivity(intent);
+                        String idCancion = v.getTag().toString();
+                        SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
+                        String idPlaylist = preferences.getString("idPlaylistActual", "");
+                        try {
+                            doRequestDeleteSongLista(idPlaylist, idCancion);
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        recreate();
                     }
                 });
 
@@ -263,6 +288,7 @@ public class playlist_favoritos extends AppCompatActivity {
                 listView.removeHeaderView(header);
             }
 
+            genreBTN.setClickable(false);
             ordenarPorWildcard(idsCanciones, nombresCanciones, generosCanciones);
         });
 
@@ -282,6 +308,7 @@ public class playlist_favoritos extends AppCompatActivity {
                 listView.removeHeaderView(header);
             }
 
+            typeBTN.setClickable(false);
             ordenarPorWildcard(idsCanciones, nombresCanciones, tipo);
         });
     }
@@ -291,14 +318,15 @@ public class playlist_favoritos extends AppCompatActivity {
         String[] nombresCanciones = nombresCancionesString.split(","); //Seguimos necesitando los nombres para el setText
         String[] wildcardCanciones = wildcardString.split(",");
 
-        playlist_favoritos.ObjetoConIdNombreYWildcard[] objetos = new playlist_favoritos.ObjetoConIdNombreYWildcard[idsCanciones.length];
-        for (int i = 0; i < idsCanciones.length; i++) {
-            objetos[i] = new playlist_favoritos.ObjetoConIdNombreYWildcard(idsCanciones[i], nombresCanciones[i], wildcardCanciones[i]);
+        playlist_favoritos.ObjetoConIdNombreYWildcard[] objetos = new playlist_favoritos.ObjetoConIdNombreYWildcard[idsCanciones.length-1];
+        for (int i = 1; i < idsCanciones.length; i++) {
+            objetos[i-1] = new ObjetoConIdNombreYWildcard(idsCanciones[i], nombresCanciones[i-1], wildcardCanciones[i-1]);
         }
+
 
         // Ordenar el array de objetos por el nombre utilizando un comparador
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Arrays.sort(objetos, Comparator.comparing(playlist_favoritos.ObjetoConIdNombreYWildcard::getWildcard));
+            Arrays.sort(objetos, Comparator.comparing(ObjetoConIdNombreYWildcard::getWildcard));
         }
 
         SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
@@ -344,10 +372,10 @@ public class playlist_favoritos extends AppCompatActivity {
         }
         wildcardCanciones = wildcardCanciones2;
 
-
+        int length = nombresCanciones.length;
         // Pongo las canciones en pantalla
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, wildcardCanciones);
-        ListView listView = findViewById(R.id.listCRep);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, nombresCanciones);
+        ListView listView = findViewById(R.id.listSongsArtist);
         listView.setAdapter(adapter);
 
         for (int j = 0; j < idsCanciones.length-1; j++) {
@@ -360,7 +388,7 @@ public class playlist_favoritos extends AppCompatActivity {
             listView.addHeaderView(header);
 
             TextView row = header.findViewById(R.id.listTextView);
-            row.setText(nombresCanciones[j+1]);
+            row.setText(nombresCanciones[j]);
             row.setTag(idsCanciones[j+1]);
 
             row.setOnClickListener(new View.OnClickListener() {

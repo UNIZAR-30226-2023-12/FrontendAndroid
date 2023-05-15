@@ -176,7 +176,7 @@ public class Results extends AppCompatActivity {
             return "cancion";
         } else if (response[0].equals("usuario")) {
             return "artista";
-        } else if (response[0].equals("idLista")) {
+        } else if (response[0].equals("lista")) {
             return "playlist";
         } else {
             return "iAmError";
@@ -299,7 +299,16 @@ public class Results extends AppCompatActivity {
                             listView.addHeaderView(header, null, false);
 
                             TextView row = header.findViewById(R.id.listTextViewSingle);
-                            row.setText(nombresElementos[j]);
+                            String tipo = whatAmI(idElemento);
+                            if (tipo.equals("cancion")) {
+                                row.setText(nombresElementos[j] + ",c");
+                            }
+                            else if (tipo.equals("artista")) {
+                                row.setText(nombresElementos[j] + ",a");
+                            }
+                            else if (tipo.equals("playlist")) {
+                                row.setText(nombresElementos[j] + ",p");
+                            }
                             row.setTag(idElemento);
 
 

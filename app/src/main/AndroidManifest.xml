@@ -26,10 +26,12 @@
             android:exported="false" />
         <activity
             android:name=".AddFriend"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".ListenFromLink"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -78,7 +80,8 @@
             android:exported="false" />
         <activity
             android:name=".playlist_favoritos"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

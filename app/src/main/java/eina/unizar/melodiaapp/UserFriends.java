@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import eina.unizar.melodiaapp.Modules.MyTaskAskFriends;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNameFriends;
+import eina.unizar.melodiaapp.Modules.MyTaskGetSubsribeArtist;
 
 public class UserFriends extends AppCompatActivity {
     /**
@@ -54,6 +55,24 @@ public class UserFriends extends AppCompatActivity {
         }
     }
 
+    protected String[] doRequestGetSubsribeArtist() throws Exception {
+        // Obtengo usuario y contraseña
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        MyTaskGetSubsribeArtist task = new MyTaskGetSubsribeArtist();
+        String respuesta = task.execute(idUsuario, contrasenya).get();
+        String response[] = respuesta.split(",");
+
+        if (response[0].equals("200")) {
+            return response;
+        }
+        else {
+            return new String[]{"Error"};
+        }
+    }
+
     /**
      * Inicializa la pantalla y realiza la request correspondiente para obtener a los amigos
      * @param savedInstanceState
@@ -67,6 +86,13 @@ public class UserFriends extends AppCompatActivity {
         String[] idsAmigos = new String[]{"Error"};
         try {
             idsAmigos = doRequestAskFriends();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String[] idsArtistas = new String[]{"Error"};
+        try {
+            idsArtistas = doRequestGetSubsribeArtist();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,6 +115,25 @@ public class UserFriends extends AppCompatActivity {
         }
         else {
             Toast.makeText(getApplicationContext(), "Error al obtener los amigos", Toast.LENGTH_SHORT).show();
+        }
+
+        if (idsArtistas[0].equals("200")) {
+            String nombresArtistas[] = new String[idsArtistas.length - 1];
+            for (int i = 1; i < idsArtistas.length; i++) {
+                try {
+                    nombresArtistas[i - 1] = doRequesAskNameFriend(idsAmigos[i]);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // Una vez obtenidos los nombres, los muestro en la interfaz
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, nombresArtistas);
+            ListView listView = findViewById(R.id.FriendsListView);
+            listView.setAdapter(adapter);
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Error al obtener los artistas suscritos", Toast.LENGTH_SHORT).show();
         }
 
         // OnClick para el botón de menú
