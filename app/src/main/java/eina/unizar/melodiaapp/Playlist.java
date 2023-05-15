@@ -288,6 +288,21 @@ public class Playlist extends AppCompatActivity {
                             }
                         }
                     });
+
+                    // Añado el listener para el botón de opciones que sirve para añadir una playlist a una carpeta
+                    ImageView optionsBtn = header.findViewById(R.id.imageView7);
+                    optionsBtn.setOnClickListener(new AdapterView.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Obtengo el id de la lista
+                            String idLista = (String) textView.getTag();
+
+                            Intent intent = new Intent(getApplicationContext(), Carpeta.class);
+                            intent.putExtra("key", "Append");
+                            intent.putExtra("idLista", idLista);
+                            startActivity(intent);
+                        }
+                    });
                 }
 
                 listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>()));
