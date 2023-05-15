@@ -26,6 +26,7 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskProfile;
 import eina.unizar.melodiaapp.Modules.MyTaskAskTopReproductions;
 import eina.unizar.melodiaapp.Modules.MyTaskDeletePlaylist;
 import eina.unizar.melodiaapp.Modules.MyTaskGetListFolder;
+import eina.unizar.melodiaapp.Modules.MyTaskSubscribeToArtist;
 
 public class Results extends AppCompatActivity {
 
@@ -155,6 +156,17 @@ public class Results extends AppCompatActivity {
         return task.execute(idUsuario, contrasenya, idPlaylist).get();
     }
 
+    protected String doRequestSubscribeToArtist(String idArtist) throws ExecutionException, InterruptedException {
+        // Obtengo usuario, contraseña e id del artista a seguir
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+
+        // Hago la petición
+        MyTaskSubscribeToArtist task = new MyTaskSubscribeToArtist();
+
+        return task.execute(idUsuario, contrasenya, idArtist).get();
+    }
 
     protected String whatAmI(String id) {
 
@@ -204,45 +216,68 @@ public class Results extends AppCompatActivity {
                         String nombresElementos[] = new String[listaIdResultados.length - 1];
 
                         Integer i = 1;
-                        for (i = 0; i < nombresElementos.length; i++) {
+                        int contUsers = 0;
+                        int contSongs = 0;
+                        int contLists = 0;
+                        String[] idsUsers = new String[listaIdResultados.length - 1];
+                        String[] idsSongs = new String[listaIdResultados.length - 1];
+                        String[] idsLists = new String[listaIdResultados.length - 1];
+                        for (i = 0; i < listaIdResultados.length-1; i++) {
 
                             //Necesitamos diferenciar entre canción, artista y autor
-                            switch (whatAmI(listaIdResultados[i+1])) {
+                            switch (whatAmI(listaIdResultados[i + 1])) {
                                 case "cancion":
                                     // Si el elemento es una canción
-                                    nombresElementos[i] = doRequestAskNameSongs(listaIdResultados[i+1].split(",")[0]);
+                                    idsSongs = new String[listaIdResultados[i + 1].split(",").length];
+                                    for (int j = 0; j < listaIdResultados[i + 1].split(",").length; j++) {
+                                        nombresElementos[contSongs] = doRequestAskNameSongs(listaIdResultados[i + 1].split(",")[j]);
+                                        idsSongs[contSongs] = listaIdResultados[i + 1].split(",")[j];
+                                        contSongs++;
+                                    }
                                     break;
                                 case "artista":
                                     // Si el elemento es un artista
-                                    nombresElementos[i-1] = doRequestAskArtistName(listaIdResultados[i+1].split(",")[0]);
+                                    idsUsers = new String[listaIdResultados[i + 1].split(",").length];
+                                    for (int j = 0; j < listaIdResultados[i + 1].split(",").length; j++) {
+                                        nombresElementos[contUsers] = doRequestAskArtistName(listaIdResultados[i + 1].split(",")[j]);
+                                        idsUsers[contUsers] = listaIdResultados[i + 1].split(",")[j];
+                                        contUsers++;
+                                    }
                                     break;
                                 case "playlist":
                                     // Si el elemento es una playlist
-                                    nombresElementos[i] = doRequestAskNameListas(listaIdResultados[i+1].split(",")[0]);
+                                    idsLists = new String[listaIdResultados[i + 1].split(",").length];
+                                    for (int j = 0; j < listaIdResultados[i + 1].split(",").length; j++) {
+                                        nombresElementos[contLists] = doRequestAskNameListas(listaIdResultados[i + 1].split(",")[j]);
+                                        idsLists[contLists] = listaIdResultados[i + 1].split(",")[j];
+                                        contLists++;
+                                    }
                                     break;
                                 default:
                                     // handle unknown result
                                     break;
                             }
-
-
-
-                    /*
-                    // Si el nombre es la de Favoritos se guarda en SharedPreferences con su id
-                    if (nombresListas[i - 1].equals("Favoritos")) {
-                        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("idListaFavoritos", listaListasRepUser[i]);
-                        editor.apply();
-                    }
-
-                    */
                         }
-
-
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.textview_item, R.id.listTextViewSingle, nombresElementos);
                         ListView listView = findViewById(R.id.listResults);
                         listView.setAdapter(adapter);
+
+                        int totalResultados =  contSongs + contUsers + contLists;
+                        listaIdResultados = new String[totalResultados + 1];
+                        listaIdResultados[0] = "200";
+                        int cont = 0;
+                        for (int j = cont; j < contSongs; j++) {
+                            listaIdResultados[j + 1] = idsSongs[j];
+                            cont++;
+                        }
+                        for (int j = cont; j < contUsers; j++) {
+                            listaIdResultados[j + 1] = idsUsers[j];
+                            cont++;
+                        }
+                        for (int j = cont; j < contLists; j++) {
+                            listaIdResultados[j + 1] = idsLists[j];
+                            cont++;
+                        }
 
 
                         /*
@@ -250,7 +285,7 @@ public class Results extends AppCompatActivity {
                          * Se podría añadir en el bucle anterior pero de momento
                          * esta separado para facilitar cambios al código
                          */
-                        for (int j = 0; j < listaIdResultados.length - 1; j++) {
+                        for (int j = 0; j < totalResultados; j++) {
                             // Obtener una referencia a la lista en concreto
                             View listItem = adapter.getView(j, null, listView);
                             TextView textView = listItem.findViewById(R.id.listTextViewSingle);
@@ -295,12 +330,19 @@ public class Results extends AppCompatActivity {
                                             break;
                                         case "artista":
                                             // Si el elemento es un artista
-                                            editor.putString("idArtistaActual", idElemento);
-                                            editor.apply();
-                                            Intent intentA = new Intent(getApplicationContext(), Player.class);
-                                            intentA.putExtra("mode", "visitor");
-                                            intentA.putExtra("idArtista", idElemento);
-                                            startActivity(intentA);
+                                            try {
+                                                String response = doRequestSubscribeToArtist(idElemento);
+                                                if (response.equals("200")) {
+                                                    Toast.makeText(getApplicationContext(), "Se ha suscrito al artista", Toast.LENGTH_SHORT).show();
+                                                }
+                                                else {
+                                                    Toast.makeText(getApplicationContext(), "Error al suscribirse al artista", Toast.LENGTH_SHORT).show();
+                                                }
+                                            } catch (ExecutionException e) {
+                                                e.printStackTrace();
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
                                             break;
                                         case "playlist":
                                             // Si el elemento es una playlist
