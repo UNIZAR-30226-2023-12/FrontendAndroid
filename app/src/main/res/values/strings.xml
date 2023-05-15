@@ -66,9 +66,9 @@
     <string name="Reproduction_titleArtist">Reproducciones</string>
     <string name="Reproduction_titleAdmin">Reproducciones totales</string>
     <string name="Results_title">Resultados: </string>
-    <string name="Results_orderName">Ordenar por\nnombre </string>
-    <string name="Results_orderGenre">Ordenar por\ngénero </string>
-    <string name="Results_orderArtist">Ordenar por\nartista </string>
+    <string name="Results_orderName">Ordenar por\ntítulo</string>
+    <string name="Results_orderGenre">Ordenar por\ntemática </string>
+    <string name="Results_orderArtist">Ordenar por\nautor </string>
     <string name="AddFriend_hint">Introduce el alias\n de tu amigo</string>
     <string name="AddFriend_add">Añadir</string>
     <string name="AllSeconds_title">Segundos reproducidos\n por día</string>

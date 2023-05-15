@@ -29,7 +29,7 @@ public class MyTaskAskTopReproductions extends AsyncTask<String, Void, String> {
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"n\": \"" + n + "\", \"esPodcast\": \"" + "1" + "\"}";
+            String jsonInputString = "{\"n\": \"" + n + "\", \"esPodcast\": \"" + "True" + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
