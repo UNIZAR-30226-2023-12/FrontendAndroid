@@ -23,19 +23,19 @@ public class MyTaskAskNameFolder extends AsyncTask<String, Void, String> {
     public String doInBackground(String... params) {
         String idUsuario = params[0];
         String contrasenya = params[1];
-        String idLista = params[2];
+        String idFolder = params[2];
         String result = "";
 
         try {
             MySingleton singleton = MySingleton.getInstance();
-            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/GetNombreCarpeta/");
+            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/GetFolder/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\", \"idLista\": \"" + idLista + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\", \"idCarpeta\": \"" + idFolder + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
@@ -56,9 +56,9 @@ public class MyTaskAskNameFolder extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                String nombreDevuelto = jsonObject.get("nombreLista").getAsString();
+                String nombreDevuelto = jsonObject.get("nombreCarpeta").getAsString();
 
-                return "200" + nombreDevuelto;
+                return "200," + nombreDevuelto;
             }
             else {
                 return "Error";

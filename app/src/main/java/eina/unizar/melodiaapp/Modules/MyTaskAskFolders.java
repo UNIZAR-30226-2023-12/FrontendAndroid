@@ -3,6 +3,7 @@ package eina.unizar.melodiaapp.Modules;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
@@ -23,18 +24,19 @@ public class MyTaskAskFolders extends AsyncTask<String, Void, String> {
     public String doInBackground(String... params) {
         String idUsuario = params[0];
         String contrasenya = params[1];
+        String idUsrGet = idUsuario;
         String result = "";
 
         try {
             MySingleton singleton = MySingleton.getInstance();
-            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/GetFolder/");
+            URL url = new URL("http://" + singleton.getMyGlobalVariable() + ":8081/GetFoldersUsr/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\"}";
+            String jsonInputString = "{\"idUsr\": \"" + idUsuario + "\", \"contrasenya\": \"" + contrasenya + "\" , \"idUsrGet\": \"" + idUsrGet + "\"}";
 
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.writeBytes(jsonInputString);
@@ -55,9 +57,14 @@ public class MyTaskAskFolders extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                String idDevuelto = jsonObject.get("carpetas").getAsString();
+                JsonArray jsonArray = jsonObject.get("idCarpeta").getAsJsonArray();
+                String idDevuelto = "";
+                for (int i = 0; i < jsonArray.size(); i++) {
+                    idDevuelto += jsonArray.get(i).getAsString() + ",";
+                }
 
-                return idDevuelto;
+
+                return "200," + idDevuelto;
             }
             else {
                 return "Error";

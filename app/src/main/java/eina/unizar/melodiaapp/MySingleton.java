@@ -2,7 +2,7 @@ package eina.unizar.melodiaapp;
 
 public class MySingleton {
     private static MySingleton instance;
-    private String IPdir = "ec2-3-83-121-162.compute-1.amazonaws.com";
+    private String IPdir = "10.0.2.2";
 
     private MySingleton() {
         // Constructor privado para evitar que se creen instancias de la clase

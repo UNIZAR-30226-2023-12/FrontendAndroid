@@ -139,7 +139,7 @@ public class Carpeta extends AppCompatActivity {
         //Obtengo de shared preferences los ids de las carpetas del usuario
         SharedPreferences preferences = getSharedPreferences("carpeta", MODE_PRIVATE);
         String idsCarpetasJson = preferences.getString("idCarpetas", "[]");
-        if (idsCarpetasJson.equals("[]")) {
+        if (!idsCarpetasJson.equals("[]")) {
             String idsCarpetas[] = doRequestAskFolders();
             if (idsCarpetas[0].equals("200")) {
                 //Obtengo los nombres de las carpetas
@@ -147,10 +147,11 @@ public class Carpeta extends AppCompatActivity {
                 for (int i = 1; i < idsCarpetas.length; i++) {
                     nombresCarpetas[i - 1] = doRequestAskNameFolder(idsCarpetas[i]);
                 }
-                String [] prueba = {"lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4", "lista1", "lista2", "lista3", "lista4"};
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, prueba);
-                ListView listView = findViewById(R.id.listPlsylist);
-                listView.setAdapter(adapter);            }
+                
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.cancion_item, R.id.listTextView, nombresCarpetas);
+                ListView listView = findViewById(R.id.linearLayout2);
+                listView.setAdapter(adapter);
+            }
             else {
                 Toast.makeText(getApplicationContext(), "Error al obtener las carpetas", Toast.LENGTH_SHORT).show();
             }
