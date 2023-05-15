@@ -15,6 +15,8 @@ import java.util.concurrent.ExecutionException;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNamePlaylist;
 import eina.unizar.melodiaapp.Modules.MyTaskAskPlaylists;
 import eina.unizar.melodiaapp.Modules.MyTaskAskProfile;
+import eina.unizar.melodiaapp.Modules.MyTaskGetLastSecondHeared;
+import eina.unizar.melodiaapp.Modules.MyTaskGetListFolder;
 
 /**
  * Clase que codifica la actividad del menu principal de la aplicación
@@ -65,6 +67,25 @@ public class Menu extends AppCompatActivity {
 
         MyTaskAskNamePlaylist task = new MyTaskAskNamePlaylist();
         String respuesta = task.execute(idUsuario, contrasenya, idLista).get();
+        String response[] = respuesta.split(",");
+
+        if (response[0].equals("200")) {
+            return response[1];
+        }
+        else {
+            return "Error";
+        }
+    }
+
+    protected String doRequestGetLastSecondHeared() throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contraseña
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
+        String audio = preferences.getString("ultimoAudio", "");
+
+        MyTaskGetLastSecondHeared task = new MyTaskGetLastSecondHeared();
+        String respuesta = task.execute(idUsuario, contrasenya, audio).get();
         String response[] = respuesta.split(",");
 
         if (response[0].equals("200")) {
@@ -202,6 +223,30 @@ public class Menu extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), Results.class);
                 intent.putExtra("mode","top10");
                 startActivity(intent);
+            }
+        });
+
+        TextView boton_reanudar = findViewById(R.id.bResume);
+        boton_reanudar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Results.class);
+                intent.putExtra("tipoRep", "resume");
+                intent.putExtra("playingMode", "repeat");
+                SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+                String audio = preferences.getString("ultimoAudio", "");
+                intent.putExtra("idCancionActual", audio);
+
+                String response = "Error";
+                try {
+                    response = doRequestGetLastSecondHeared();
+                    intent.putExtra("lastSecond",response);
+
+                    startActivity(intent);
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 

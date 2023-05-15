@@ -2,6 +2,8 @@ package eina.unizar.melodiaapp;
 
 import static android.util.Log.d;
 
+import static java.lang.Integer.parseInt;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -285,7 +287,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                     ReproducirAudioRandom(idUsr);
                 }
             }
-            else if (tipoRep.equals("individual")){
+            else if (tipoRep.equals("individual") || tipoRep.equals("resume")){//Sea individual o resume, la cancion es la misma
                 idAudioActual = extras.getString("idCancionActual");
                 // Obtengo el idUsr de SharedPreferences
                 SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -543,6 +545,12 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
 
                     mediaPlayer.setDataSource(tempMp3.getAbsolutePath());
                     mediaPlayer.prepare();
+                    //TODO setlastsecondheard(0)
+                    //Guardamos el último audio reproducido en preferences
+                    SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("ultimoAudio",idAudioActual );
+                    editor.apply();
                     mediaPlayer.start();
 
                     mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -565,6 +573,9 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                                 mediaPlayer.start();
                             } else {
                                 mediaPlayer.pause();
+                                int currentPosition = mediaPlayer.getCurrentPosition();
+                                int currentSeconds = currentPosition / 1000;
+                                //TODO setlastsecondheard(currentSeconds.toString()) segundo actual
                             }
                         }
                     });
@@ -636,6 +647,12 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
 
                     mediaPlayer.setDataSource(tempMp3.getAbsolutePath());
                     mediaPlayer.prepare();
+
+                    //TODO setlastsecondheard(0)
+                    SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("ultimoAudio",idAudioActual );
+                    editor.apply();
                     mediaPlayer.start();
 
                     mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -664,6 +681,9 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                                 mediaPlayer.start();
                             } else {
                                 mediaPlayer.pause();
+                                int currentPosition = mediaPlayer.getCurrentPosition();
+                                int currentSeconds = currentPosition / 1000;
+                                //TODO setlastsecondheard(currentSeconds.toString()) segundo actual
                             }
                         }
                     });
@@ -737,7 +757,17 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
 
                     mediaPlayer.setDataSource(tempMp3.getAbsolutePath());
                     mediaPlayer.prepare();
+                    Bundle extras = getIntent().getExtras();
+                    if(extras.getString("tipoRep").equals("resume")){//Si estamos en modo volver, nos posicionamos en el último segundo
+                        mediaPlayer.seekTo(parseInt(extras.getString("lastSecond")));
+                    }
+                    //TODO setlastsecondheard(0)
+                    SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("ultimoAudio",idAudioActual );
+                    editor.apply();
                     mediaPlayer.start();
+
 
                     mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
@@ -756,6 +786,9 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                                 mediaPlayer.start();
                             } else {
                                 mediaPlayer.pause();
+                                int currentPosition = mediaPlayer.getCurrentPosition();
+                                int currentSeconds = currentPosition / 1000;
+                                //TODO setlastsecondheard(currentSeconds.toString()) segundo actual
                             }
                         }
                     });
