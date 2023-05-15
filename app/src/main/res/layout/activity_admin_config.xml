@@ -21,27 +21,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/bAprobarArtistas"
-        android:layout_width="172dp"
-        android:layout_height="128dp"
-        android:layout_marginTop="112dp"
-        android:background="@drawable/bigbutton1"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="@string/Admin_artist"
-        android:textColor="@color/button_text"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NombreAdmin" />
 
     <TextView
         android:id="@+id/bViews"
         android:layout_width="172dp"
         android:layout_height="128dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="116dp"
         android:background="@drawable/bigbutton1"
         android:gravity="center"
         android:padding="8dp"
@@ -49,7 +34,7 @@
         android:textColor="@color/button_text"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.937"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NombreAdmin" />
 
