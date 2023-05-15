@@ -30,7 +30,6 @@ import eina.unizar.melodiaapp.Modules.MyTaskSubscribeToArtist;
 
 public class Results extends AppCompatActivity {
 
-
     private String listaIdResultados[]; //TODO asegurar que diferenciamos entre tipos de id
 
     protected String doRequestAskNameListas(String idLista) throws ExecutionException, InterruptedException {
@@ -262,7 +261,7 @@ public class Results extends AppCompatActivity {
                         ListView listView = findViewById(R.id.listResults);
                         listView.setAdapter(adapter);
 
-                        int totalResultados =  contSongs + contUsers + contLists;
+                        int totalResultados =  contSongs + contUsers + contLists - 1;
                         listaIdResultados = new String[totalResultados + 1];
                         listaIdResultados[0] = "200";
                         int cont = 0;
@@ -313,6 +312,12 @@ public class Results extends AppCompatActivity {
 
 
                             TextView btnView = header.findViewById(R.id.listTextViewSingle);
+                            String[] finalSongs = new String[idsSongs.length+1];
+                            finalSongs[0] = "200";
+                            System.arraycopy(idsSongs, 0, finalSongs, 1, idsSongs.length);
+                            String finalSongsString = String.join(",", finalSongs);
+
+                            // Añado "200" a la primera posición
                             btnView.setOnClickListener(new AdapterView.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -326,6 +331,7 @@ public class Results extends AppCompatActivity {
                                     SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = preferences.edit();
                                     editor.putString("idCancionActual", idElemento);
+                                    editor.putString("idsCancionesPlaylist", finalSongsString);
                                     editor.apply();
 
                                     switch (whatAmI(idElemento)) {
@@ -333,7 +339,7 @@ public class Results extends AppCompatActivity {
                                             // Si el elemento es una canción
                                             Intent intent = new Intent(getApplicationContext(), Player.class);
                                             intent.putExtra("tipoRep", "playlistNormal");
-                                            intent.putExtra("playingMode", "repeat");
+                                            intent.putExtra("playingMode", "linear");
                                             intent.putExtra("idCancionActual", idElemento);
                                             startActivity(intent);
                                             break;
