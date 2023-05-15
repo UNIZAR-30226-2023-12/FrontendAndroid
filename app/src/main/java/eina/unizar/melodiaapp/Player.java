@@ -80,7 +80,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
     private int posicionCancionActual = 0;
     private String[] idsCancionesPlaylistArray;
 
-    protected String doRequestSetLastSecondHeared(String seconds) throws ExecutionException, InterruptedException {
+    protected String doRequestSetSecHeared(String seconds) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         String idUsr = preferences.getString("idUsuario", "");
@@ -657,6 +657,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                                 int currentSeconds = currentPosition / 1000;
                                 try {
                                     doRequestMyTaskSetLastSecondHeared(String.valueOf(currentSeconds));
+                                    doRequestSetSecHeared(String.valueOf(currentSeconds));
                                 } catch (ExecutionException e) {
                                     e.printStackTrace();
                                 } catch (InterruptedException e) {
@@ -682,8 +683,9 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                                 e.printStackTrace();
                             }
                             int currentTime = mediaPlayer.getCurrentPosition();
+                            String timeString = String.valueOf(currentTime/1000);
                             try {
-                                doRequestSetLastSecondHeared(String.valueOf(currentTime));
+                                doRequestSetSecHeared(timeString);
                             } catch (ExecutionException e) {
                                 e.printStackTrace();
                             } catch (InterruptedException e) {
@@ -722,7 +724,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         // Seteo el título de la canción
         TextView title = findViewById(R.id.song_title);
         try {
-            String name = doRequestAskNameSongs(idsCancionesPlaylistArray[posicionCancionActual]);
+            String name = doRequestAskNameSongs(idAudioActual);
             title.setText(name);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
@@ -796,6 +798,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                                 int currentSeconds = currentPosition / 1000;
                                 try {
                                     doRequestMyTaskSetLastSecondHeared(String.valueOf(currentSeconds));
+                                    doRequestSetSecHeared(String.valueOf(currentSeconds));
                                 } catch (ExecutionException e) {
                                     e.printStackTrace();
                                 } catch (InterruptedException e) {
@@ -814,14 +817,16 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                             int currentSeconds = currentPosition / 1000;
                             try {
                                 doRequestMyTaskSetLastSecondHeared(String.valueOf(currentSeconds));
+                                doRequestSetSecHeared(String.valueOf(currentSeconds));
                             } catch (ExecutionException e) {
                                 e.printStackTrace();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
                             int currentTime = mediaPlayer.getCurrentPosition();
+                            String timeString = String.valueOf(currentTime/1000);
                             try {
-                                doRequestSetLastSecondHeared(String.valueOf(currentTime));
+                                doRequestSetSecHeared(timeString);
                             } catch (ExecutionException e) {
                                 e.printStackTrace();
                             } catch (InterruptedException e) {
@@ -927,6 +932,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                                 int currentSeconds = currentPosition / 1000;
                                 try {
                                     doRequestMyTaskSetLastSecondHeared(String.valueOf(currentSeconds));
+                                    doRequestSetSecHeared(String.valueOf(currentSeconds));
                                 } catch (ExecutionException e) {
                                     e.printStackTrace();
                                 } catch (InterruptedException e) {
@@ -951,8 +957,9 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                                 e.printStackTrace();
                             }
                             int currentTime = mediaPlayer.getCurrentPosition();
+                            String timeString = String.valueOf(currentTime/1000);
                             try {
-                                doRequestSetLastSecondHeared(String.valueOf(currentTime));
+                                doRequestSetSecHeared(timeString);
                             } catch (ExecutionException e) {
                                 e.printStackTrace();
                             } catch (InterruptedException e) {

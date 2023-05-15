@@ -58,7 +58,7 @@ public class MyTaskGetTime extends AsyncTask<String, Void, String> {
                 // Parseamos el JSON
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
-                String link = jsonObject.get("segundos").getAsString();
+                String link = jsonObject.get("second").getAsString();
                 return "200," + link;
             }
             else {

@@ -16,16 +16,6 @@ public class AdminConfig extends AppCompatActivity {
         setContentView(R.layout.activity_admin_config);
         String mode = "Admin";
 
-        TextView artistas = findViewById(R.id.bAprobarArtistas);
-        artistas.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Notifications.class);
-                intent.putExtra("key",mode);
-                startActivity(intent);
-            }
-        });
-
         TextView reproducciones = findViewById(R.id.bViews);
         reproducciones.setOnClickListener(new View.OnClickListener(){
             @Override

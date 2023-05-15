@@ -73,9 +73,12 @@ public class ArtistSongs extends AppCompatActivity {
     }
 
     protected String doRequestGetReproductionsArtist(String idAudio) throws ExecutionException, InterruptedException {
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsuario = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
 
         MyTaskGetReproductionsArtist task = new MyTaskGetReproductionsArtist();
-        String[] respuesta = task.execute(idAudio).get().split(",");
+        String[] respuesta = task.execute(idUsuario, contrasenya, idAudio).get().split(",");
 
         if (respuesta[0].equals("200")) {
             return respuesta[1];
@@ -131,7 +134,7 @@ public class ArtistSongs extends AppCompatActivity {
                 TextView count = header.findViewById(R.id.countSongsArtist);
 
                 try {
-                    count.setText(doRequestGetSongSeconds(idsCanciones[j+1]));
+                    count.setText(doRequestGetReproductionsArtist(idsCanciones[j+1]));
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
