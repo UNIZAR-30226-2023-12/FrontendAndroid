@@ -56,6 +56,7 @@ import eina.unizar.melodiaapp.Modules.MyTaskGetCaratula;
 import eina.unizar.melodiaapp.Modules.MyTaskGetRating;
 import eina.unizar.melodiaapp.Modules.MyTaskGetRecommendedAudio;
 import eina.unizar.melodiaapp.Modules.MyTaskGetValoracionMedia;
+import eina.unizar.melodiaapp.Modules.MyTaskSetLastSecondHeared;
 import eina.unizar.melodiaapp.Modules.MyTaskSetRating;
 import eina.unizar.melodiaapp.Modules.MyTaskSetSecHeared;
 
@@ -97,6 +98,16 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
 
         MyTaskSetRating task = new MyTaskSetRating();
         return task.execute(idUsr, passwd, idAudioActual, rating).get();
+    }
+
+    protected String doRequestMyTaskSetLastSecondHeared(String second) throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contrasenya de shared preferences
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsr = preferences.getString("idUsuario", "");
+        String passwd = preferences.getString("contrasenya", "");
+
+        MyTaskSetLastSecondHeared task = new MyTaskSetLastSecondHeared();
+        return task.execute(idUsr, passwd, idAudioActual, second).get();
     }
 
     protected String doRequestGetRating() throws ExecutionException, InterruptedException {
@@ -607,7 +618,14 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
 
                     mediaPlayer.setDataSource(tempMp3.getAbsolutePath());
                     mediaPlayer.prepare();
-                    //TODO setlastsecondheard(0)
+
+                    try {
+                        doRequestMyTaskSetLastSecondHeared("0");
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     //Guardamos el último audio reproducido en preferences
                     SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
@@ -637,7 +655,14 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                                 mediaPlayer.pause();
                                 int currentPosition = mediaPlayer.getCurrentPosition();
                                 int currentSeconds = currentPosition / 1000;
-                                //TODO setlastsecondheard(currentSeconds.toString()) segundo actual
+                                try {
+                                    doRequestMyTaskSetLastSecondHeared(String.valueOf(currentSeconds));
+                                } catch (ExecutionException e) {
+                                    e.printStackTrace();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
                             }
                         }
                     });
@@ -719,7 +744,13 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                     mediaPlayer.setDataSource(tempMp3.getAbsolutePath());
                     mediaPlayer.prepare();
 
-                    //TODO setlastsecondheard(0)
+                    try {
+                        doRequestMyTaskSetLastSecondHeared("0");
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("ultimoAudio",idAudioActual );
@@ -754,7 +785,13 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                                 mediaPlayer.pause();
                                 int currentPosition = mediaPlayer.getCurrentPosition();
                                 int currentSeconds = currentPosition / 1000;
-                                //TODO setlastsecondheard(currentSeconds.toString()) segundo actual
+                                try {
+                                    doRequestMyTaskSetLastSecondHeared(String.valueOf(currentSeconds));
+                                } catch (ExecutionException e) {
+                                    e.printStackTrace();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     });
@@ -870,7 +907,13 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                                 mediaPlayer.pause();
                                 int currentPosition = mediaPlayer.getCurrentPosition();
                                 int currentSeconds = currentPosition / 1000;
-                                //TODO setlastsecondheard(currentSeconds.toString()) segundo actual
+                                try {
+                                    doRequestMyTaskSetLastSecondHeared(String.valueOf(currentSeconds));
+                                } catch (ExecutionException e) {
+                                    e.printStackTrace();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     });
