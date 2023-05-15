@@ -54,6 +54,7 @@ import eina.unizar.melodiaapp.Modules.MyTaskDeleteSongLista;
 import eina.unizar.melodiaapp.Modules.MyTaskGetCaratula;
 import eina.unizar.melodiaapp.Modules.MyTaskGetRating;
 import eina.unizar.melodiaapp.Modules.MyTaskGetRecommendedAudio;
+import eina.unizar.melodiaapp.Modules.MyTaskGetValoracionMedia;
 import eina.unizar.melodiaapp.Modules.MyTaskSetRating;
 import eina.unizar.melodiaapp.Modules.MyTaskSetSecHeared;
 
@@ -103,7 +104,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         String idUsr = preferences.getString("idUsuario", "");
         String passwd = preferences.getString("contrasenya", "");
 
-        MyTaskGetRating task = new MyTaskGetRating();
+        MyTaskGetValoracionMedia task = new MyTaskGetValoracionMedia();
         String[] respuesta = task.execute(idUsr, passwd, idAudioActual).get().split(",");
 
         if (respuesta[0].equals("200")) {
