@@ -48,6 +48,7 @@ import java.util.concurrent.ExecutionException;
 import android.media.AudioManager;
 
 import eina.unizar.melodiaapp.Modules.GETRequest;
+import eina.unizar.melodiaapp.Modules.MyTaskAlmacenarEjemplo;
 import eina.unizar.melodiaapp.Modules.MyTaskAskLink;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNameSongs;
 import eina.unizar.melodiaapp.Modules.MyTaskDeleteSongLista;
@@ -216,6 +217,23 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
             return response[1];
         }
         else {
+            return "Error";
+        }
+    }
+
+    protected String doRequestAlmacenarEjemplo(String rating) throws ExecutionException, InterruptedException {
+        // Obtengo usuario y contrasenya de shared preferences
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsr = preferences.getString("idUsuario", "");
+        String passwd = preferences.getString("contrasenya", "");
+
+        MyTaskAlmacenarEjemplo task = new MyTaskAlmacenarEjemplo();
+        String result = task.execute(idUsr, passwd, idAudioActual, rating).get();
+        String[] response = result.split(",");
+
+        if (response[0].equals("200")) {
+            return "200";
+        } else {
             return "Error";
         }
     }
@@ -441,6 +459,7 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
                 ratingValueTextFinal.setText(ratingValue);
                 try {
                     doRequestSetRating(ratingValue);
+                    doRequestAlmacenarEjemplo(ratingValue);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
