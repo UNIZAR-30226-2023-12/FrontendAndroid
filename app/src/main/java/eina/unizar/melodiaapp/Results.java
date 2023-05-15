@@ -69,14 +69,16 @@ public class Results extends AppCompatActivity {
     protected String doRequestAskArtistName(String idUsuario) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
 
-        String contrasenya = "none";
+        SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
+        String idUsr = preferences.getString("idUsuario", "");
+        String contrasenya = preferences.getString("contrasenya", "");
 
         MyTaskAskProfile task = new MyTaskAskProfile();
-        String respuesta = task.execute(idUsuario, contrasenya).get();
+        String respuesta = task.execute(idUsr, contrasenya, idUsuario).get();
         String response[] = respuesta.split(",");
 
         if (response[0].equals("200")) {
-            return response[1];
+            return response[2];
         } else {
             return "Error";
         }
@@ -127,7 +129,7 @@ public class Results extends AppCompatActivity {
 
         if (response[0].equals("idAudio")) {
             return "cancion";
-        } else if (response[0].equals("idArtista")) {
+        } else if (response[0].equals("usuario")) {
             return "artista";
         } else if (response[0].equals("idLista")) {
             return "playlist";
@@ -179,7 +181,7 @@ public class Results extends AppCompatActivity {
                                     break;
                                 case "artista":
                                     // Si el elemento es un artista
-                                    nombresElementos[i] = doRequestAskArtistName(listaIdResultados[i+1].split(",")[0]);
+                                    nombresElementos[i-1] = doRequestAskArtistName(listaIdResultados[i+1].split(",")[0]);
                                     break;
                                 case "playlist":
                                     // Si el elemento es una playlist
@@ -221,7 +223,7 @@ public class Results extends AppCompatActivity {
                             TextView textView = listItem.findViewById(R.id.listTextViewSingle);
 
                             // Añadir el tag con la id de la lista
-                            String idElemento = listaIdResultados[j + 1];
+                            String idElemento = listaIdResultados[j + 1].split(",")[0];
                             textView.setTag(idElemento);
 
                             LayoutInflater inflater = getLayoutInflater();
@@ -230,7 +232,7 @@ public class Results extends AppCompatActivity {
 
                             TextView row = header.findViewById(R.id.listTextViewSingle);
                             row.setText(nombresElementos[j]);
-                            row.setTag(listaIdResultados[j + 1]);
+                            row.setTag(idElemento);
 
 
                             TextView btnView = header.findViewById(R.id.listTextViewSingle);
@@ -244,15 +246,18 @@ public class Results extends AppCompatActivity {
                                     System.arraycopy(listaIdResultados, 1, test, 0, test.length);
                                     Toast.makeText(getApplicationContext(), "Elemento Id: " + idElemento, Toast.LENGTH_SHORT).show();
                                     //Por defecto lo escribimos como cancionActual, pero si no es asi lo cambiamos
-                                    SharedPreferences preferences = getSharedPreferences("cancionActual", MODE_PRIVATE);
+                                    SharedPreferences preferences = getSharedPreferences("playlistActual", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = preferences.edit();
+                                    editor.putString("idCancionActual", idElemento);
+                                    editor.apply();
 
                                     switch (whatAmI(idElemento)) {
                                         case "cancion":
                                             // Si el elemento es una canción
                                             Intent intent = new Intent(getApplicationContext(), Player.class);
-                                            intent.putExtra("tipoRep", "individual");
-                                            intent.putExtra("idCancionActual", idElemento.split(",")[0]);
+                                            intent.putExtra("tipoRep", "playlistNormal");
+                                            intent.putExtra("playingMode", "repeat");
+                                            intent.putExtra("idCancionActual", idElemento);
                                             startActivity(intent);
                                             break;
                                         case "artista":

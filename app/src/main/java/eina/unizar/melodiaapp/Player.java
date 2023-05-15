@@ -705,11 +705,13 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        ImageView caratula = findViewById(R.id.track_image);
-        if (!imagen.equals("")) {
-            byte[] decodedString = Base64.decode(imagen, Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            caratula.setImageBitmap(decodedByte);
+        if (!imagen.equals("Error")) {
+            ImageView caratula = findViewById(R.id.track_image);
+            if (!imagen.equals("")) {
+                byte[] decodedString = Base64.decode(imagen, Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                caratula.setImageBitmap(decodedByte);
+            }
         }
         String InputString = "?idAudio=" + idAudioActual + "&calidad=False&esCancion=True&idUsr=" + idUsr;
 
