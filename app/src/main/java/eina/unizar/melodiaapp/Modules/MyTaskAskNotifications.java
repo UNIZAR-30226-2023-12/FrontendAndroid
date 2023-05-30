@@ -14,12 +14,15 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener las notificaciones de un usuario.
+ */
 public class MyTaskAskNotifications extends AsyncTask<String, Void, String> {
     /**
      * Método que se ejecuta en segundo plano para realizar la petición al servidor y que
      * devuelve los ids de las notificaciones de un usuario dado su usr y contraseña
-     * @param params
-     * @return
+     * @param params Recibe el id del usuario y su contraseña
+     * @return Devuelve un string con el código de respuesta y los ids de las notificaciones
      */
     @Override
     public String doInBackground(String... params) {

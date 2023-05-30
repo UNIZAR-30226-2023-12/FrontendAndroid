@@ -14,7 +14,17 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para realizar una búsqueda por palabras.
+ */
 public class MyTaskByWordSearch extends AsyncTask<String, Void, String> {
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y
+     * obtener los ids de los resultados de la búsqueda.
+     * @param params params[0] es la query y params[1] es n
+     *
+     * @return Devuelve un string con el código de respuesta y los ids de los resultados
+     */
     public String doInBackground(String... params) {
         String query = params[0];
         String n = params[1];

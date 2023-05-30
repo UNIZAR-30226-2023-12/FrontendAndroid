@@ -8,8 +8,16 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que codifica la tarea asíncrona de suscribirse a un artista
+ */
 public class MyTaskSubscribe extends AsyncTask<String, Void, String> {
-
+    /**
+     * Realiza la tarea de llamar al backend para realizar la suscripción a un artista
+     * @param params idUsuario, contrasenya, idUsrArtista
+     *
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor
+     */
     @Override
     public String doInBackground(String... params) {
         String idUsuario = params[0];

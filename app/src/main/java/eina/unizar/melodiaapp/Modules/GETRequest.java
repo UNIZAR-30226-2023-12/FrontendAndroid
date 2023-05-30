@@ -21,7 +21,7 @@ import eina.unizar.melodiaapp.MySingleton;
  */
 
 /**
- * Clase que realiza una petición get a la API REST del backend
+ * Clase que implementa una petición GET.
  */
 public class GETRequest extends AsyncTask<String, Void, JSONObject> {
 

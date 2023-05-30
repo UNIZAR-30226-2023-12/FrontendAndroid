@@ -13,11 +13,14 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para crear una carpeta.
+ */
 public class MyTaskCreatePlaylist extends AsyncTask<String, Void, String> {
     /**
      * Método que se ejecuta en segundo plano para realizar la petición al servidor y crear una playlist
-     * @param params
-     * @return
+     * @param params nombre, privacidad, idUsuario, contrasenya, idLista, tipoLista
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor y el id de la playlist creada.
      */
     @Override
     public String doInBackground(String... params) {

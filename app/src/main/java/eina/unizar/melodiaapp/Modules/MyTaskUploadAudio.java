@@ -14,13 +14,16 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para subir un audio.
+ */
 public class MyTaskUploadAudio extends AsyncTask<String, Void, String> {
     /**
      * Método que se ejecuta en segundo plano para realizar la petición al servidor y que
      * sube un audio y devuelve el código de respuesta http
      *
-     * @param params
-     * @return
+     * @param params idUsuario, contrasenya, nombre, audio, esCancion, duracion, genero, calidad, nombreArtista
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor.
      */
     @Override
     public String doInBackground(String... params) {

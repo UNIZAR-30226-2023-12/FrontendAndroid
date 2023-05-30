@@ -8,21 +8,24 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-
+/**
+ * Clase que implementa un reproductor de audio.
+ */
 public class AudioPlayer {
     private boolean paused = false;
     private MediaPlayer mediaPlayer = new MediaPlayer();
 
 
-    /*
-     * Constructor de la clase, recibe como parámetro la ruta del archivo de audio que se quiere reproducir.
+    /**
+     * Constructor de la clase AudioPlayer.
      */
     public AudioPlayer() {
         this.mediaPlayer = new MediaPlayer();
     }
 
-    /*
-     * Método para reproducir el audio, si ya se estaba reproduciendo se para y se reproduce el nuevo.
+    /**
+     * Método para reproducir un audio.
+     * @param path
      */
     public void play(String path) {
         try {
@@ -41,8 +44,9 @@ public class AudioPlayer {
         }
     }
 
-    /*
-     * Método para reproducir audio de un array de bytes
+    /**
+     * Método para reproducir un audio.
+     * @param audioFile
      */
     public void play(byte[] audioFile){
         try {
@@ -73,7 +77,7 @@ public class AudioPlayer {
         }
     }
 
-    /*
+    /**
      * Método para pausar el audio, si no se estaba reproduciendo no hace nada.
      */
     public void pause() {
@@ -83,7 +87,7 @@ public class AudioPlayer {
         }
     }
 
-    /*
+    /**
      * Método para reanudar el audio, si no se estaba reproduciendo no hace nada.
      */
     public void resume() {
@@ -93,9 +97,8 @@ public class AudioPlayer {
         }
     }
 
-    /*
+    /**
      * Método para parar el audio, si no se estaba reproduciendo no hace nada.
-     * Parar significa dejar de escuchar el audio, y subir el instante a BBDD
      */
     public void stop() {
         if (mediaPlayer.isPlaying()) {
@@ -105,8 +108,9 @@ public class AudioPlayer {
         }
     }
 
-    /*
-     * Método para saber si se está reproduciendo o no algún audio.
+    /**
+     * Método para saber si se está reproduciendo un audio.
+     * @return true si se está reproduciendo, false en caso contrario.
      */
     public boolean isPlaying() {
         return mediaPlayer.isPlaying();

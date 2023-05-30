@@ -8,11 +8,14 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para cambiar el email de un usuario.
+ */
 public class MyTaskChangeUserEmail extends AsyncTask<String, Void, String> {
     /**
-     * Método que se ejecuta en segundo plano para realizar la petición al servidor y cambiar el alias
-     * @param params
-     * @return
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y cambiar el email
+     * @param params idUsuario, contrasenya, email
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor.
      */
     @Override
     public String doInBackground(String... params) {

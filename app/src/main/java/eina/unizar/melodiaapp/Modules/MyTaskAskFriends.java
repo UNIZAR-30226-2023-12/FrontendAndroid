@@ -14,7 +14,18 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener los amigos de un usuario.
+ */
 public class MyTaskAskFriends extends AsyncTask<String, Void, String> {
+
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor para obtener
+     * los amigos de un usuario.
+     * @param params The parameters of the task.
+     *
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor concatenado con los ids de los amigos.
+     */
     @Override
     public String doInBackground(String... params) {
         String idUsuario = params[0];

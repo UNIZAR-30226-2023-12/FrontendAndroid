@@ -12,10 +12,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para aceptar que un usuario sea artista.
+ */
 public class MyTaskAcceptArtist extends AsyncTask<String, Void, String> {
     /**
      * Método que se ejecuta en segundo plano para realizar la petición al servidor y
-     * solicitar que un usuario en concreto sea artista.
+     * aceptar que un usuario en concreto sea artista.
      * Devuelve un código de respuesta HTTP proporcionado por el servidor.
      * @param params
      * @return

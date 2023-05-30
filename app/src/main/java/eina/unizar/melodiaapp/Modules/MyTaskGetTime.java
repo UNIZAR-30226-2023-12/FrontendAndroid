@@ -13,12 +13,15 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener los segundos reproducidos totales de un día en concreto.
+ */
 public class MyTaskGetTime extends AsyncTask<String, Void, String> {
 
     /**
-     * Método que se ejecuta en segundo plano para realizar la petición al servidor y obtener los segundos reproducidos
-     * @param params
-     * @return
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y obtener los segundos reproducidos totales de un día en concreto.
+     * @param params idUsuario, contrasenya, dia
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor y los segundos reproducidos
      */
     @Override
     public String doInBackground(String... params) {

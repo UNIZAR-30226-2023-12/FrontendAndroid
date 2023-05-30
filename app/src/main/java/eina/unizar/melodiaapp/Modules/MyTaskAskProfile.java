@@ -13,12 +13,15 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener los datos de un usuario.
+ */
 public class MyTaskAskProfile extends AsyncTask<String, Void, String> {
     /**
      * Método que se ejecuta en segundo plano para realizar la petición al servidor y
      * obtener los datos del usuario
-     * @param params
-     * @return
+     * @param params idUsr,contrasenya,idUsrGet
+     * @return 200,artista,nombre,email si la petición se ha realizado correctamente
      */
     @Override
     public String doInBackground(String... params) {

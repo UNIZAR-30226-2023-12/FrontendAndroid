@@ -8,12 +8,17 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que codifica la tarea asíncrona de añadir la valoración de un usuario a una canción
+ */
 public class MyTaskSetRating extends AsyncTask<String, Void, String> {
 
     /**
-     * Método que se ejecuta en segundo plano para realizar la petición al servidor y añadir una cación a una playlist
-     * @param params
-     * @return
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y
+     * añadir la valoración de un usuario a una canción
+     * @param params idUsuario, contrasenya, idAudio, rating
+     *
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor.
      */
     @Override
     public String doInBackground(String... params) {

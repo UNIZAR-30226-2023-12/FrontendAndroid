@@ -14,7 +14,18 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener el top de reproducciones.
+ */
 public class MyTaskAskTopReproductions extends AsyncTask<String, Void, String> {//GetTopReproducciones(Int n, Bool esPodcast) : Set<String> topAudios
+
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y que
+     * devuelve los ids de las canciones más reproducidas
+     * @param params n: número de canciones a devolver
+     *
+     * @return Devuelve un string con el código de respuesta y los ids de las canciones
+     */
     public String doInBackground(String... params) {
         String n = params[0];
         String esPodcast = params[1];

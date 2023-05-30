@@ -13,11 +13,14 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para cambiar el alias de un usuario.
+ */
 public class MyTaskChangeUserAlias extends AsyncTask<String, Void, String> {
     /**
      * Método que se ejecuta en segundo plano para realizar la petición al servidor y cambiar el alias
-     * @param params
-     * @return
+     * @param params idUsuario, contrasenya, alias
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor.
      */
     @Override
     public String doInBackground(String... params) {

@@ -12,12 +12,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para aceptar a un usuario como amigo.
+ */
 public class MyTaskAcceptFriend extends AsyncTask<String, Void, String> {
     /**
      * Método que se ejecuta en segundo plano para realizar la petición al servidor y
-     * solicitar que un usuario en concreto sea artista.
+     * aceptar a un usuario como amigo.
      * Devuelve un código de respuesta HTTP proporcionado por el servidor.
-     * @param params
+     *
+     * @param params The parameters of the task.
+     *
      * @return
      */
     @Override

@@ -14,8 +14,8 @@ import eina.unizar.melodiaapp.MySingleton;
 public class MyTaskRegister extends AsyncTask<String, Void, String> {
     /**
      * Realiza la tarea de llamar al backend para realizar el registro de un usuario
-     * @param params
-     * @return
+     * @param params username, email, password
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor
      */
     @Override
     public String doInBackground(String... params) {

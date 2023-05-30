@@ -14,8 +14,18 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para hacer una búsqueda global.
+ */
 public class MyTaskAskGlobalSearchResults extends AsyncTask<String, Void, String> {
 
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y
+     * hacer una búsqueda global.
+     * @param params The parameters of the task.
+     *
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor con los resultados de la búsqueda.
+     */
     public String doInBackground(String... params) {
         String query = params[0];
         String n = params[1];

@@ -8,11 +8,15 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para cambiar la calidad de audio por defecto de un usuario.
+ */
 public class MyTaskChooseQuality extends AsyncTask<String, Void, String> {
     /**
-     * Método que se ejecuta en segundo plano para realizar la petición al servidor y cambiar el alias
-     * @param params
-     * @return
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y cambiar
+     * la calidad de audio por defecto de un usuario.
+     * @param params idUsuario, contrasenya, calidadPreferida
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor.
      */
     @Override
     public String doInBackground(String... params) {

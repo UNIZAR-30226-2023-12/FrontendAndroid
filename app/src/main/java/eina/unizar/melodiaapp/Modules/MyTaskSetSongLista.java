@@ -8,12 +8,15 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que codifica la tarea asíncrona de añadir una canción a una playlist
+ */
 public class MyTaskSetSongLista extends AsyncTask<String, Void, String> {
 
     /**
      * Método que se ejecuta en segundo plano para realizar la petición al servidor y añadir una cación a una playlist
-     * @param params
-     * @return
+     * @param params idUsuario, contrasenya, idLista, idAudio
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor.
      */
     @Override
     public String doInBackground(String... params) {

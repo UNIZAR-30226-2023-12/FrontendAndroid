@@ -14,11 +14,15 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener las carpetas de un usuario.
+ */
 public class MyTaskAskFolders extends AsyncTask<String, Void, String> {
     /**
-     * Método que se ejecuta en segundo plano para realizar la petición al servidor y crear una carpeta
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor para obtener
+     * las carpetas de un usuario.
      * @param params
-     * @return
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor y los ids de las carpetas
      */
     @Override
     public String doInBackground(String... params) {

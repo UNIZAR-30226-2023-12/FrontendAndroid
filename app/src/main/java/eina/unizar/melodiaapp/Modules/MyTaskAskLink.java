@@ -14,13 +14,16 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener el link de un audio.
+ */
 public class MyTaskAskLink extends AsyncTask<String, Void, String> {
     /**
      * Método que se ejecuta en segundo plano para realizar la petición al servidor y que
-     * sube un audio y devuelve el código de respuesta http
+     * dado el id de un audio, devuelve el link de dicho audio.
      *
      * @param params
-     * @return
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor y el link del audio
      */
     @Override
     public String doInBackground(String... params) {

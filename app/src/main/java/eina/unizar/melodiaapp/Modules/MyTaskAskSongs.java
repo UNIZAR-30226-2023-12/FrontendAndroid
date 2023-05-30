@@ -14,7 +14,17 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener las canciones de una lista.
+ */
 public class MyTaskAskSongs extends AsyncTask<String, Void, String> {
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y que
+     * devuelve los ids de las canciones de una lista dado su id
+     * @param params idUsuario, contrasenya, idLista
+     *
+     * @return Devuelve un string con el código de respuesta y los ids de las canciones
+     */
     @Override
     public String doInBackground(String... params) {
         String idUsuario = params[0];

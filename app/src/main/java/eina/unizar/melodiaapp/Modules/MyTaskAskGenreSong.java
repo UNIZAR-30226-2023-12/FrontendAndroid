@@ -13,8 +13,18 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener el género de una canción.
+ */
 public class MyTaskAskGenreSong extends AsyncTask<String, Void, String> {
 
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y
+     * obtener el género de una canción.
+     * @param params The parameters of the task.
+     *
+     * @return Devuelve el código de respuesta HTTP proporcionado por el servidor y el género de la canción.
+     */
     @Override
     public String doInBackground(String... params) {
         String idUsuario = params[0];

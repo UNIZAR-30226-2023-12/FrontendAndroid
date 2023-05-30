@@ -13,12 +13,16 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener el último segundo escuchado de una canción.
+ */
 public class MyTaskGetLastSecondHeared extends AsyncTask<String, Void, String> {
 
     /**
-     * Método que se ejecuta en segundo plano para realizar la petición al servidor y añadir una cación a una playlist
-     * @param params
-     * @return
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y
+     * obtener el último segundo escuchado de una canción.
+     * @param params idUsuario, contrasenya, idAudio
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor y el último segundo escuchado.
      */
     @Override
     public String doInBackground(String... params) {

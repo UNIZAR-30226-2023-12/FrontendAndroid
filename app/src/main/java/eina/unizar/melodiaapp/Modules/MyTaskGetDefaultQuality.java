@@ -13,12 +13,16 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener la calidad por defecto de un usuario.
+ */
 public class MyTaskGetDefaultQuality extends AsyncTask<String, Void, String> {
 
     /**
-     * Método que se ejecuta en segundo plano para realizar la petición al servidor y añadir una cación a una playlist
-     * @param params
-     * @return
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y
+     * obtener la calidad por defecto de un usuario.
+     * @param params idUsuario, contrasenya
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor.
      */
     @Override
     public String doInBackground(String... params) {

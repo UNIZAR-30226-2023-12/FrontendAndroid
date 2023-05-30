@@ -19,8 +19,8 @@ import eina.unizar.melodiaapp.MySingleton;
 public class MyTaskLogin extends AsyncTask<String, Void, String> {
     /**
      * Función que se ejecuta en segundo plano. Realiza la petición al servidor para validar el usuario
-     * @param params
-     * @return
+     * @param params email, contrasenya
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor y el id del usuario
      */
     @Override
     public String doInBackground(String... params) {

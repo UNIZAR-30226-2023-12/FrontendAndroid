@@ -13,8 +13,18 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener si un audio es un podcast o no.
+ */
 public class MyTaskAskEsPodcast extends AsyncTask<String, Void, String> {
 
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y
+     * obtener si un audio es un podcast o no.
+     * @param params The parameters of the task.
+     *
+     * @return
+     */
     @Override
     public String doInBackground(String... params) {
         String idUsuario = params[0];

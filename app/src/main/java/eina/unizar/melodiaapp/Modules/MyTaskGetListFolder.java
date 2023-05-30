@@ -14,7 +14,16 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener las listas de una carpeta.
+ */
 public class MyTaskGetListFolder extends AsyncTask<String, Void, String> {
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y obtener las listas de una carpeta.
+     * @param params idUsuario, contrasenya, idCarpeta
+     *
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor y los ids de las listas de la carpeta.
+     */
     @Override
     public String doInBackground(String... params) {
         String idUsuario = params[0];

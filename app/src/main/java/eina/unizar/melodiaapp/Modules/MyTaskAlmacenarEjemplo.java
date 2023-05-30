@@ -8,10 +8,14 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para almacenar un ejemplo en el recomendador.
+ */
 public class MyTaskAlmacenarEjemplo extends AsyncTask<String, Void, String> {
 
     /**
-     * Método que se ejecuta en segundo plano para realizar la petición al servidor y añadir una cación a una playlist
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y
+     * almacenar un ejemplo en el recomendador.
      * @param params
      * @return
      */

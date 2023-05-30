@@ -14,12 +14,15 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener el nombre de una notificación
+ */
 public class MyTaskAskNameNotifications extends AsyncTask<String, Void, String> {
     /**
      * Método que se ejecuta en segundo plano para realizar la petición al servidor que devuelve el
      * nombre de una notificación dado su id, usr y contraseña
      * @param params
-     * @return
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor y el nombre de la notificación
      */
     @Override
     public String doInBackground(String... params) {

@@ -13,8 +13,18 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener el número de reproducciones de una canción.
+ */
 public class MyTaskGetReproductionsArtist extends AsyncTask<String, Void, String> {
 
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y
+     * obtener el número de reproducciones de una canción.
+     * @param params idUsuario, contrasenya, idSong
+     *
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor y el número de reproducciones de la canción.
+     */
     @Override
     public String doInBackground(String... params) {
         String idUsuario = params[0];

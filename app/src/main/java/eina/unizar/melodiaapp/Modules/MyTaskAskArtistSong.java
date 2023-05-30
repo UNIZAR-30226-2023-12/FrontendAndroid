@@ -13,8 +13,18 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener el nombre del artista de una canción.
+ */
 public class MyTaskAskArtistSong extends AsyncTask<String, Void, String> {
 
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y
+     * obtener el nombre del artista de una canción.
+     * @param params The parameters of the task.
+     *
+     * @return
+     */
     @Override
     public String doInBackground(String... params) {
         String idUsuario = params[0];

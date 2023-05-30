@@ -13,11 +13,15 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para cambiar el nombre de una playlist.
+ */
 public class MyTaskChangeNamePlaylist extends AsyncTask<String, Void, String> {
     /**
-     * Método que se ejecuta en segundo plano para realizar la petición al servidor y crear una playlist
-     * @param params
-     * @return
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y
+     * cambiar el nombre de una playlist.
+     * @param params idUsuario, contrasenya, idLista, nombreLista
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor.
      */
     @Override
     public String doInBackground(String... params) {

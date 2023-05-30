@@ -14,7 +14,17 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para preguntar por el nombre de un usuario amigo.
+ */
 public class MyTaskAskNameFriends extends AsyncTask<String, Void, String> {
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y
+     * preguntar por el nombre de un usuario amigo.
+     * @param params The parameters of the task.
+     *
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor con el nombre del usuario amigo.
+     */
     @Override
     public String doInBackground(String... params) {
         String idUsr = params[0];

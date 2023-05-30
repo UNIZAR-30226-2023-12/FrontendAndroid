@@ -14,7 +14,16 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición GET para obtener los artistas a los que está suscrito un usuario.
+ */
 public class MyTaskGetSubsribeArtist extends AsyncTask<String, Void, String> {
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y obtener los artistas a los que está suscrito un usuario.
+     * @param params idUsuario, contrasenya
+     *
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor y los ids de los artistas a los que está suscrito el usuario.
+     */
     @Override
     public String doInBackground(String... params) {
         String idUsuario = params[0];

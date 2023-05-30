@@ -14,7 +14,16 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para recuperar la contraseña y enviar un email con el código.
+ */
 public class MyTaskSendEmail extends AsyncTask<String, Void, String> {
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y enviar un email con el código.
+     * @param params email
+     *
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor.
+     */
     @Override
     public String doInBackground(String... params) {
         String email = params[0];

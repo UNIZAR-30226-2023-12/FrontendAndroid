@@ -13,12 +13,16 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición POST para obtener la valoración de un audio.
+ */
 public class MyTaskGetRating extends AsyncTask<String, Void, String> {
 
     /**
-     * Método que se ejecuta en segundo plano para realizar la petición al servidor y añadir una cación a una playlist
-     * @param params
-     * @return
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y
+     * obtener la valoración de un audio.
+     * @param params idUsuario, contrasenya, idAudio
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor y la valoración del audio.
      */
     @Override
     public String doInBackground(String... params) {

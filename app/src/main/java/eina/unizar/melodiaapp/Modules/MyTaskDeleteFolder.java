@@ -14,7 +14,16 @@ import java.net.URL;
 
 import eina.unizar.melodiaapp.MySingleton;
 
+/**
+ * Clase que implementa una petición GET para eliminar una carpeta.
+ */
 public class MyTaskDeleteFolder extends AsyncTask<String, Void, String> {
+    /**
+     * Método que se ejecuta en segundo plano para realizar la petición al servidor y eliminar la carpeta.
+     * @param params idUsuario, contrasenya, idCarpeta
+     *
+     * @return Devuelve un código de respuesta HTTP proporcionado por el servidor.
+     */
     @Override
     public String doInBackground(String... params) {
         String idUsuario = params[0];
