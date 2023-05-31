@@ -25,10 +25,13 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskNotifications;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNameNotifications;
 import eina.unizar.melodiaapp.Modules.MyTaskRejectArtist;
 
+/**
+ * Clase que codifica la actividad notificaciones
+ */
 public class Notifications extends AppCompatActivity {
     /**
      * Realiza la petición para obtener los ids de las notificaciones del usuario
-     * @return
+     * @return respuesta del servidor
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -53,8 +56,8 @@ public class Notifications extends AppCompatActivity {
 
     /**
      * Realiza la petición para obtener el nombre de una notificación dado su id
-     * @param idNot
-     * @return
+     * @param idNot id de la notificación
+     * @return respuesta del servidor
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -77,6 +80,13 @@ public class Notifications extends AppCompatActivity {
         }
     }
 
+    /**
+     * Realiza la petición para aceptar una solicitud de artista
+     * @param idNot id de la notificación
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestAcceptArtist(String idNot) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -95,6 +105,13 @@ public class Notifications extends AppCompatActivity {
         }
     }
 
+    /**
+     * Realiza la petición para rechazar una solicitud de artista
+     * @param idNot id de la notificación
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestRejectArtist(String idNot) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -113,6 +130,13 @@ public class Notifications extends AppCompatActivity {
         }
     }
 
+    /**
+     * Realiza la petición para aceptar una solicitud de amistad
+     * @param idNot id de la notificación
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestAcceptFriend(String idNot) throws ExecutionException, InterruptedException {
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         String idUsuario = preferences.getString("idUsuario", "");

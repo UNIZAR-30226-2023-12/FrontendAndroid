@@ -29,7 +29,7 @@ public class Menu extends AppCompatActivity {
      * Función que llama a la task encargada de pedir al servidor las listas de reproducción del usuario
      * Si ha ido bien devuelve un array con el código de respuesta y el json con las listas de reproducción
      * Sino devuelve un array con el código de error
-     * @return
+     * @return respuesta del servidor
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -77,6 +77,12 @@ public class Menu extends AppCompatActivity {
         }
     }
 
+    /**
+     * Función que llama a la task encargada de pedir al servidor el último segundo escuchado de una canción
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestGetLastSecondHeared() throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -96,6 +102,12 @@ public class Menu extends AppCompatActivity {
         }
     }
 
+    /**
+     * Función que llama a la task encargada de pedir al servidor la información de un usuario
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String[] doRequestAskUser() throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);

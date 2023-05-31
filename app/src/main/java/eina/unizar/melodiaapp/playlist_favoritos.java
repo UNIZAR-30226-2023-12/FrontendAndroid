@@ -24,11 +24,14 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskNameSongs;
 import eina.unizar.melodiaapp.Modules.MyTaskAskSongs;
 import eina.unizar.melodiaapp.Modules.MyTaskDeleteSongLista;
 
+/**
+ * Clase que codifica la actividad de la playlist de favoritos
+ */
 public class playlist_favoritos extends AppCompatActivity {
 
     /**
      * Hace una request para obtener las canciones de una playlist
-     * @return
+     * @return respuesta del servidor
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -53,8 +56,8 @@ public class playlist_favoritos extends AppCompatActivity {
 
     /**
      * Hace una request para obtener el nombre de una canción
-     * @param idSong
-     * @return
+     * @param idSong id de la canción
+     * @return respuesta del servidor
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -78,8 +81,8 @@ public class playlist_favoritos extends AppCompatActivity {
 
     /**
      * Hace una request para obtener el género de una canción
-     * @param idAudio
-     * @return
+     * @param idAudio id de la canción
+     * @return respuesta del servidor
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -103,8 +106,8 @@ public class playlist_favoritos extends AppCompatActivity {
 
     /**
      * Hace una request para obtener si un audio es podcast o canción
-     * @param idAudio
-     * @return
+     * @param idAudio id del audio
+     * @return respuesta del servidor
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -126,6 +129,14 @@ public class playlist_favoritos extends AppCompatActivity {
         }
     }
 
+    /**
+     * Hace una request para eliminar una canción de una playlist
+     * @param idPlaylist id de la playlist
+     * @param idCancion id de la canción
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestDeleteSongLista(String idPlaylist, String idCancion) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -144,6 +155,14 @@ public class playlist_favoritos extends AppCompatActivity {
         }
     }
 
+    /**
+     * Clase que codifica el adaptador de la playlist de favoritos
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -313,6 +332,13 @@ public class playlist_favoritos extends AppCompatActivity {
         });
     }
 
+    /**
+     * Clase para ordenar los objetos por el wildcard
+     *
+     * @param idsCancionesString String con los ids de las canciones
+     * @param nombresCancionesString String con los nombres de las canciones
+     * @param wildcardString String con los wildcards de las canciones
+     */
     public void ordenarPorWildcard(String idsCancionesString, String nombresCancionesString, String wildcardString) {
         String[] idsCanciones = idsCancionesString.split(",");
         String[] nombresCanciones = nombresCancionesString.split(","); //Seguimos necesitando los nombres para el setText
@@ -421,6 +447,9 @@ public class playlist_favoritos extends AppCompatActivity {
 
     }
 
+    /**
+     * Clase que representa un objeto con id, nombre y wildcard
+     */
     class ObjetoConIdNombreYWildcard {
 
         private String id;
@@ -429,20 +458,38 @@ public class playlist_favoritos extends AppCompatActivity {
 
         private String wildcard; //Puede ser genero, artista, u otra cosa si fuese necesario
 
+        /**
+         * Constructor
+         * @param id id del objeto
+         * @param nombre nombre del objeto
+         * @param wildcard wildcard del objeto
+         */
         public ObjetoConIdNombreYWildcard(String id, String nombre, String wildcard) {
             this.id = id;
             this.nombre = nombre;
             this.wildcard = wildcard;
         }
 
+        /**
+         * Getter del id
+         * @return id
+         */
         public String getId() {
             return id;
         }
 
+        /**
+         * Getter del nombre
+         * @return nombre
+         */
         public String getNombre() {
             return nombre;
         }
 
+        /**
+         * Getter del wildcard
+         * @return wildcard
+         */
         public String getWildcard() {
             return wildcard;
         }

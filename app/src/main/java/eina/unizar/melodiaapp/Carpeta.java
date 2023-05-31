@@ -31,7 +31,7 @@ import eina.unizar.melodiaapp.Modules.MyTaskSetListFolder;
 public class Carpeta extends AppCompatActivity {
     /**
      * Función que llama a la task encargada de pedir al servidor los ids de las carpetas del usuario
-     * @return
+     * @return array de strings con los ids de las carpetas
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -57,7 +57,7 @@ public class Carpeta extends AppCompatActivity {
      * Función que llama a la task encargada de pedir al servidor el nombre de una carpeta
      * Si ha ido bien devuelve un string con el nombre de la carpeta
      * Sino devuelve un string con el código de error
-     * @return
+     * @return string con el nombre de la carpeta
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -79,6 +79,13 @@ public class Carpeta extends AppCompatActivity {
         }
     }
 
+    /**
+     * Función que llama a la task para borrar una carpeta
+     * @param idCarpeta id de la carpeta a borrar
+     * @return string con el código de error
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestDeleteFolder(String idCarpeta) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -90,6 +97,14 @@ public class Carpeta extends AppCompatActivity {
         return task.execute(idUsuario, contrasenya, idCarpeta).get();
     }
 
+    /**
+     * Función que llama a la task para añadir una lista de reproducción a una carpeta
+     * @param idCarpeta id de la carpeta
+     * @param idPlaylist id de la lista de reproducción
+     * @return string con el código de la petición
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestSetListFolder(String idCarpeta, String idPlaylist) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -161,7 +176,9 @@ public class Carpeta extends AppCompatActivity {
     }
 
     /**
-     * Función que rellena la lista de carpetas del usuario cada vez que es invocada
+     * Función que se encarga de rellenar la lista de carpetas con los datos obtenidos del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     private void fillData() throws ExecutionException, InterruptedException {
         //Obtengo de shared preferences los ids de las carpetas del usuario

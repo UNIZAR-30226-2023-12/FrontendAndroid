@@ -25,7 +25,16 @@ import eina.unizar.melodiaapp.Modules.MyTaskGetDefaultQuality;
 import eina.unizar.melodiaapp.Modules.MyTaskSetSongLista;
 import eina.unizar.melodiaapp.Modules.MyTaskSubscribe;
 
+/**
+ * Clase que codifica la actividad para el perfil de usuario
+ */
 public class Profile extends AppCompatActivity {
+    /**
+     * Llama a la función que realiza la petición al servidor para obtener los datos del usuario
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String[] doRequestAskUser() throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -44,6 +53,13 @@ public class Profile extends AppCompatActivity {
         }
     }
 
+    /**
+     * Función invocada al crear la pantalla. Inicializa todos los elementos de la interfaz de usuario
+     * @param idUsuario identificador del usuario
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String[] doRequestAskArtistData(String idUsuario) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
 
@@ -61,6 +77,13 @@ public class Profile extends AppCompatActivity {
         }
     }
 
+    /**
+     * Función que llama a la request para cambiar el alias del usuario
+     * @param alias nuevo alias
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestChangeAlias(String alias) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -78,6 +101,13 @@ public class Profile extends AppCompatActivity {
         }
     }
 
+    /**
+     * Función que llama a la request para cambiar la calidad por defecto de las canciones del usuario
+     * @param quality nueva calidad
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestChangeQuality(String quality) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -96,6 +126,13 @@ public class Profile extends AppCompatActivity {
     }
 
 
+    /**
+     * Función que llama a la request para cambiar el email del usuario
+     * @param email nuevo email
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestChangeEmail(String email) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -113,6 +150,13 @@ public class Profile extends AppCompatActivity {
         }
     }
 
+    /**
+     * Función que llama a la request para suscribirse a un artista
+     * @param idArtista identificador del artista
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestSubscribe(String idArtista) throws ExecutionException, InterruptedException {
         // Obtengo usuario, contraseña e id de la playlist a modificar
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -126,6 +170,12 @@ public class Profile extends AppCompatActivity {
         return task.execute(idUsuario, contrasenya, idArtista).get();
     }
 
+    /**
+     * Función que llama a la request para obtener la calidad por defecto de las canciones del usuario
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestGetDefaultQuality() throws ExecutionException, InterruptedException {
         // Obtengo usuario, contraseña e id de la playlist a modificar
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -144,6 +194,13 @@ public class Profile extends AppCompatActivity {
         }
     }
 
+    /**
+     * OnCreate de la actividad. Inicializa todos los elementos de la interfaz de usuario
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

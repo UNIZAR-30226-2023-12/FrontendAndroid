@@ -62,7 +62,7 @@ public class EqualizerScreen extends AppCompatActivity {
     }
 
     /**
-     * Función invocada al salir de la pantalla
+     * Función invocada al destruir la actividad. Libera los recursos utilizados por el ecualizador
      */
     @Override
     public void finish() {
@@ -70,7 +70,9 @@ public class EqualizerScreen extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
 
-    // Implementamos un OnSeekBarChangeListener para todas las seekbars
+    /**
+     * Implementación de un seekbar
+     */
     private SeekBar.OnSeekBarChangeListener mOnSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -105,7 +107,11 @@ public class EqualizerScreen extends AppCompatActivity {
         }
     };
 
-    // Implementamos el método updateEqualizer para actualizar el ecualizador
+    /**
+     * Función que actualiza el ecualizador
+     * @param seekBarId Identificador de la seekbar que ha cambiado
+     * @param progress Progreso de la seekbar
+     */
     private void updateEqualizer(int seekBarId, int progress) {
         // Obtenemos el índice de la banda correspondiente a la seekbar actual
         int band = -1;

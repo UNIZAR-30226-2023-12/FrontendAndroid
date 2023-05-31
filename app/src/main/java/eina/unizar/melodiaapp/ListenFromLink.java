@@ -15,8 +15,17 @@ import java.util.concurrent.ExecutionException;
 import eina.unizar.melodiaapp.Modules.MyTaskGetAudioFromLink;
 import eina.unizar.melodiaapp.R;
 
+/**
+ * Clase que codifica la actividad escuchar desde link
+ */
 public class ListenFromLink extends AppCompatActivity {
 
+    /**
+     * Método que se ejecuta para llamar a la request de obtener audio desde link
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestGetAudioFromLink() throws ExecutionException, InterruptedException, ExecutionException {
         // Obtengo usuario, contraseña e id de la playlist a modificar
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -39,6 +48,13 @@ public class ListenFromLink extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método que se ejecuta al crear la actividad
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

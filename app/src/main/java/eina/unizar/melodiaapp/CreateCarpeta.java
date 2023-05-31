@@ -24,9 +24,11 @@ import eina.unizar.melodiaapp.Modules.MyTaskCreateFolder;
  */
 public class CreateCarpeta extends AppCompatActivity {
     /**
-     * Función que realiza la petición al servidor para crear una carpeta
-     *
-     * @return String con el código de respuesta del servidor
+     * Método que se ejecuta para llamar a la request de crear carpeta
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     * @throws JSONException
      */
     protected String doRequestCreate() throws ExecutionException, InterruptedException, JSONException {
         EditText nombreCarpetaEdit = findViewById(R.id.inCapretaName);

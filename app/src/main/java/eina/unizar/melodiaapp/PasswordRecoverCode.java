@@ -17,6 +17,14 @@ import eina.unizar.melodiaapp.Modules.MyTaskRecoverPasswd;
  * Clase que codifica la actividad para cambio de contraseña
  */
 public class PasswordRecoverCode extends AppCompatActivity {
+    /**
+     * Llama a la función que realiza la petición al servidor para cambiar la contraseña
+     * @param email email del usuario
+     * @param contrasenya contraseña del usuario
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestChangePasswd(String email, String contrasenya) throws ExecutionException, InterruptedException {
 
         EditText code = findViewById(R.id.inCodeRecover);

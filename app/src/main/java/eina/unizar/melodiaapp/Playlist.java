@@ -34,6 +34,12 @@ public class Playlist extends AppCompatActivity {
 
     private String listaListasRepUser[];
 
+    /**
+     * Función que hace la petición al servidor para obtener los datos del usuario
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String[] doRequestAskUser() throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -56,7 +62,7 @@ public class Playlist extends AppCompatActivity {
      * Función que llama a la task encargada de pedir al servidor las listas de reproducción del usuario
      * Si ha ido bien devuelve un array con el código de respuesta y el json con las listas de reproducción
      * Sino devuelve un array con el código de error
-     * @return
+     * @return respuesta del servidor
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -82,7 +88,7 @@ public class Playlist extends AppCompatActivity {
      * Función que llama a la task encargada de pedir al servidor el nombre de una lista de reproducción
      * Si ha ido bien devuelve un string con el nombre de la lista
      * Sino devuelve un string con el código de error
-     * @return
+     * @return respuesta del servidor
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -108,7 +114,7 @@ public class Playlist extends AppCompatActivity {
      * Función que llama a la task encargada de añadir una canción a una lista de reproducción
      * Si ha ido bien devuelve el resultado de task.execute
      * Sino devuelve un código de error
-     * @return
+     * @return respuesta del servidor
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -127,8 +133,8 @@ public class Playlist extends AppCompatActivity {
 
     /**
      * Función que llama a la task encargada de borrar una lista de reproducción
-     * @param idPlaylist
-     * @return
+     * @param idPlaylist id de la lista de reproducción a borrar
+     * @return respuesta del servidor
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -362,14 +368,4 @@ public class Playlist extends AppCompatActivity {
             }
         });
     }
-
-    /**
-     * Función que se encarga de rellenar la lista de reproducción con los datos de la base de datos
-     */
-    /*
-    private void fillData() {
-        TextView playlistName = findViewById(R.id.ListaRejemplo);
-        playlistName.setText("Prueba");
-    }
-    */
 }

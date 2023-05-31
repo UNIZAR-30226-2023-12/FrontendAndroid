@@ -16,8 +16,18 @@ import java.util.concurrent.ExecutionException;
 import eina.unizar.melodiaapp.Modules.MyTaskGetRating;
 import eina.unizar.melodiaapp.Modules.MyTaskGetTime;
 
+/**
+ * Clase que gestiona la actividad de todos los segundos
+ */
 public class AllSeconds extends AppCompatActivity {
 
+    /**
+     * Método que realiza la petición de obtener el tiempo de reproducción
+     * @param dia día de la semana
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestGetTime(String dia) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -34,6 +44,13 @@ public class AllSeconds extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método que se ejecuta al crear la actividad
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

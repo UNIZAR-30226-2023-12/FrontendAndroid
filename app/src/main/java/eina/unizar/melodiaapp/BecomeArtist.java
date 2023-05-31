@@ -13,7 +13,16 @@ import java.util.concurrent.ExecutionException;
 
 import eina.unizar.melodiaapp.Modules.MyTaskAskArtist;
 
+/**
+ * Clase que gestiona la actividad de solicitar ser artista
+ */
 public class BecomeArtist extends AppCompatActivity {
+    /**
+     * Método que realiza la petición de ser artista
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequest() throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -28,6 +37,14 @@ public class BecomeArtist extends AppCompatActivity {
         String respuesta = task.execute(idUsuario, contrasenya, url.getText().toString(), motivo.getText().toString()).get();
         return respuesta;
     }
+
+    /**
+     * Método que se ejecuta al crear la actividad
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

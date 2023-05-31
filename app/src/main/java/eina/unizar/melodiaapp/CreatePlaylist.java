@@ -21,13 +21,16 @@ import java.util.concurrent.ExecutionException;
 
 import eina.unizar.melodiaapp.Modules.MyTaskCreatePlaylist;
 
+/**
+ * Clase que codifica la actividad crear lista de reproducción
+ */
 public class CreatePlaylist extends AppCompatActivity {
     /**
      * Función que llama a la task encargada de crear una lista de reproducción
      * Si ha ido bien devuelve 200
      * Sino devuelve error
      *
-     * @return
+     * @return respuesta del servidor
      * @throws ExecutionException
      * @throws InterruptedException
      * @throws JSONException
@@ -85,7 +88,7 @@ public class CreatePlaylist extends AppCompatActivity {
      * Función que se ejecuta al crear la actividad. Se encarga de asignar los listeners a los botones
      * de la actividad y de iniciar los distintos componentes de la pantalla
      *
-     * @param savedInstanceState
+     * @param savedInstanceState instancia guardada con los datos de la actividad
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

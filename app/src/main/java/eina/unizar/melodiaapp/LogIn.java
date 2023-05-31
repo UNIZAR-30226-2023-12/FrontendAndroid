@@ -36,7 +36,7 @@ public class LogIn extends AppCompatActivity {
      * con los datos introducidos en el formulario
      * Devuelve el resultado de la petición
      *
-     * @return
+     * @return respuesta del servidor
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -73,7 +73,10 @@ public class LogIn extends AppCompatActivity {
      * Función que se ejecuta al crear la actividad. Se encarga de asignar los listeners a los botones
      * de la actividad y de iniciar los distintos componentes de la pantalla
      *
-     * @param savedInstanceState
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.
+     *
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

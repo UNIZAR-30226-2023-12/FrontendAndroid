@@ -18,6 +18,12 @@ import eina.unizar.melodiaapp.Modules.MyTaskSendEmail;
  */
 public class PasswordRecover extends AppCompatActivity {
 
+    /**
+     * Llama a la función que realiza la petición al servidor para enviar un correo
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestSendEmail() throws ExecutionException, InterruptedException {
 
         EditText eTemail = findViewById(R.id.inEmailRecover);

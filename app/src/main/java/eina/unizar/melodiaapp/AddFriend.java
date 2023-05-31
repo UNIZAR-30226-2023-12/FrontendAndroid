@@ -17,8 +17,17 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskFriends;
 import eina.unizar.melodiaapp.Modules.MyTaskAskGlobalSearchResults;
 import eina.unizar.melodiaapp.Modules.MyTaskChangeNamePlaylist;
 
+/**
+ * Clase que gestiona la actividad de añadir amigos
+ */
 public class AddFriend extends AppCompatActivity {
-
+    /**
+     * Método que realiza la petición de añadir un amigo
+     * @param idAmigo id del amigo a añadir
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestAskFriend(String idAmigo) throws ExecutionException, InterruptedException {
 
         // Obtengo usuario y contraseña
@@ -32,6 +41,13 @@ public class AddFriend extends AppCompatActivity {
         return task.execute(idUsuario, contrasenya, idAmigo).get();
     }
 
+    /**
+     * Método que se ejecuta al crear la actividad
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

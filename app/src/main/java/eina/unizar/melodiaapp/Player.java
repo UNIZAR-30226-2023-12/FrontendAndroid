@@ -63,6 +63,9 @@ import eina.unizar.melodiaapp.Modules.MyTaskSetSecHeared;
 import eina.unizar.melodiaapp.Modules.AudioPlayer;
 import eina.unizar.melodiaapp.Modules.MyTaskSetSongLista;
 
+/**
+ * Clase que codifica la actividad de reproductor
+ */
 public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado? donde esta la id de la canción
 
     byte[] AudioFile = null;
@@ -80,6 +83,14 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
     private int posicionCancionActual = 0;
     private String[] idsCancionesPlaylistArray;
 
+    /**
+     * Método que hace la request para setear la última posición escuchada
+     * @param seconds segundos
+     *
+     * @return String con el resultado de la request
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestSetSecHeared(String seconds) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -90,6 +101,14 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         return task.execute(idUsr, passwd, idAudioActual, seconds).get();
     }
 
+    /**
+     * Método que hace la request para setear la valoración
+     * @param rating valoración
+     *
+     * @return String con el resultado de la request
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestSetRating(String rating) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -100,6 +119,14 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         return task.execute(idUsr, passwd, idAudioActual, rating).get();
     }
 
+    /**
+     * Método que hace la request para setear la última posición escuchada
+     * @param second segundos
+     *
+     * @return String con el resultado de la request
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestMyTaskSetLastSecondHeared(String second) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -110,6 +137,13 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         return task.execute(idUsr, passwd, idAudioActual, second).get();
     }
 
+    /**
+     * Método que hace la request para obtener la valoración
+     *
+     * @return String con el resultado de la request
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestGetRating() throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -126,6 +160,12 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         }
     }
 
+    /**
+     * Método que hace la request para obtener el link asociado a un audio
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestAskLink() throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -143,7 +183,12 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         }
     }
 
-    // Para añadir canción a la lista favoritos
+    /**
+     * Método que hace la request para añadir a favoritos una canción
+     * @return String con el resultado de la request
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestAddFav() throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -162,7 +207,12 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         }
     }
 
-    // Para borrar canción de favoritos
+    /**
+     * Método que hace la request para eliminar de favoritos una canción
+     * @return String con el resultado de la request
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestDeleteFav() throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -181,7 +231,12 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         }
     }
 
-    // Para canción recomendada
+    /**
+     * Método que hace la request para obtener un audio recomendado
+     * @return String con el resultado de la request
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestGetRecommendedAudio() throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -199,6 +254,12 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         }
     }
 
+    /**
+     * Método que hace la request para obtener la carátula de un audio
+     * @return String con el resultado de la request (carátula)
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestGetCaratula() throws ExecutionException, InterruptedException {
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         String idUsr = preferences.getString("idUsuario", "");
@@ -214,6 +275,12 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         }
     }
 
+    /**
+     * Método que hace la request para obtener el nombre de una canción
+     * @return String con el resultado de la request (nombre de la canción)
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public String doRequestAskNameSongs(String idPlaylist) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -232,6 +299,12 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         }
     }
 
+    /**
+     * Método que hace la request para almacenar un ejemplo para el recomendador
+     * @return String con el resultado de la request
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestAlmacenarEjemplo(String rating) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contrasenya de shared preferences
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -566,6 +639,10 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         }
     }
 
+    /**
+     * Función que se ejecuta para reproducir el audio de la canción.
+     * @param idUsr id del usuario que está reproduciendo la canción.
+     */
     private void ReproducirAudio(String idUsr) {
         // Obtengo la caratula
         String imagen = "";
@@ -705,6 +782,10 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         }.execute("GetFicheroSong/", InputString);
     }
 
+    /**
+     * Función que se ejecuta para reproducir el audio de una canción aleatoria.
+     * @param idUsr id del usuario que está reproduciendo la canción.
+     */
     private void ReproducirAudioRandom(String idUsr) {
         // Obtengo la caratula
         String imagen = "";
@@ -846,6 +927,10 @@ public class Player extends AppCompatActivity { //TODO idAudio esta hardcodeado?
         }.execute("GetFicheroSong/", InputString);
     }
 
+    /**
+     * Función que se ejecuta para reproducir el audio de una canción en bucle.
+     * @param idUsr id del usuario que está reproduciendo la canción.
+     */
     private void ReproducirAudioRepeat(String idUsr) {
         // Obtengo la caratula
         String imagen = "";

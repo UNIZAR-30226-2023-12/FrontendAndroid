@@ -22,7 +22,16 @@ import eina.unizar.melodiaapp.Modules.MyTaskGetReproductionsArtist;
 import eina.unizar.melodiaapp.Modules.MyTaskGetSongSeconds;
 import eina.unizar.melodiaapp.Modules.MyTaskGetTime;
 
+/**
+ * Clase que gestiona la actividad de canciones de un artista
+ */
 public class ArtistSongs extends AppCompatActivity {
+    /**
+     * Método que hace la petición de las canciones de un artista
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String[] doRequestAskSongs() throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -41,6 +50,13 @@ public class ArtistSongs extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método que hace la petición del nombre de una canción
+     * @param idSong id de la canción
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestAskNameSongs(String idSong) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -59,6 +75,13 @@ public class ArtistSongs extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método que hace la petición de los segundos que se ha reproducido una canción
+     * @param idAudio id de la canción
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestGetSongSeconds(String idAudio) throws ExecutionException, InterruptedException {
         MyTaskGetSongSeconds task = new MyTaskGetSongSeconds();
         String respuesta = task.execute(idAudio).get();
@@ -72,6 +95,13 @@ public class ArtistSongs extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método que hace la petición del tiempo que se han reproducido las canciones de un artista
+     * @param idAudio id de la canción
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestGetReproductionsArtist(String idAudio) throws ExecutionException, InterruptedException {
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         String idUsuario = preferences.getString("idUsuario", "");
@@ -87,6 +117,13 @@ public class ArtistSongs extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método que se ejecuta al crear la actividad
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

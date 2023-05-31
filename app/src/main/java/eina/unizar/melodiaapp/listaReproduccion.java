@@ -30,12 +30,22 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskArtistSong;
 import eina.unizar.melodiaapp.Modules.MyTaskAskGenreSong;
 import eina.unizar.melodiaapp.Modules.MyTaskDeleteSongLista;
 
+/**
+ * Clase que codifica la actividad lista de reproducción
+ */
 public class listaReproduccion extends AppCompatActivity {
 
     protected  ArrayAdapter<String> adapterPrueba;
 
     protected String mode = "linear";
 
+    /**
+     * Función que solicita al servidor la lista de canciones de una lista de reproducción
+     * @param idPlaylist id de la lista de reproducción
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public String[] doRequestAskSongs(String idPlaylist) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -54,6 +64,13 @@ public class listaReproduccion extends AppCompatActivity {
         }
     }
 
+    /**
+     * Función que solicita
+     * @param idPlaylist
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public String doRequestAskNameSongs(String idPlaylist) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -72,6 +89,13 @@ public class listaReproduccion extends AppCompatActivity {
         }
     }
 
+    /**
+     * Función que solicita al servidor el artista de una canción
+     * @param idPlaylist id de la lista de reproducción
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public String doRequestAskArtistSong(String idPlaylist) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -90,6 +114,13 @@ public class listaReproduccion extends AppCompatActivity {
         }
     }
 
+    /**
+     * Función que solicita al servidor el género de una canción
+     * @param idPlaylist id de la lista de reproducción
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public String doRequestAskGenreSong(String idPlaylist) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -108,6 +139,14 @@ public class listaReproduccion extends AppCompatActivity {
         }
     }
 
+    /**
+     * Función que solicita al servidor la eliminación de una canción de una lista de reproducción
+     * @param idPlaylist id de la lista de reproducción
+     * @param idCancion id de la canción
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestDeleteSongLista(String idPlaylist, String idCancion) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -126,6 +165,13 @@ public class listaReproduccion extends AppCompatActivity {
         }
     }
 
+    /**
+     * Función que se ejecuta al crear la actividad
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -341,7 +387,12 @@ public class listaReproduccion extends AppCompatActivity {
 
     }
 
-        public void ordenarPorNombre(String idsCancionesString, String nombresCancionesString) {
+    /**
+     * Ordena las canciones por el nombre
+     * @param idsCancionesString ids de las canciones
+     * @param nombresCancionesString nombres de las canciones
+     */
+    public void ordenarPorNombre(String idsCancionesString, String nombresCancionesString) {
             String[] idsCanciones = idsCancionesString.split(",");
             String[] nombresCanciones = nombresCancionesString.split(",");
             ObjetoConIdYNombre[] objetos = new ObjetoConIdYNombre[idsCanciones.length];
@@ -436,8 +487,15 @@ public class listaReproduccion extends AppCompatActivity {
             }
             listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>()));
 
-        }
+    }
 
+
+    /**
+     * Ordena las canciones por el wildcard
+     * @param idsCancionesString ids de las canciones
+     * @param nombresCancionesString nombres de las canciones
+     * @param wildcardString wildcards de las canciones
+     */
     public void ordenarPorWildcard(String idsCancionesString, String nombresCancionesString, String wildcardString) {
         String[] idsCanciones = idsCancionesString.split(",");
         String[] nombresCanciones = nombresCancionesString.split(","); //Seguimos necesitando los nombres para el setText
@@ -532,6 +590,10 @@ public class listaReproduccion extends AppCompatActivity {
         listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>()));
 
     }
+
+    /**
+     * Clase ObjetoConIdYNombre
+     */
         class ObjetoConIdYNombre {
             private String id;
             private String nombre;
@@ -550,7 +612,10 @@ public class listaReproduccion extends AppCompatActivity {
             }
         }
 
-        class ObjetoConIdNombreYWildcard {
+    /**
+     * Clase ObjetoConIdNombreYWildcard
+     */
+    class ObjetoConIdNombreYWildcard {
 
             private String id;
 
