@@ -14,6 +14,9 @@ import eina.unizar.melodiaapp.Modules.MyTaskAskFriends;
 import eina.unizar.melodiaapp.Modules.MyTaskAskNameFriends;
 import eina.unizar.melodiaapp.Modules.MyTaskGetSubsribeArtist;
 
+/**
+ * Clase que implementa la gestión de amigos
+ */
 public class UserFriends extends AppCompatActivity {
     /**
      * Realiza la request correspondiente para obtener a los amigos y devuelve sus ids en caso
@@ -39,6 +42,12 @@ public class UserFriends extends AppCompatActivity {
         }
     }
 
+    /**
+     * Realiza la request correspondiente para obtener el nombre de un amigo y devuelve sus ids en
+     * caso de que la request haya sido correcta y sino devuelve un string de error
+     * @return
+     * @throws Exception
+     */
     protected String doRequesAskNameFriend(String idUsrAmigo) throws Exception {
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         String idUsuario = preferences.getString("idUsuario", "");
@@ -55,6 +64,13 @@ public class UserFriends extends AppCompatActivity {
         }
     }
 
+    /**
+     * Realiza la request correspondiente para obtener los artistas a los que esta suscrito el
+     * usuario y devuelve sus ids en caso de que la request haya sido correcta y sino devuelve
+     * un string de error
+     * @return
+     * @throws Exception
+     */
     protected String[] doRequestGetSubsribeArtist() throws Exception {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);

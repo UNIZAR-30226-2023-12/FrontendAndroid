@@ -29,10 +29,21 @@ import eina.unizar.melodiaapp.Modules.MyTaskDeletePlaylist;
 import eina.unizar.melodiaapp.Modules.MyTaskGetListFolder;
 import eina.unizar.melodiaapp.Modules.MyTaskSubscribeToArtist;
 
+/**
+ * Clase que muestra los resultados de la búsqueda
+ */
 public class Results extends AppCompatActivity {
 
     private String listaIdResultados[]; //TODO asegurar que diferenciamos entre tipos de id
 
+    /**
+     * Realiza la request correspondiente para obtener los nombres de las listas y devuelve dichos
+     * nombres en caso de que la request haya sido correcta y sino devuelve un string de error
+     * @param idLista identificador del usuario
+     * @return respuesta del servidore
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestAskNameListas(String idLista) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -51,6 +62,14 @@ public class Results extends AppCompatActivity {
         }
     }
 
+    /**
+     * Realiza la request correspondiente para obtener los nombres de las canciones y devuelve dichos
+     * nombres en caso de que la request haya sido correcta y sino devuelve un string de error
+     * @param idPlaylist identificador de la playlist
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public String doRequestAskNameSongs(String idPlaylist) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -69,6 +88,14 @@ public class Results extends AppCompatActivity {
         }
     }
 
+    /**
+     * Realiza la request correspondiente para obtener de un artista según su id y devuelve dicho
+     * nombre en caso de que la request haya sido correcta y sino devuelve un string de error
+     * @param idUsuario identificador del ususario
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestAskArtistName(String idUsuario) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña de shared preferences
 
@@ -87,6 +114,16 @@ public class Results extends AppCompatActivity {
         }
     }
 
+    /**
+     * Realiza la request correspondiente para obtener los primeros n resultados de la búsqueda a
+     * partir de query y devuelve dichos resultados en caso de que la request haya sido correcta y
+     * sino devuelve un string de error
+     * @param query palabras emepleadas en la búsqueda
+     * @param n número de resultados
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String[] doRequestAskGlobalSearchResults(String query, String n) throws ExecutionException, InterruptedException {
 
         MyTaskAskGlobalSearchResults task = new MyTaskAskGlobalSearchResults();
@@ -100,6 +137,16 @@ public class Results extends AppCompatActivity {
         }
     }
 
+    /**
+     * Realiza la request correspondiente para obtener los primeros n resultados de la búsqueda a
+     * partir de  las palabras individduales en query y devuelve dichos resultados en caso de que la
+     * request haya sido correcta y sino devuelve un string de error
+     * @param query palabras empleadas individualmente en la búsqueda
+     * @param n número de resultados
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String[] doRequestAskMyTaskByWordSearch(String query, String n) throws ExecutionException, InterruptedException {
 
         MyTaskByWordSearch task = new MyTaskByWordSearch();
@@ -113,6 +160,14 @@ public class Results extends AppCompatActivity {
         }
     }
 
+    /**
+     * Realiza la request correspondiente para obtener las 10 canciones mas reproducidas,
+     * devolviendo sus ids en caso de que la request haya sido correcta y sino devuelve un
+     * string de error
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String[] doRequestAskTop10() throws ExecutionException, InterruptedException {
 
         MyTaskAskTopReproductions task = new MyTaskAskTopReproductions();
@@ -126,6 +181,14 @@ public class Results extends AppCompatActivity {
         }
     }
 
+    /**
+     * Realiza la request correspondiente para obtener las listas dentro de una carpeta, devolviendo
+     * sus ids en caso de que la request haya sido correcta y sino devuelve un string de error
+     * @param idCarpeta identificador de la carpeta
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String[] doRequestGetListFolder(String idCarpeta) throws ExecutionException, InterruptedException {
         // Obtengo usuario y contraseña
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -144,6 +207,15 @@ public class Results extends AppCompatActivity {
         }
     }
 
+    /**
+     * Realiza la request correspondiente para eliminar una playlist, eliminando la playlist de id
+     * "idPlaylist" en caso de que la request se haya procesado correctamente y devolviendo la
+     * respuesta del servidor
+     * @param idPlaylist identificador de la playlist
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestDeletePlaylist(String idPlaylist) throws ExecutionException, InterruptedException {
         // Obtengo usuario, contraseña e id de la playlist a modificar
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -156,6 +228,15 @@ public class Results extends AppCompatActivity {
         return task.execute(idUsuario, contrasenya, idPlaylist).get();
     }
 
+    /**
+     * Realiza la request correspondiente para realizar la suscripción a un artista, suscribiendose
+     * al artista de id "idArtist" en caso de que la request haya sido correcta y devolviendo la
+     * respuesta del servidor
+     * @param idArtist identificador del artista
+     * @return respuesta del servidor
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     protected String doRequestSubscribeToArtist(String idArtist) throws ExecutionException, InterruptedException {
         // Obtengo usuario, contraseña e id del artista a seguir
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
@@ -168,6 +249,12 @@ public class Results extends AppCompatActivity {
         return task.execute(idUsuario, contrasenya, idArtist).get();
     }
 
+    /**
+     * Función auxiliar para identificar si un id corresponde a una canción, un artista o una lista
+     * devuelve el tipo de identificador si consigue reconocerlo, y sino devuelve un string de error
+     * @param id identificador a identificar
+     * @return respuesta del servidor
+     */
     protected String whatAmI(String id) {
 
         String response[] = id.split(":");
@@ -183,7 +270,13 @@ public class Results extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Metodo que se llama al crear la actividad
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+/**
+ * Clase que muestra las reproducciones globales en segundos
+ */
 public class Reproductions extends AppCompatActivity {
 
     @Override
