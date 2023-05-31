@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".playlist">
+    tools:context=".Playlist">
 
     <ImageView
-        android:id="@+id/imageHomeC"
+        android:id="@+id/imageHomeCCarpeta"
         android:layout_width="97dp"
         android:layout_height="93dp"
         android:layout_marginTop="16dp"
@@ -18,55 +18,71 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/home" />
 
+    <ImageView
+        android:id="@+id/profileIconAplaylist"
+        android:layout_width="101dp"
+        android:layout_height="91dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profileicon" />
+
+    <ImageView
+        android:id="@+id/bellIconAPlaylist"
+        android:layout_width="54dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toStartOf="@+id/profileIconAplaylist"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bell" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="108dp"
         android:gravity="center"
-        android:text="Listas placeholder"
+        android:text="@string/Results_title"
         android:textColor="@color/regular_text"
-        android:textSize="24pt"
+        android:textSize="22pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="71dp"
-        android:layout_height="83dp"
-        app:layout_constraintEnd_toStartOf="@+id/ListaRejemplo"
-        app:srcCompat="@drawable/options"
-        tools:layout_editor_absoluteY="261dp" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="50dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="4dp"
-        app:layout_constraintStart_toEndOf="@+id/ListaRejemplo"
-        app:srcCompat="@drawable/thrash"
-        tools:layout_editor_absoluteY="276dp" />
-
-    <TextView
-        android:id="@+id/ListaRejemplo"
-        android:layout_width="241dp"
-        android:layout_height="38dp"
-        android:text="Lista reproduccion"
-        android:textSize="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="276dp" />
-
-    <LinearLayout
-        android:layout_width="411dp"
-        android:layout_height="352dp"
-        android:layout_marginTop="96dp"
+    <ListView
+        android:id="@+id/listPlsylist"
+        android:layout_width="410dp"
+        android:layout_height="380dp"
+        android:layout_marginTop="24dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/textView"></ListView>
+
+    <TextView
+        android:id="@+id/bCrearLista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button1"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/CP_crear"
+        android:textColor="@color/button_text"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listPlsylist"
+        app:layout_constraintVertical_bias="0.671"
+        tools:ignore="UnknownId" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

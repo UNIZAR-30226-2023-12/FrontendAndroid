@@ -18,13 +18,35 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/home" />
 
+    <ImageView
+        android:id="@+id/profileIconAcarpeta"
+        android:layout_width="101dp"
+        android:layout_height="91dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profileicon" />
+
+    <ImageView
+        android:id="@+id/bellIconACarpeta"
+        android:layout_width="54dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toStartOf="@+id/profileIconAcarpeta"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bell" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="108dp"
         android:gravity="center"
-        android:text="Carpeta placeholder"
+        android:text="Mis carpetas placeholder"
         android:textColor="@color/regular_text"
         android:textSize="24pt"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,44 +54,28 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="71dp"
-        android:layout_height="83dp"
-        app:layout_constraintEnd_toStartOf="@+id/carpetaEjemplo"
-        app:srcCompat="@drawable/options"
-        tools:layout_editor_absoluteY="261dp" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="50dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="4dp"
-        app:layout_constraintStart_toEndOf="@+id/carpetaEjemplo"
-        app:srcCompat="@drawable/thrash"
-        tools:layout_editor_absoluteY="276dp" />
-
     <TextView
         android:id="@+id/carpetaEjemplo"
         android:layout_width="241dp"
         android:layout_height="38dp"
-        android:text="Carpeta"
-        android:textSize="28dp"
         android:gravity="center"
+        android:text="Carpeta placeholder"
+        android:textColor="@color/regular_text"
+        android:textSize="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="276dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <LinearLayout
+    <ListView
         android:id="@+id/linearLayout2"
         android:layout_width="406dp"
         android:layout_height="270dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="56dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/textView"></ListView>
 
     <TextView
         android:id="@+id/bMasCarpetas"
@@ -82,9 +88,11 @@
         android:text="@string/carpeta_masCarpetas"
         android:textColor="@color/button_text"
         android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.081" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

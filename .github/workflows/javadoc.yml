@@ -9,6 +9,8 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
       - name: Deploy JavaDoc
         uses: MathieuSoysal/Javadoc-publisher.yml@v2.4.0
         with:
@@ -18,3 +20,4 @@ jobs:
           java-distribution: temurin
           target-folder: docs 
           project: gradle
+          custom-command: cd app && gradle generateJavadoc

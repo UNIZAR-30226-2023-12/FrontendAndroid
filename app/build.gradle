@@ -37,6 +37,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation 'com.google.code.gson:gson:2.8.9'
 
 }
 
@@ -57,4 +58,19 @@ task generateJavadoc(type: Javadoc) {
     options.addStringOption("use")
     options.addStringOption("author")
     options.addStringOption("version")
+    failOnError false
+
+    doFirst {
+        ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+        classpath = files(ext.androidJar)
+
+        // I used a custom doclet
+        options.docletpath = configurations.umlDoclet.files as List
+        options.doclet = "nl.talsmasoftware.umldoclet.UMLDoclet"
+
+        options.addStringOption "-show-members", "package"
+        // more doclet options here...
+       
+        options.links "https://developer.android.com/reference/"
+    }
 }

@@ -85,7 +85,7 @@
             style="@style/Widget.Button.favToggle"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:checked="true"
+            android:checked="false"
             android:clickable="true"
             android:focusable="true"
             android:text="ToggleButton"
@@ -274,7 +274,7 @@
 
     </TableLayout>
 
-    <LinearLayout
+    <SeekBar
         android:id="@+id/volume_bar_slot"
         android:layout_width="250dp"
         android:layout_height="48dp"
@@ -282,6 +282,38 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/track_image"
         app:layout_constraintEnd_toEndOf="@+id/nav_bar"
-        app:layout_constraintTop_toBottomOf="@+id/nav_bar"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/nav_bar"></SeekBar>
+
+    <ImageView
+        android:id="@+id/bAddSong2Playlist"
+        android:layout_width="47dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="340dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="9dp"
+        app:layout_constraintBottom_toTopOf="@+id/nav_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_favorites_bar"
+        app:srcCompat="@drawable/addsong" />
+
+
+    <ScrollView
+        android:layout_width="411dp"
+        android:layout_height="248dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/volume_bar_slot">
+
+        <TextView
+            android:id="@+id/hidden_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/text_placeholder_long"
+            android:textColor="@color/regular_text"
+            android:textSize="10pt" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

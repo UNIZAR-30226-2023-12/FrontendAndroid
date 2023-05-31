@@ -98,6 +98,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inPasswd" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/hiddenLoginError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/LogIn_error"
+            android:textColor="@color/error_red"
+            android:textSize="10pt"
+            app:layout_constraintBottom_toTopOf="@+id/bAcceder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inPasswd" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

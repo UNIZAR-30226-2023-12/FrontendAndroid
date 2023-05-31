@@ -9,8 +9,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import eina.unizar.melodiaapp.MySingleton;
 
 /*
  * Haciendo uso de las distintas funciones que ofrece el backend en su API llamar con urls
@@ -18,56 +21,53 @@ import org.json.JSONObject;
  */
 
 /**
- * Clase que realiza una petición al tomcat pasandole de parámetro una URL
+ * Clase que implementa una petición GET.
  */
 public class GETRequest extends AsyncTask<String, Void, JSONObject> {
 
     private Exception exception;
+    MySingleton singleton = MySingleton.getInstance();
+    
+    private String url = "http://" + singleton.getMyGlobalVariable() + ":8081/";
 
     /**
-     * Metodo que realiza la petición a través de la url que se pasa.
-     * @param url
-     * @return
+     * Metodo que realiza la petición GET con los datos especificados
+     * @param endpoint endpoint al que realizar la petición
+     * @param data datos a enviar en formato JSON
+     * @return respuesta de la API
      */
-    public JSONObject sendGET(String url) {
+    public JSONObject sendGET(String endpoint, String data) {
         JSONObject jsonResponse = null;
+
+        StringBuilder sb = new StringBuilder(url);
+        sb.append(endpoint);
+        sb.append(data);
+
+        int status = 0;
         try {
-            URL urlConnect = new URL(url);
 
-            // Abrimos la conexión
-            HttpURLConnection connection = (HttpURLConnection) urlConnect.openConnection();
-
-            // Establecemos el método GET
-            connection.setRequestMethod("GET");
-
-            // Envíamos la petición
-            connection.connect();
-
-            // Recibimos la respuesta
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
-
-            String line;
-            while ((line = in.readLine()) != null) {
-                response.append(line);
+            HttpURLConnection con = (HttpURLConnection) new URL(sb.toString()).openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Content-Type", "application/json");
+            status = con.getResponseCode();
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer content = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
             }
             in.close();
-
-            // Cerramos la conexión
-            connection.disconnect();
-
-            // Convertimos la respuesta a un objeto JSON
-            jsonResponse = new JSONObject(response.toString());
-
-
-        } catch (Exception e) {
+            jsonResponse = new JSONObject(content.toString());
+            con.disconnect();
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return jsonResponse;
     }
 
     @Override
-    protected JSONObject doInBackground(String... url) {
-        return sendGET(url[0]);
+    protected JSONObject doInBackground(String... data) {
+        return sendGET(data[0], data[1]);
     }
 }
